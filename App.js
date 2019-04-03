@@ -6,18 +6,20 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import React, {Component} from 'react'
+import {StyleSheet} from 'react-native'
 import HomeScreen from "./src/screens/HomeScreen"
 import NetworkTestScreen from "./src/screens/NetworkTestScreen"
 import UITestScreen from "./src/screens/UITestScreen"
+import MapTestScreen from "./src/screens/MapTestScreen"
 
-import {createStackNavigator, createAppContainer} from "react-navigation";
+import {createStackNavigator, createAppContainer} from "react-navigation"
 
 const MainNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
   NetworkTest: {screen: NetworkTestScreen},
-  UITest: {screen: UITestScreen}
+  UITest: {screen: UITestScreen},
+  MapTest: {screen: MapTestScreen},
 }, {
   initialRouteName: 'Home',
   defaultNavigationOptions: {
