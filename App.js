@@ -10,10 +10,10 @@ import React, {Component} from 'react'
 import {StyleSheet} from 'react-native'
 import HomeScreen from "./src/screens/HomeScreen"
 import NetworkTestScreen from "./src/screens/NetworkTestScreen"
-import UITestScreen from "./src/screens/UITestScreen"
+import UITestScreen from "./src/screens/UITest/UITestScreen"
+
 import MapTestScreen from "./src/screens/MapTestScreen"
 import AnimatedMarkers from "./src/screens/MapTestCases/AnimatedMarkers";
-
 import {createStackNavigator, createAppContainer} from "react-navigation"
 import AnimatedNavigation from "./src/screens/MapTestCases/AnimatedNavigation";
 import DisplayLatLng from "./src/screens/MapTestCases/DisplayLatLng";
