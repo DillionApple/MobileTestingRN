@@ -10,7 +10,7 @@ import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 import HomeScreen from "./src/screens/HomeScreen"
 import NetworkTestScreen from "./src/screens/NetworkTestScreen"
-import UITestScreen from "./src/screens/UITestScreen"
+import UITestScreen from "./src/screens/UITest/UITestScreen"
 
 import {createStackNavigator, createAppContainer} from "react-navigation";
 
