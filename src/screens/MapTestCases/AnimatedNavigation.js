@@ -13,6 +13,7 @@ import carImage from './assets/car.png';
 
 export default class NavigationMap extends Component {
 
+    interval = null;
     constructor(props) {
         super(props);
         this.state = {
@@ -21,6 +22,7 @@ export default class NavigationMap extends Component {
             curAng: 45,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
+            intervalCount: 0,
         };
         this.changePosition = this.changePosition.bind(this);
         this.getRotation = this.getRotation.bind(this);
@@ -45,6 +47,22 @@ export default class NavigationMap extends Component {
         const { curPos, prevPos, curAng } = this.state;
         const curRot = this.getRotation(prevPos, curPos);
         this.map.animateCamera({ heading: curRot, center: curPos, pitch: curAng });
+    }
+
+    componentDidMount(): void {
+        this.interval = setInterval(this.intervalHandler, 1000, this);
+    }
+
+    intervalHandler(vm) {
+        let latOffset = Math.random() * 0.0001;
+        let lonOffset = Math.random() * 0.0001;
+        if (vm.state.intervalCount < 5) {
+            vm.changePosition(latOffset, lonOffset);
+            vm.setState({intervalCount: vm.state.intervalCount + 1});
+        } else {
+            clearInterval(vm.interval);
+            vm.props.testFinish();
+        }
     }
 
     render() {

@@ -13,13 +13,13 @@ import {createStackNavigator, createAppContainer} from "react-navigation"
 import HomeScreen from "./src/screens/HomeScreen"
 import NetworkTestScreen from "./src/screens/NetworkTestScreen"
 import UITestScreen from "./src/screens/UITest/UITestScreen"
-import MapTestNavigatorScreen from "./src/screens/MapTestCases/MapTestNavigatorScreen"
+import MapTestScreen from "./src/screens/MapTestCases/MapTestScreen"
 
 const MainNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
   NetworkTest: {screen: NetworkTestScreen},
   UITest: {screen: UITestScreen},
-  MapTest: {screen: MapTestNavigatorScreen},
+  MapTest: {screen: MapTestScreen},
 });
 
 const App = createAppContainer(MainNavigator)

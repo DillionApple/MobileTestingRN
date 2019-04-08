@@ -18,6 +18,17 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 class DisplayLatLng extends React.Component {
+
+    interval = null;
+
+    actionMap = {
+        0: this.jumpRandom,
+        1: this.animateRandom,
+        2: this.animateRandomCoordinate,
+        3: this.animateToRandomBearing,
+        4: this.animateToRandomViewingAngle,
+    };
+
     constructor(props) {
         super(props);
 
@@ -28,6 +39,7 @@ class DisplayLatLng extends React.Component {
                 latitudeDelta: LATITUDE_DELTA,
                 longitudeDelta: LONGITUDE_DELTA,
             },
+            intervalCount: 0,
         };
     }
 
@@ -35,24 +47,24 @@ class DisplayLatLng extends React.Component {
         this.setState({ region });
     }
 
-    jumpRandom() {
-        this.setState({ region: this.randomRegion() });
+    jumpRandom(vm) {
+        vm.setState({ region: vm.randomRegion() });
     }
 
-    animateRandom() {
-        this.map.animateToRegion(this.randomRegion());
+    animateRandom(vm) {
+        vm.map.animateToRegion(vm.randomRegion());
     }
 
-    animateRandomCoordinate() {
-        this.map.animateCamera({ center: this.randomCoordinate() });
+    animateRandomCoordinate(vm) {
+        vm.map.animateCamera({ center: vm.randomCoordinate() });
     }
 
-    animateToRandomBearing() {
-        this.map.animateCamera({ heading: this.getRandomFloat(-360, 360) });
+    animateToRandomBearing(vm) {
+        vm.map.animateCamera({ heading: vm.getRandomFloat(-360, 360) });
     }
 
-    animateToRandomViewingAngle() {
-        this.map.animateCamera({ pitch: this.getRandomFloat(0, 90) });
+    animateToRandomViewingAngle(vm) {
+        vm.map.animateCamera({ pitch: vm.getRandomFloat(0, 90) });
     }
 
     getRandomFloat(min, max) {
@@ -72,6 +84,22 @@ class DisplayLatLng extends React.Component {
             ...this.state.region,
             ...this.randomCoordinate(),
         };
+    }
+
+    intervalHandler(vm) {
+        let actionIndex = Math.floor(vm.state.intervalCount / 3);
+        let action = vm.actionMap[actionIndex]
+        if (action) {
+            action(vm);
+            vm.setState({intervalCount: vm.state.intervalCount + 1});
+        } else {
+            clearInterval(vm.interval);
+            vm.props.testFinish();
+        }
+    }
+
+    componentDidMount(): void {
+        this.interval = setInterval(this.intervalHandler, 1000, this);
     }
 
     render() {
