@@ -32,11 +32,12 @@ class UITestScreen extends React.Component {
     }
 
     doingTask(task) {
-        console.log(123);
         if (task === 1) {
             this.testImageView();
         } else if (task === 2) {
             this.testAnimationView();
+        } else if (task === 3) {
+            this.testListView();
         }
     }
 
@@ -49,9 +50,19 @@ class UITestScreen extends React.Component {
     }
 
     testAnimationView() {
-        this.props.navigation.navigate('AnimationView');
+        this.props.navigation.navigate('AnimationView', {
+            onGoBack: () => this.doingTask(3),
+        });
         this.setState({currentProgress: 0.5});
         this.setState({currentTaskName: 'AnimationViewTesting..'});
+    }
+
+    testListView() {
+        this.props.navigation.navigate('ListView', {
+            onGoBack: () => this.doingTask(4),
+        });
+        this.setState({currentProgress: 1});
+        this.setState({currentTaskName: 'ListViewTesting..'});
     }
 
     static router = UITestNavigator.router;
@@ -67,7 +78,7 @@ class UITestScreen extends React.Component {
                 <View style={styles.progressbar}>
                     <Progress.Bar progress={currentProgress}
                                   indeterminate={this.state.indeterminate}
-                                  width={300}
+                                  width={250}
                                   height={50}
                     />
                     <Text style={styles.progressbarText}>{currentProgress * 100}%</Text>
@@ -96,7 +107,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     progressbar: {
-        width: 300,
+        width: 250,
         height: 30,
         marginTop: 30,
         marginLeft: 30,
@@ -108,7 +119,7 @@ const styles = StyleSheet.create({
         paddingLeft: 20
     },
     progressbarTaskText: {
-        fontSize: 30,
+        fontSize: 28,
         paddingLeft: 30
     }
 });
