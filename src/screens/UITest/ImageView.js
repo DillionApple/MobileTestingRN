@@ -11,7 +11,6 @@ class ImageViewTest extends React.Component {
 
     componentDidMount() {
         this.start();
-
     }
 
     // [0,max)
