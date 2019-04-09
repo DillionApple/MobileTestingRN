@@ -13,6 +13,10 @@ import carImage from './assets/car.png';
 
 export default class NavigationMap extends Component {
 
+    maxIntervalCount = 10;
+    initTimeoutMs = 2000;
+    intervalTimeMs = 1000;
+
     interval = null;
     constructor(props) {
         super(props);
@@ -50,13 +54,16 @@ export default class NavigationMap extends Component {
     }
 
     componentDidMount(): void {
-        this.interval = setInterval(this.intervalHandler, 1000, this);
+        this.changePosition(0.0001, 0);
+        setTimeout((vm) => {
+            vm.interval = setInterval(vm.intervalHandler, vm.intervalTimeMs, vm);
+        }, this.initTimeoutMs, this);
     }
 
     intervalHandler(vm) {
         let latOffset = Math.random() * 0.0001;
         let lonOffset = Math.random() * 0.0001;
-        if (vm.state.intervalCount < 5) {
+        if (vm.state.intervalCount < vm.maxIntervalCount) {
             vm.changePosition(latOffset, lonOffset);
             vm.setState({intervalCount: vm.state.intervalCount + 1});
         } else {

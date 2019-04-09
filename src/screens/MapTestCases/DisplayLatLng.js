@@ -19,6 +19,8 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 class DisplayLatLng extends React.Component {
 
+    eachIntervalCount = 5;
+    intervalTimeMs = 500;
     interval = null;
 
     actionMap = {
@@ -87,7 +89,7 @@ class DisplayLatLng extends React.Component {
     }
 
     intervalHandler(vm) {
-        let actionIndex = Math.floor(vm.state.intervalCount / 3);
+        let actionIndex = Math.floor(vm.state.intervalCount / vm.eachIntervalCount);
         let action = vm.actionMap[actionIndex]
         if (action) {
             action(vm);
@@ -99,7 +101,7 @@ class DisplayLatLng extends React.Component {
     }
 
     componentDidMount(): void {
-        this.interval = setInterval(this.intervalHandler, 1000, this);
+        this.interval = setInterval(this.intervalHandler, this.intervalTimeMs, this);
     }
 
     render() {

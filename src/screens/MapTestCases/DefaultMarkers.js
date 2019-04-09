@@ -23,6 +23,11 @@ function randomColor() {
 }
 
 class DefaultMarkers extends React.Component {
+
+    maxIntervalCount = 50;
+    intervalTimeMs = 200;
+    interval = null;
+
     constructor(props) {
         super(props);
 
@@ -34,7 +39,37 @@ class DefaultMarkers extends React.Component {
                 longitudeDelta: LONGITUDE_DELTA,
             },
             markers: [],
+            intervalCount: 0,
         };
+    }
+
+    intervalHandler(vm) {
+        vm.setState({intervalCount: vm.state.intervalCount + 1});
+        if (vm.state.intervalCount <= vm.maxIntervalCount) {
+
+            const newCoordinate = {
+                latitude: LATITUDE + ((Math.random() - 0.5) * (LATITUDE_DELTA / 2)),
+                longitude: LONGITUDE + ((Math.random() - 0.5) * (LONGITUDE_DELTA / 2)),
+            };
+
+            vm.setState({
+                markers: [
+                    ...vm.state.markers,
+                    {
+                        coordinate: newCoordinate,
+                        key: id++,
+                        color: randomColor(),
+                    }
+                ]
+            })
+        } else {
+            clearInterval(vm.interval);
+            vm.props.testFinish();
+        }
+    }
+
+    componentDidMount(): void {
+        this.interval = setInterval(this.intervalHandler, this.intervalTimeMs, this)
     }
 
     onMapPress(e) {

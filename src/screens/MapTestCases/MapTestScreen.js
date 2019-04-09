@@ -1,33 +1,23 @@
 import React from 'react'
 
-import {View, Button, Text} from 'react-native'
+import {View, Button, Text, StyleSheet} from 'react-native'
 
 import AnimatedMarkers from "./AnimatedMarkers";
 import AnimatedNavigation from "./AnimatedNavigation";
 import DisplayLatLng from "./DisplayLatLng";
+import DefaultMarkers from "./DefaultMarkers";
 import ViewsAsMarkers from "./ViewsAsMarkers";
 import EventListener from "./EventListener";
 import MarkerTypes from "./MarkerTypes";
 import DraggableMarkers from "./DraggableMarkers";
 import PolygonCreator from "./PolygonCreator";
-import DefaultMarkers from "./DefaultMarkers";
 
 class MapTestScreen extends React.Component {
     static navigationOptions = {
         title: 'Map Test',
     };
 
-    static testCaseMap = {
-        0: AnimatedMarkers,
-        1: AnimatedNavigation,
-        2: DisplayLatLng,
-        3: ViewsAsMarkers,
-        4: EventListener,
-        5: MarkerTypes,
-        6: DraggableMarkers,
-        7: PolygonCreator,
-        8: DefaultMarkers,
-    }
+    static testCaseMap = [AnimatedMarkers, AnimatedNavigation, DisplayLatLng, DefaultMarkers, ViewsAsMarkers, EventListener, MarkerTypes, DraggableMarkers, PolygonCreator,]
 
     constructor(props) {
         super(props);
@@ -46,7 +36,10 @@ class MapTestScreen extends React.Component {
         let Component = MapTestScreen.testCaseMap[index];
 
         if (Component) {
-          return <Component testFinish={() => this.childFinish()} />;
+          return (
+              <View style={styles.container}>
+                  <Component testFinish={() => this.childFinish()} />
+              </View>);
         } else {
             this.props.navigation.pop();
             return (<Text>All test done!</Text>);
@@ -59,5 +52,11 @@ class MapTestScreen extends React.Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        ...StyleSheet.absoluteFillObject,
+    },
+});
 
 export default MapTestScreen

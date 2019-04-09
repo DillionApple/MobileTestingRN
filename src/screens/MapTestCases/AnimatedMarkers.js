@@ -22,8 +22,10 @@ class AnimatedMarkers extends React.Component {
     static navigationOptions = {
         title: "AnimatedMarkers"
     };
+    maxIntervalCount = 20;
+    intervalTimeMs = 500;
     animateButton = null;
-    interval: null;
+    interval = null;
     constructor(props) {
         super(props);
 
@@ -39,13 +41,13 @@ class AnimatedMarkers extends React.Component {
     }
 
     componentDidMount(): void {
-        this.interval = setInterval(this.intervalHandler, 1000, this);
+        this.interval = setInterval(this.intervalHandler, this.intervalTimeMs, this);
     }
 
     intervalHandler(vm) {
         vm.setState({intervalCount: vm.state.intervalCount + 1});
         vm.animate();
-        if (vm.state.intervalCount == 2) {
+        if (vm.state.intervalCount == vm.maxIntervalCount) {
             clearInterval(vm.interval);
             vm.props.testFinish();
         }
