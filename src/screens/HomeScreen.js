@@ -11,7 +11,8 @@ class HomeScreen extends React.Component {
             <View>
                 <Button title="Network Test" onPress={() => navigate('NetworkTest')}/>
                 <Button title="UI Test" onPress={() => navigate('UITest')}/>
-                <Button title={"Map Test"} onPress={() => navigate('MapTest')}/>
+                <Button title="Map Test" onPress={() => navigate('MapTest')}/>
+                <Button title="Video Test" onPress={() => navigate('VideoTest')}/>
             </View>
         )
     }
