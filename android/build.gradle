@@ -31,3 +31,11 @@ allprojects {
         }
     }
 }
+
+/**
+ + Project-wide Gradle configuration properties
+ */
+ext {
+    googlePlayServicesVersion = "11.8.0"
+    androidMapsUtilsVersion = "0.5+"
+}
