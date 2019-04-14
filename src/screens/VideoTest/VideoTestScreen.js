@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { View, StyleSheet, Dimensions, Text } from 'react-native'
+import { View, StyleSheet, Dimensions, Text, Animated } from 'react-native'
 
 import Video from 'react-native-video'
 
@@ -11,34 +11,90 @@ class VideoTestScreen extends React.Component {
         title: 'Map Test',
     };
 
+    intervals = [];
+    player = null;
+    duration = 0;
+    windowWidth = Dimensions.get('window').width
+
     constructor(props) {
         super(props);
         this.state = {
+            intervalCount: 0,
             aspectRatio: 0,
+            paused: false,
+            rate: 1.0,
+            widthAnim: new Animated.Value(this.windowWidth)
         }
     }
 
-    onVideoLoad(response) {
-        this.setState({aspectRatio: aspectRatio})
+    __togglePaused(vm) {
+        vm.setState({paused: ! vm.state.paused});
+    }
+
+    __seekRandomly(vm) {
+        vm.player.seek(Math.random() * vm.duration)
+    }
+
+    __changeSpeedRandomly(vm) {
+        vm.setState({rate: Math.random() * 2.0})
+    }
+
+    __changeSizeRandomly(vm) {
+        Animated.timing(
+            vm.state.widthAnim,
+            {
+                toValue: Math.random() * 2.0 * vm.windowWidth,
+                duration: 500,
+            }
+        ).start()
+    }
+
+    intervalHandler(vm) {
+        //vm.__togglePaused(vm);
+        //vm.__seekRandomly(vm);
+        vm.__changeSpeedRandomly(vm);
+        vm.__changeSizeRandomly(vm);
+    }
+
+    componentDidMount(): void {
+        this.intervals.concat(setInterval(this.__togglePaused, 1300, this))
+        this.intervals.concat(setInterval(this.__changeSpeedRandomly, 2300, this))
+        this.intervals.concat(setInterval(this.__changeSizeRandomly, 2900, this))
+        this.intervals.concat(setInterval(this.__seekRandomly, 4700, this))
+    }
+
+    componentWillUnmount(): void {
+        for (let interval in this.intervals) {
+            clearInterval(interval)
+        }
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Video
+                <Animated.View
+                    style={{
+                        width: this.state.widthAnim,
+                        aspectRatio: this.state.aspectRatio
+                    }}
+                >
+                    <Video
+                    ref={(ref) => {
+                        this.player = ref
+                    }}
                     repeat={true}
                     controls={true}
-                    style={{
-                        width: "100%",
-                        aspectRatio: this.state.aspectRatio,
-                        transform: [{rotate: '90deg'}],
-                    }}
+                    paused={this.state.paused}
+                    rate={this.state.rate}
+                    style={StyleSheet.absoluteFill}
                     onLoad={response => {
+                        this.duration = response.duration
                         const { width, height }= response.naturalSize;
                         const aspectRatio = width / height;
                         this.setState({aspectRatio: aspectRatio})
                     }}
                     source={require('./assets/test_video.mov')}/>
+                </Animated.View>
             </View>
         )
     }
@@ -52,6 +108,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#AAAAAA",
         flexDirection: "column",
         flexWrap: "wrap",
-        justifyContent: "flex-end",
+        justifyContent: "flex-start",
+        alignItems:"center",
     },
 })
