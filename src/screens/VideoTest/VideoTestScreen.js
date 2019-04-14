@@ -14,7 +14,7 @@ class VideoTestScreen extends React.Component {
     intervals = [];
     player = null;
     duration = 0;
-    windowWidth = Dimensions.get('window').width
+    windowWidth = Dimensions.get('window').width;
 
     constructor(props) {
         super(props);
@@ -23,7 +23,8 @@ class VideoTestScreen extends React.Component {
             aspectRatio: 0,
             paused: false,
             rate: 1.0,
-            widthAnim: new Animated.Value(this.windowWidth)
+            widthAnim: new Animated.Value(this.windowWidth),
+            rotateAnim: new Animated.Value(0),
         }
     }
 
@@ -46,7 +47,14 @@ class VideoTestScreen extends React.Component {
                 toValue: Math.random() * 2.0 * vm.windowWidth,
                 duration: 500,
             }
-        ).start()
+        ).start();
+        Animated.timing(
+            vm.state.rotateAnim,
+            {
+                toValue: 0.25 - vm.state.rotateAnim._value,
+                duration: 500,
+            }
+        ).start();
     }
 
     intervalHandler(vm) {
@@ -57,10 +65,10 @@ class VideoTestScreen extends React.Component {
     }
 
     componentDidMount(): void {
-        this.intervals.concat(setInterval(this.__togglePaused, 1300, this))
-        this.intervals.concat(setInterval(this.__changeSpeedRandomly, 2300, this))
-        this.intervals.concat(setInterval(this.__changeSizeRandomly, 2900, this))
-        this.intervals.concat(setInterval(this.__seekRandomly, 4700, this))
+        this.intervals.concat(setInterval(this.__togglePaused, 1300, this));
+        this.intervals.concat(setInterval(this.__changeSpeedRandomly, 2300, this));
+        this.intervals.concat(setInterval(this.__changeSizeRandomly, 2900, this));
+        this.intervals.concat(setInterval(this.__seekRandomly, 4700, this));
     }
 
     componentWillUnmount(): void {
@@ -70,15 +78,21 @@ class VideoTestScreen extends React.Component {
     }
 
     render() {
-        return (
+        const rotateDegree = this.state.rotateAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: ['0deg', '360deg']
+        });
+            return (
             <View style={styles.container}>
                 <Animated.View
-                    style={{
-                        width: this.state.widthAnim,
-                        aspectRatio: this.state.aspectRatio
-                    }}
-                >
-                    <Video
+                style={{
+                    width: this.state.widthAnim,
+                    aspectRatio: this.state.aspectRatio,
+                    transform: [{rotate: rotateDegree}],
+
+                }}
+            >
+                <Video
                     ref={(ref) => {
                         this.player = ref
                     }}
@@ -88,7 +102,7 @@ class VideoTestScreen extends React.Component {
                     rate={this.state.rate}
                     style={StyleSheet.absoluteFill}
                     onLoad={response => {
-                        this.duration = response.duration
+                        this.duration = response.duration;
                         const { width, height }= response.naturalSize;
                         const aspectRatio = width / height;
                         this.setState({aspectRatio: aspectRatio})
@@ -108,7 +122,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#AAAAAA",
         flexDirection: "column",
         flexWrap: "wrap",
-        justifyContent: "flex-start",
+        justifyContent: "center",
         alignItems:"center",
     },
-})
+});
