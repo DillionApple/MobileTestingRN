@@ -8,6 +8,7 @@ import {
 import MapView, { Marker, ProviderPropType } from 'react-native-maps';
 import flagBlueImg from './assets/flag-blue.png';
 import flagPinkImg from './assets/flag-pink.png';
+import BackButton from "../../components/BackButton";
 
 const { width, height } = Dimensions.get('window');
 
@@ -74,6 +75,7 @@ class MarkerTypes extends React.Component {
                         image={this.state.marker2 ? flagBlueImg : flagPinkImg}
                     />
                 </MapView>
+                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }

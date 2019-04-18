@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import PriceMarker from './PriceMarker';
+import BackButton from "../../components/BackButton";
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,10 +19,6 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 class ViewsAsMarkers extends React.Component {
-
-    maxIntervalCount = 10;
-    intervalTimeMs = 200;
-    interval = null;
 
     constructor(props) {
         super(props);
@@ -38,26 +35,7 @@ class ViewsAsMarkers extends React.Component {
                 longitude: LONGITUDE,
             },
             amount: 99,
-            intervalCount: 0,
         };
-    }
-
-    intervalHandler(vm) {
-        vm.setState({intervalCount: vm.state.intervalCount + 1})
-        if (vm.state.intervalCount <= vm.maxIntervalCount) {
-            if (Math.random() < 0.5) {
-                vm.increment();
-            } else {
-                vm.decrement();
-            }
-        } else {
-            clearInterval(vm.interval);
-            vm.props.testFinish();
-        }
-    }
-
-    componentDidMount(): void {
-        this.interval = setInterval(this.intervalHandler, this.intervalTimeMs, this);
     }
 
     increment() {
@@ -93,6 +71,7 @@ class ViewsAsMarkers extends React.Component {
                         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>+</Text>
                     </TouchableOpacity>
                 </View>
+                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }

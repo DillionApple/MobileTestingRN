@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import MapView, { MAP_TYPES, Polygon, ProviderPropType } from 'react-native-maps';
+import BackButton from "../../components/BackButton";
 
 const { width, height } = Dimensions.get('window');
 
@@ -170,6 +171,7 @@ class PolygonCreator extends React.Component {
                         </TouchableOpacity>
                     )}
                 </View>
+                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }

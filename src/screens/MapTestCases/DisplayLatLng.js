@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
-import MapView, { MAP_TYPES } from 'react-native-maps';
+import MapView from 'react-native-maps';
+import BackButton from "../../components/BackButton";
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,10 +19,6 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 class DisplayLatLng extends React.Component {
-
-    eachIntervalCount = 5;
-    intervalTimeMs = 500;
-    interval = null;
 
     actionMap = {
         0: this.jumpRandom,
@@ -41,7 +38,6 @@ class DisplayLatLng extends React.Component {
                 latitudeDelta: LATITUDE_DELTA,
                 longitudeDelta: LONGITUDE_DELTA,
             },
-            intervalCount: 0,
         };
     }
 
@@ -86,22 +82,6 @@ class DisplayLatLng extends React.Component {
             ...this.state.region,
             ...this.randomCoordinate(),
         };
-    }
-
-    intervalHandler(vm) {
-        let actionIndex = Math.floor(vm.state.intervalCount / vm.eachIntervalCount);
-        let action = vm.actionMap[actionIndex]
-        if (action) {
-            action(vm);
-            vm.setState({intervalCount: vm.state.intervalCount + 1});
-        } else {
-            clearInterval(vm.interval);
-            vm.props.testFinish();
-        }
-    }
-
-    componentDidMount(): void {
-        this.interval = setInterval(this.intervalHandler, this.intervalTimeMs, this);
     }
 
     render() {
@@ -151,6 +131,7 @@ class DisplayLatLng extends React.Component {
                         <Text style={styles.buttonText}>Animate (View Angle)</Text>
                     </TouchableOpacity>
                 </View>
+                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }

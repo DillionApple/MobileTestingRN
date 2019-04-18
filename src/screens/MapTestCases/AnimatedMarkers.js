@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
+import BackButton from "../../components/BackButton";
 
 const screen = Dimensions.get('window');
 
@@ -22,10 +23,6 @@ class AnimatedMarkers extends React.Component {
     static navigationOptions = {
         title: "AnimatedMarkers"
     };
-    maxIntervalCount = 20;
-    intervalTimeMs = 500;
-    animateButton = null;
-    interval = null;
     constructor(props) {
         super(props);
 
@@ -36,21 +33,7 @@ class AnimatedMarkers extends React.Component {
                 latitudeDelta: LATITUDE_DELTA,
                 longitudeDelta: LONGITUDE_DELTA,
             }),
-            intervalCount: 0,
         };
-    }
-
-    componentDidMount(): void {
-        this.interval = setInterval(this.intervalHandler, this.intervalTimeMs, this);
-    }
-
-    intervalHandler(vm) {
-        vm.setState({intervalCount: vm.state.intervalCount + 1});
-        vm.animate();
-        if (vm.state.intervalCount == vm.maxIntervalCount) {
-            clearInterval(vm.interval);
-            vm.props.testFinish();
-        }
     }
 
     animate() {
@@ -88,13 +71,13 @@ class AnimatedMarkers extends React.Component {
                 </MapView>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                        ref={(button) => this.animateButton = button}
                         onPress={() => this.animate()}
                         style={[styles.bubble, styles.button]}
                     >
                         <Text>Animate</Text>
                     </TouchableOpacity>
                 </View>
+                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }

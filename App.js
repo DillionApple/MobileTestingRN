@@ -12,21 +12,34 @@ import {createStackNavigator, createAppContainer} from "react-navigation"
 
 import HomeScreen from "./src/screens/HomeScreen"
 import NetworkTestScreen from "./src/screens/NetworkTestScreen"
+import MapTestNavigator from "./src/screens/MapTestCases/MapTestNavigator"
 import UITestScreen from "./src/screens/UITest/UITestScreen"
-import MapTestScreen from "./src/screens/MapTestCases/MapTestScreen"
 import VideoTestScreen from "./src/screens/VideoTest/VideoTestScreen"
 
-const MainNavigator = createStackNavigator({
-  Home: {screen: HomeScreen},
-  NetworkTest: {screen: NetworkTestScreen},
-  UITest: {screen: UITestScreen},
-  MapTest: {screen: MapTestScreen},
-  VideoTest: {screen: VideoTestScreen},
-});
 
-const App = createAppContainer(MainNavigator)
+const AppNavigator = createStackNavigator(
+    {
+      Home: {screen: HomeScreen},
+      NetworkTest: {screen: NetworkTestScreen},
+      MapTest: {screen: MapTestNavigator},
+      UITest: {screen: UITestScreen},
+      VideoTest: {screen: VideoTestScreen},
+    },
+    {
+      mode: 'modal',
+      headerMode: 'none',
+    }
+);
 
-export default App
+const AppContainer = createAppContainer(AppNavigator)
+
+export default class App extends Component<Props> {
+  render() {
+    return(
+        <AppContainer/>
+    )
+  }
+}
 
 const styles = StyleSheet.create({
   container: {

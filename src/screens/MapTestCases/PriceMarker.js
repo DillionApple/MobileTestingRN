@@ -6,6 +6,7 @@ import {
     View,
     Text,
 } from 'react-native';
+import BackButton from "../../components/BackButton";
 
 const propTypes = {
     amount: PropTypes.number.isRequired,
@@ -27,6 +28,7 @@ class PriceMarker extends React.Component {
                 </View>
                 <View style={styles.arrowBorder} />
                 <View style={styles.arrow} />
+                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }

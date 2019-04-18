@@ -5,19 +5,14 @@ import {
     StyleSheet,
     TouchableOpacity,
     Text,
-    Button
 } from 'react-native';
 
 import MapView from 'react-native-maps';
 import carImage from './assets/car.png';
+import BackButton from "../../components/BackButton";
 
 export default class NavigationMap extends Component {
 
-    maxIntervalCount = 10;
-    initTimeoutMs = 2000;
-    intervalTimeMs = 1000;
-
-    interval = null;
     constructor(props) {
         super(props);
         this.state = {
@@ -26,7 +21,6 @@ export default class NavigationMap extends Component {
             curAng: 45,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
-            intervalCount: 0,
         };
         this.changePosition = this.changePosition.bind(this);
         this.getRotation = this.getRotation.bind(this);
@@ -51,25 +45,6 @@ export default class NavigationMap extends Component {
         const { curPos, prevPos, curAng } = this.state;
         const curRot = this.getRotation(prevPos, curPos);
         this.map.animateCamera({ heading: curRot, center: curPos, pitch: curAng });
-    }
-
-    componentDidMount(): void {
-        this.changePosition(0.0001, 0);
-        setTimeout((vm) => {
-            vm.interval = setInterval(vm.intervalHandler, vm.intervalTimeMs, vm);
-        }, this.initTimeoutMs, this);
-    }
-
-    intervalHandler(vm) {
-        let latOffset = Math.random() * 0.0001;
-        let lonOffset = Math.random() * 0.0001;
-        if (vm.state.intervalCount < vm.maxIntervalCount) {
-            vm.changePosition(latOffset, lonOffset);
-            vm.setState({intervalCount: vm.state.intervalCount + 1});
-        } else {
-            clearInterval(vm.interval);
-            vm.props.testFinish();
-        }
     }
 
     render() {
@@ -117,6 +92,7 @@ export default class NavigationMap extends Component {
                         <Text>+ Lon</Text>
                     </TouchableOpacity>
                 </View>
+                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }

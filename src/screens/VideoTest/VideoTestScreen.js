@@ -1,8 +1,9 @@
 import React from 'react'
 
-import { View, StyleSheet } from 'react-native'
+import { SafeAreaView, StyleSheet } from 'react-native'
 import SingleVideo from "./SingleVideo";
 import MultiVideo from "./MultiVideo";
+import BackButton from "../../components/BackButton";
 
 class VideoTestScreen extends React.Component {
     static navigationOptions = {
@@ -12,7 +13,7 @@ class VideoTestScreen extends React.Component {
     static testViews = [SingleVideo, MultiVideo]
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             testViewIndex: 0
         }
@@ -28,9 +29,10 @@ class VideoTestScreen extends React.Component {
     render() {
         let Component = VideoTestScreen.testViews[this.state.testViewIndex]
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <Component testFinish={() => this.childFinish()}/>
-            </View>
+                <BackButton navigation={this.props.navigation}/>
+            </SafeAreaView>
         )
     }
 }

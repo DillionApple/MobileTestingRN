@@ -7,6 +7,7 @@ import {
 
 import MapView, { Marker, ProviderPropType } from 'react-native-maps';
 import PriceMarker from './PriceMarker';
+import BackButton from "../../components/BackButton";
 
 const { width, height } = Dimensions.get('window');
 
@@ -71,6 +72,7 @@ class DraggableMarkers extends React.Component {
                         draggable
                     />
                 </MapView>
+                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }

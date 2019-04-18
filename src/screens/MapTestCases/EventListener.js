@@ -11,6 +11,7 @@ import {
 // eslint-disable-next-line max-len
 import MapView, { PROVIDER_GOOGLE, Marker, ProviderPropType, Polygon, Polyline, Callout } from 'react-native-maps';
 import PriceMarker from './PriceMarker';
+import BackButton from "../../components/BackButton";
 
 const { width, height } = Dimensions.get('window');
 
@@ -32,6 +33,7 @@ class Event extends React.Component {
             <View style={styles.event}>
                 <Text style={styles.eventName}>{event.name}</Text>
                 <Text style={styles.eventData}>{JSON.stringify(event.data, null, 2)}</Text>
+                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }
