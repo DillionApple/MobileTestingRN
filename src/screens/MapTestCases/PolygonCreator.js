@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import MapView, { MAP_TYPES, Polygon, ProviderPropType } from 'react-native-maps';
-import BackButton from "../../components/BackButton";
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 const { width, height } = Dimensions.get('window');
 
@@ -19,7 +19,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 let id = 0;
 
-class PolygonCreator extends React.Component {
+class PolygonCreator extends BaseScreenComponent {
     constructor(props) {
         super(props);
 
@@ -112,7 +112,7 @@ class PolygonCreator extends React.Component {
         }
     }
 
-    render() {
+    slotRender() {
         const mapOptions = {
             scrollEnabled: true,
         };
@@ -171,7 +171,6 @@ class PolygonCreator extends React.Component {
                         </TouchableOpacity>
                     )}
                 </View>
-                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }
@@ -183,7 +182,7 @@ PolygonCreator.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        ...StyleSheet.absoluteFillObject,
+        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
     },

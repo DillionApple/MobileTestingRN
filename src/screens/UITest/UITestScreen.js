@@ -3,7 +3,6 @@ import {SafeAreaView, View, Text, StyleSheet} from "react-native"
 
 import UITestNavigator from "./UITestNav";
 import * as Progress from 'react-native-progress';
-import BackButton from "../../components/BackButton";
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 
@@ -22,7 +21,7 @@ class UITestScreen extends BaseScreenComponent {
     }
 
     componentDidMount() {
-        this.start();
+        //this.start();
     }
 
     async start() {

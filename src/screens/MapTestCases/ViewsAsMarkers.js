@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import PriceMarker from './PriceMarker';
-import BackButton from "../../components/BackButton";
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,7 +18,7 @@ const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-class ViewsAsMarkers extends React.Component {
+class ViewsAsMarkers extends BaseScreenComponent {
 
     constructor(props) {
         super(props);
@@ -46,7 +46,7 @@ class ViewsAsMarkers extends React.Component {
         this.setState({ amount: this.state.amount - 1 });
     }
 
-    render() {
+    slotRender() {
         return (
             <View style={styles.container}>
                 <MapView
@@ -71,7 +71,6 @@ class ViewsAsMarkers extends React.Component {
                         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>+</Text>
                     </TouchableOpacity>
                 </View>
-                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }
@@ -79,7 +78,7 @@ class ViewsAsMarkers extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        ...StyleSheet.absoluteFillObject,
+        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
     },

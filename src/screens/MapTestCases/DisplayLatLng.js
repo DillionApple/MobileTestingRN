@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import MapView from 'react-native-maps';
-import BackButton from "../../components/BackButton";
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,7 +18,7 @@ const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-class DisplayLatLng extends React.Component {
+class DisplayLatLng extends BaseScreenComponent {
 
     actionMap = {
         0: this.jumpRandom,
@@ -45,24 +45,24 @@ class DisplayLatLng extends React.Component {
         this.setState({ region });
     }
 
-    jumpRandom(vm) {
-        vm.setState({ region: vm.randomRegion() });
+    jumpRandom() {
+        this.setState({ region: this.randomRegion() });
     }
 
-    animateRandom(vm) {
-        vm.map.animateToRegion(vm.randomRegion());
+    animateRandom() {
+        this.map.animateToRegion(this.randomRegion());
     }
 
-    animateRandomCoordinate(vm) {
-        vm.map.animateCamera({ center: vm.randomCoordinate() });
+    animateRandomCoordinate() {
+        this.map.animateCamera({ center: this.randomCoordinate() });
     }
 
-    animateToRandomBearing(vm) {
-        vm.map.animateCamera({ heading: vm.getRandomFloat(-360, 360) });
+    animateToRandomBearing() {
+        this.map.animateCamera({ heading: this.getRandomFloat(-360, 360) });
     }
 
-    animateToRandomViewingAngle(vm) {
-        vm.map.animateCamera({ pitch: vm.getRandomFloat(0, 90) });
+    animateToRandomViewingAngle() {
+        this.map.animateCamera({ pitch: this.getRandomFloat(0, 90) });
     }
 
     getRandomFloat(min, max) {
@@ -84,7 +84,7 @@ class DisplayLatLng extends React.Component {
         };
     }
 
-    render() {
+    slotRender() {
         return (
             <View style={styles.container}>
                 <MapView
@@ -131,7 +131,6 @@ class DisplayLatLng extends React.Component {
                         <Text style={styles.buttonText}>Animate (View Angle)</Text>
                     </TouchableOpacity>
                 </View>
-                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }
@@ -140,7 +139,7 @@ class DisplayLatLng extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        ...StyleSheet.absoluteFillObject,
+        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
     },

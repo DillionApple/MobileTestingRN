@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import MapView, { Marker, ProviderPropType } from 'react-native-maps';
-import BackButton from "../../components/BackButton";
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 const { width, height } = Dimensions.get('window');
 
@@ -23,7 +23,7 @@ function randomColor() {
     return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}`;
 }
 
-class DefaultMarkers extends React.Component {
+class DefaultMarkers extends BaseScreenComponent {
 
     constructor(props) {
         super(props);
@@ -52,7 +52,7 @@ class DefaultMarkers extends React.Component {
         });
     }
 
-    render() {
+    slotRender() {
         return (
             <View style={styles.container}>
                 <MapView
@@ -77,7 +77,6 @@ class DefaultMarkers extends React.Component {
                         <Text>Tap to create a marker of random color</Text>
                     </TouchableOpacity>
                 </View>
-                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }
@@ -89,7 +88,7 @@ DefaultMarkers.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        ...StyleSheet.absoluteFillObject,
+        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
     },

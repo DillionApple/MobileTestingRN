@@ -13,7 +13,9 @@ class HeaderWithBackButton extends React.Component {
             <Header
                 statusBarProps={{ translucent: true }}
                 leftComponent={<Button
-                    color={'#fff'}
+                    color={Platform.select({
+                        ios: '#fff'
+                    })}
                     title={'Back'}
                     style={styles.backButton}
                     onPress={() => this.props.navigation.pop()}
@@ -29,4 +31,5 @@ export default HeaderWithBackButton
 export const styles = StyleSheet.create({
     backButton: {
     }
-})
+});
+

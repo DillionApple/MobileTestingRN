@@ -3,8 +3,6 @@ import React from 'react'
 import {SafeAreaView, Button, View, Text, StyleSheet} from 'react-native'
 
 import { routeConfigMap } from './MapTestNavigator'
-import BackButton from "../../components/BackButton";
-import {Header} from "react-native-elements";
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 class MapTestRootScreen extends BaseScreenComponent {
