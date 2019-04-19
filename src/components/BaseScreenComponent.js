@@ -7,7 +7,7 @@ import { Header } from "react-navigation"
 class BaseScreenComponent extends React.Component {
 
     navigationConfig = {
-        title: this.constructor.name
+        title: `<-${this.constructor.name}->`
     };
 
     constructor(props) {
