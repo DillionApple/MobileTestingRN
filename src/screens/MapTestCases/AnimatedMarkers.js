@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
-import BackButton from "../../components/BackButton";
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 const screen = Dimensions.get('window');
 
@@ -19,7 +19,7 @@ const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-class AnimatedMarkers extends React.Component {
+class AnimatedMarkers extends BaseScreenComponent {
     static navigationOptions = {
         title: "AnimatedMarkers"
     };
@@ -52,7 +52,7 @@ class AnimatedMarkers extends React.Component {
         }
     }
 
-    render() {
+    slotRender() {
         return (
             <View style={styles.container}>
                 <MapView
@@ -77,7 +77,6 @@ class AnimatedMarkers extends React.Component {
                         <Text>Animate</Text>
                     </TouchableOpacity>
                 </View>
-                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }
@@ -85,9 +84,9 @@ class AnimatedMarkers extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        ...StyleSheet.absoluteFillObject,
         justifyContent: 'flex-end',
         alignItems: 'center',
+        flex: 1
     },
     map: {
         ...StyleSheet.absoluteFillObject,

@@ -25,6 +25,5 @@ export const styles = StyleSheet.create({
         left: 5,
         backgroundColor: 'rgba(200, 200, 200, 0.2)',
         borderRadius: 5,
-        zIndex: 1000
     }
 })

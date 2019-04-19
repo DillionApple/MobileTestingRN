@@ -4,11 +4,10 @@ import {SafeAreaView, Button, View, Text, StyleSheet} from 'react-native'
 
 import { routeConfigMap } from './MapTestNavigator'
 import BackButton from "../../components/BackButton";
+import {Header} from "react-native-elements";
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
-class MapTestRootScreen extends React.Component {
-    static navigationOptions = {
-        title: 'Map Test',
-    };
+class MapTestRootScreen extends BaseScreenComponent {
 
     constructor(props) {
         super(props);
@@ -22,16 +21,9 @@ class MapTestRootScreen extends React.Component {
         });
     }
 
-    render() {
-
-
+    slotRender() {
         return(
-            <SafeAreaView>
-                <View>
-                    {this.renderButtons()}
-                </View>
-                <BackButton navigation={this.props.navigation}/>
-            </SafeAreaView>
+            this.renderButtons()
         )
     }
 }

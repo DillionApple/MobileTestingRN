@@ -1,11 +1,13 @@
 import React from 'react'
-import {View, Text, StyleSheet} from "react-native"
+import {SafeAreaView, View, Text, StyleSheet} from "react-native"
 
 import UITestNavigator from "./UITestNav";
 import * as Progress from 'react-native-progress';
+import BackButton from "../../components/BackButton";
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 
-class UITestScreen extends React.Component {
+class UITestScreen extends BaseScreenComponent {
     static navigationOptions = {
         title: 'UITestScreen',
     };
@@ -67,14 +69,14 @@ class UITestScreen extends React.Component {
 
     static router = UITestNavigator.router;
 
-    render() {
+    slotRender() {
         let currentProgress = this.state.currentProgress;
         let currentTaskName = this.state.currentTaskName;
         let props = {
             doingTask: task => this.doingTask(task)
         };
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <View style={styles.progressbar}>
                     <Progress.Bar progress={currentProgress}
                                   indeterminate={this.state.indeterminate}
@@ -89,8 +91,7 @@ class UITestScreen extends React.Component {
                 <View style={styles.UIContainer}>
                     <UITestNavigator navigation={this.props.navigation}/>
                 </View>
-
-            </View>
+            </SafeAreaView>
         )
     }
 }

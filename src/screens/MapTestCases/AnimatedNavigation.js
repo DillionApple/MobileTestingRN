@@ -9,9 +9,9 @@ import {
 
 import MapView from 'react-native-maps';
 import carImage from './assets/car.png';
-import BackButton from "../../components/BackButton";
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
-export default class NavigationMap extends Component {
+export default class NavigationMap extends BaseScreenComponent {
 
     constructor(props) {
         super(props);
@@ -47,7 +47,7 @@ export default class NavigationMap extends Component {
         this.map.animateCamera({ heading: curRot, center: curPos, pitch: curAng });
     }
 
-    render() {
+    slotRender() {
         return (
             <View style={styles.flex}>
                 <MapView
@@ -92,7 +92,6 @@ export default class NavigationMap extends Component {
                         <Text>+ Lon</Text>
                     </TouchableOpacity>
                 </View>
-                <BackButton navigation={this.props.navigation}/>
             </View>
         );
     }
@@ -100,7 +99,7 @@ export default class NavigationMap extends Component {
 
 const styles = StyleSheet.create({
     flex: {
-        ...StyleSheet.absoluteFillObject,
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'stretch',

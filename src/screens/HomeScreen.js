@@ -1,5 +1,6 @@
 import React from 'react'
-import {Button, Text, SafeAreaView} from 'react-native'
+import {Button, Text, View} from 'react-native'
+import {Header} from "react-native-elements";
 
 class HomeScreen extends React.Component {
     static navigationOptions = {
@@ -8,12 +9,16 @@ class HomeScreen extends React.Component {
     render() {
         const {navigate} = this.props.navigation;
         return(
-            <SafeAreaView>
+            <View>
+                <Header
+                    statusBarProps={{ translucent: true }}
+                    centerComponent={{text: "Mobile Testing", style: {color: '#fff'}}}
+                />
                 <Button title="Network Test" onPress={() => navigate('NetworkTest')}/>
                 <Button title="UI Test" onPress={() => navigate('UITest')}/>
                 <Button title="Map Test" onPress={() => navigate('MapTest')}/>
                 <Button title="Video Test" onPress={() => navigate('VideoTest')}/>
-            </SafeAreaView>
+            </View>
         )
     }
 }

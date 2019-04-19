@@ -34,6 +34,9 @@ const MapTestNavigator = createStackNavigator(
     {
         ...rootRouteConfigMap,
         ...routeConfigMap,
+    },
+    {
+        headerMode: 'none'
     }
 );
 

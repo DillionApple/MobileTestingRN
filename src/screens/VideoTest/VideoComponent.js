@@ -120,7 +120,6 @@ export default VideoComponent
 
 const styles = StyleSheet.create({
     container: {
-        ...StyleSheet.absoluteFillObject,
         backgroundColor: "#AAAAAA",
         flexDirection: "column",
         flexWrap: "wrap",
