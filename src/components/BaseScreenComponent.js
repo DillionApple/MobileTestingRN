@@ -6,6 +6,10 @@ import { Header } from "react-navigation"
 
 class BaseScreenComponent extends React.Component {
 
+    navigationConfig = {
+        title: this.constructor.name
+    };
+
     constructor(props) {
         super(props);
     }
@@ -19,6 +23,7 @@ class BaseScreenComponent extends React.Component {
             <View style={styles.container}>
                 <HeaderWithBackButton
                     navigation={this.props.navigation}
+                    title={this.navigationConfig.title}
                 />
                 {this.slotRender()}
             </View>

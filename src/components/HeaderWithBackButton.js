@@ -16,10 +16,11 @@ class HeaderWithBackButton extends React.Component {
                     color={Platform.select({
                         ios: '#fff'
                     })}
-                    title={'Back'}
+                    title='Back'
                     style={styles.backButton}
                     onPress={() => this.props.navigation.pop()}
-                />}
+                />
+                }
                 centerComponent={{text: this.props.title, style: {color: '#fff'}}}
             />
         )

@@ -8,14 +8,6 @@ class SingleVideo extends React.Component {
         title: 'Single Video',
     };
 
-    timeoutHandler(vm) {
-        vm.props.testFinish()
-    }
-
-    componentDidMount(): void {
-        setTimeout(this.timeoutHandler, 5 * 60 * 1000, this);
-    }
-
     render() {
         return (
             <VideoComponent></VideoComponent>

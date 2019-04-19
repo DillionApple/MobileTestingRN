@@ -6,19 +6,15 @@ import Video from 'react-native-video'
 
 class VideoComponent extends React.Component {
 
-    intervals = [];
     player = null;
     duration = 0;
     windowWidth = Dimensions.get('window').width;
-
-    intervalActions = [this.__togglePaused, this.__seekRandomly, this.__changeSpeedRandomly, this.__changeSizeRandomly]
 
     mounted = true;
 
     constructor(props) {
         super(props);
         this.state = {
-            intervalCount: 0,
             aspectRatio: 0,
             paused: false,
             rate: 1.0,
@@ -54,25 +50,6 @@ class VideoComponent extends React.Component {
                 duration: 500,
             }
         ).start();
-    }
-
-    __intervalHandler(vm, type) {
-        if (! vm.mounted) {
-            for (let interval in vm.intervals) {
-                clearInterval(interval)
-            }
-            return
-        }
-        vm.intervalActions[type](vm)
-    }
-
-
-
-    componentDidMount(): void {
-        this.intervals.concat(setInterval(this.__intervalHandler, 1300, this, 0));
-        this.intervals.concat(setInterval(this.__intervalHandler, 2300, this, 1));
-        this.intervals.concat(setInterval(this.__intervalHandler, 2900, this, 2));
-        this.intervals.concat(setInterval(this.__intervalHandler, 4700, this, 3));
     }
 
     componentWillUnmount(): void {

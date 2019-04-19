@@ -10,14 +10,6 @@ class MultiVideo extends React.Component {
         title: 'Multi Video',
     };
 
-    timeoutHandler(vm) {
-        vm.props.testFinish()
-    }
-
-    componentDidMount(): void {
-        setTimeout(this.timeoutHandler, 5 * 60 * 1000, this);
-    }
-
     render() {
         return (
             <View>
