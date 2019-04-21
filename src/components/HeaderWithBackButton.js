@@ -31,6 +31,8 @@ export default HeaderWithBackButton
 
 export const styles = StyleSheet.create({
     backButton: {
+        position: 'absolute',
+        zIndex: 1000,
     }
 });
 

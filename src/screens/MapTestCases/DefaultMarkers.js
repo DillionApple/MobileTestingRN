@@ -52,6 +52,22 @@ class DefaultMarkers extends BaseScreenComponent {
         });
     }
 
+    createRandomMarker() {
+        this.setState({
+            markers: [
+                ...this.state.markers,
+                {
+                    coordinate: {
+                        latitude: LATITUDE + (Math.random() - 0.5) * (LATITUDE_DELTA),
+                        longitude: LONGITUDE + (Math.random() - 0.5)  * (LONGITUDE_DELTA),
+                    },
+                    key: id++,
+                    color: randomColor(),
+                },
+            ],
+        });
+    }
+
     slotRender() {
         return (
             <View style={styles.container}>
@@ -71,10 +87,10 @@ class DefaultMarkers extends BaseScreenComponent {
                 </MapView>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                        onPress={() => this.setState({ markers: [] })}
+                        onPress={() => this.createRandomMarker()}
                         style={styles.bubble}
                     >
-                        <Text>Tap to create a marker of random color</Text>
+                        <Text>|-Tap to create a marker of random color-|</Text>
                     </TouchableOpacity>
                 </View>
             </View>

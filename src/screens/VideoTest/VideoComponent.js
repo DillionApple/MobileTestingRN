@@ -23,19 +23,19 @@ class VideoComponent extends React.Component {
         }
     }
 
-    __togglePaused(vm) {
-        vm.setState({paused: !vm.state.paused});
+    togglePausedRandomly() {
+        this.setState({paused: !vm.state.paused});
     }
 
-    __seekRandomly(vm) {
-        vm.player.seek(Math.random() * vm.duration)
+    seekRandomly() {
+        this.player.seek(Math.random() * vm.duration)
     }
 
-    __changeSpeedRandomly(vm) {
+    changeSpeedRandomly(vm) {
         vm.setState({rate: Math.random() * 2.0})
     }
 
-    __changeSizeRandomly(vm) {
+    changeSizeRandomly(vm) {
         Animated.timing(
             vm.state.widthAnim,
             {
@@ -63,31 +63,7 @@ class VideoComponent extends React.Component {
         });
         return (
             <View style={styles.container}>
-                <Animated.View
-                    style={{
-                        width: this.state.widthAnim,
-                        aspectRatio: this.state.aspectRatio,
-                        transform: [{rotate: rotateDegree}],
 
-                    }}
-                >
-                    <Video
-                        ref={(ref) => {
-                            this.player = ref
-                        }}
-                        repeat={true}
-                        controls={true}
-                        paused={this.state.paused}
-                        rate={this.state.rate}
-                        style={StyleSheet.absoluteFill}
-                        onLoad={response => {
-                            this.duration = response.duration;
-                            const { width, height }= response.naturalSize;
-                            const aspectRatio = width / height;
-                            this.setState({aspectRatio: aspectRatio})
-                        }}
-                        source={require('./assets/test_video.mov')}/>
-                </Animated.View>
             </View>
         )
     }

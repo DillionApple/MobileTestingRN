@@ -74,7 +74,7 @@ class AnimatedMarkers extends BaseScreenComponent {
                         onPress={() => this.animate()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text>Animate</Text>
+                        <Text>|-Animate-|</Text>
                     </TouchableOpacity>
                 </View>
             </View>

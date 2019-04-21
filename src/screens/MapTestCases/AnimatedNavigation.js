@@ -52,7 +52,7 @@ export default class NavigationMap extends BaseScreenComponent {
             <View style={styles.flex}>
                 <MapView
                     ref={(el) => (this.map = el)}
-                    style={styles.flex}
+                    style={styles.map}
                     minZoomLevel={15}
                     initialRegion={{
                         ...this.state.curPos,
@@ -71,25 +71,25 @@ export default class NavigationMap extends BaseScreenComponent {
                         style={[styles.button]}
                         onPress={() => this.changePosition(0.0001, 0)}
                     >
-                        <Text>+ Lat</Text>
+                        <Text>|-Inc Lat-|</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.button]}
                         onPress={() => this.changePosition(-0.0001, 0)}
                     >
-                        <Text>- Lat</Text>
+                        <Text>|-Dec Lat-|</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.button]}
                         onPress={() => this.changePosition(0, -0.0001)}
                     >
-                        <Text>- Lon</Text>
+                        <Text>|-Dec Lon-|</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.button]}
                         onPress={() => this.changePosition(0, 0.0001)}
                     >
-                        <Text>+ Lon</Text>
+                        <Text>|-Inc Lon-|</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -103,6 +103,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'stretch',
+    },
+    map: {
+        ...StyleSheet.absoluteFillObject
     },
     buttonContainer: {
         flexDirection: 'row',

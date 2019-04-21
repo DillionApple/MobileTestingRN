@@ -104,31 +104,31 @@ class DisplayLatLng extends BaseScreenComponent {
                         onPress={() => this.jumpRandom()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text style={styles.buttonText}>Jump</Text>
+                        <Text style={styles.buttonText}>|-Jump-|</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => this.animateRandom()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text style={styles.buttonText}>Animate (Region)</Text>
+                        <Text style={styles.buttonText}>|-Animate Region-|</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => this.animateRandomCoordinate()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text style={styles.buttonText}>Animate (Coordinate)</Text>
+                        <Text style={styles.buttonText}>|-Animate Coordinate-|</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => this.animateToRandomBearing()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text style={styles.buttonText}>Animate (Bearing)</Text>
+                        <Text style={styles.buttonText}>|-Animate Bearing-|</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => this.animateToRandomViewingAngle()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text style={styles.buttonText}>Animate (View Angle)</Text>
+                        <Text style={styles.buttonText}>|-Animate View Angle-|</Text>
                     </TouchableOpacity>
                 </View>
             </View>
