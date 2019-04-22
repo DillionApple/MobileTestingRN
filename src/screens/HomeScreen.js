@@ -35,7 +35,6 @@ class HomeScreen extends React.Component {
                             button
                             onPress={() => navigate(item)}
                             title={`[-${item}-]`}
-                            chevron
                             bottomDivider
                         />
                     )}

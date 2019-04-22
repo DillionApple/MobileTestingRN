@@ -33,7 +33,6 @@ class MapTestRootScreen extends BaseScreenComponent {
                         button
                         onPress={() => navigate(item)}
                         title={`[-${item}-]`}
-                        chevron
                         bottomDivider
                     />
                 )}
