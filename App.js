@@ -15,6 +15,7 @@ import NetworkTestScreen from "./src/screens/NetworkTestScreen"
 import UITestScreen from "./src/screens/UITest/UITestScreen"
 import MapTestScreen from "./src/screens/MapTestCases/MapTestScreen"
 import VideoTestScreen from "./src/screens/VideoTest/VideoTestScreen"
+import WebViewScreen from "./src/screens/WebViewTest/WebViewScreen"
 
 const MainNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
@@ -22,6 +23,7 @@ const MainNavigator = createStackNavigator({
   UITest: {screen: UITestScreen},
   MapTest: {screen: MapTestScreen},
   VideoTest: {screen: VideoTestScreen},
+  WebViewTest: {screen: WebViewScreen}
 });
 
 const App = createAppContainer(MainNavigator)

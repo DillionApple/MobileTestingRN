@@ -1,7 +1,8 @@
 import React from 'react';
 import {View, FlatList, StyleSheet, Text, Dimensions, Button} from 'react-native';
+import Timeout from 'await-timeout';
 
-const {width, height} = Dimensions.get('window')
+const {width, height} = Dimensions.get('window');
 
 class ListView extends React.Component {
     constructor(props) {
@@ -9,55 +10,55 @@ class ListView extends React.Component {
     }
 
     componentDidMount() {
+        this.mounted = true;
+        this.timerHandle = new Timeout();
         this.startPlay();
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
+        if (this.timerHandle) {
+            this.timerHandle.clear();
+        }
+    }
+
+    // [0,max)
+    randomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max))
     }
 
     async startPlay() {
         this._flatList.scrollToOffset({animated: true, offset: 500});
-        await new Promise((resolve) => setTimeout(() => {
-            this._flatList.scrollToOffset({animated: true, offset: 3000});
-            resolve();
-        }, 1000));
-        await new Promise((resolve) => setTimeout(() => {
-            this._flatList.scrollToOffset({animated: true, offset: 0});
-            resolve();
-        }, 1000));
-        await new Promise((resolve) => setTimeout(() => {
-            this._flatList.scrollToOffset({animated: true, offset: 700});
-            resolve();
-        }, 1000));
-        await new Promise((resolve) => setTimeout(() => {
-            this._flatList.scrollToOffset({animated: true, offset: 3500});
-            resolve();
-        }, 1000));
-        await new Promise((resolve) => setTimeout(() => {
-            this._flatList.scrollToOffset({animated: true, offset: 0});
-            resolve();
-        }, 1000));
-        await new Promise((resolve) => setTimeout(() => {
-            this._flatList.scrollToOffset({animated: true, offset: -100});
-            resolve();
-        }, 1000));
-        // this.props.navigation.state.params.onGoBack();
+        await this.timerHandle.set(1000);
+
+        this._flatList.scrollToEnd({animated: true});
+        await this.timerHandle.set(2000);
+        this._flatList.scrollToOffset({animated: true, offset: 0});
+
+        for (let i = 0; i < 20; i++) {
+            await this.timerHandle.set(500);
+            this._flatList.scrollToIndex({animated: true, index: this.randomInt(500)});
+        }
+        this.props.navigation.state.params.onGoBack(this.mounted);
     }
 
     refreshing() {
-        let timer = setTimeout(() => {
-            clearTimeout(timer)
+        const timer = setTimeout(() => {
+            clearTimeout(timer);
             alert('刷新成功')
         }, 1500)
     }
 
     _onload() {
-        let timer = setTimeout(() => {
-            clearTimeout(timer)
+        const timer = setTimeout(() => {
+            clearTimeout(timer);
             alert('加载成功')
         }, 1500)
     }
 
     render() {
         let data = [];
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 10000; i++) {
             data.push({key: i, title: i + ''});
         }
 

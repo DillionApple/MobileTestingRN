@@ -1,6 +1,7 @@
 import LottieView from "lottie-react-native";
 import React from "react";
 import {View, StyleSheet} from 'react-native';
+import Timeout from 'await-timeout';
 
 class AnimationView extends React.Component {
     constructor(props) {
@@ -11,29 +12,35 @@ class AnimationView extends React.Component {
     }
 
     componentDidMount() {
-        this.start_play();
+        this.mounted = true;
+        this.timerHandle = new Timeout();
+        this.startPlay();
     }
 
-    async start_play() {
+    componentWillUnmount() {
+        this.mounted = false;
+        if (this.timerHandle) {
+            this.timerHandle.clear();
+        }
+    }
+
+    async startPlay() {
         this.animation.play();
-        await new Promise((resolve) => setTimeout(() => {
-            this.setState({current: 1});
-            this.animation.play();
-            resolve();
-        }, 2000));
-        await new Promise((resolve) => setTimeout(() => {
-            this.setState({current: 2});
-            this.animation.play();
-            resolve();
-        }, 2000));
-        this.props.navigation.state.params.onGoBack();
+        await this.timerHandle.set(2000);
+        this.setState({current: 1});
+        this.animation.play();
+        await this.timerHandle.set(2000);
+        this.setState({current: 2});
+        this.animation.play();
+        await this.timerHandle.set(2000);
+        this.props.navigation.state.params.onGoBack(this.mounted);
     }
 
     render() {
         let source = [require('../../../assets/json/machine.json'), require('../../../assets/json/city.json'), require('../../../assets/json/drink.json')];
         return (
             <LottieView
-                style={styles.lottieView}
+                style={styles.container}
                 ref={animation => {
                     this.animation = animation;
                 }}

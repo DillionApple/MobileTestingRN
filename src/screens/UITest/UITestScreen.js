@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from "react-native"
 
 import UITestNavigator from "./UITestNav";
 import * as Progress from 'react-native-progress';
-
+import Timeout from 'await-timeout';
 
 class UITestScreen extends React.Component {
     static navigationOptions = {
@@ -19,31 +19,38 @@ class UITestScreen extends React.Component {
         };
     }
 
+    componentWillUnmount() {
+        if (this.timerHandle) {
+            this.timerHandle.clear();
+        }
+    }
+
     componentDidMount() {
+        this.timerHandle = new Timeout();
         this.start();
     }
 
     async start() {
-        await new Promise((resolve) => setTimeout(() => {
-            this.setState({indeterminate: false});
-            resolve();
-        }, 500));
+        await this.timerHandle.set(500);
+        this.setState({indeterminate: false});
         this.doingTask(1);
     }
 
     doingTask(task) {
+        console.log('task:' + task);
         if (task === 1) {
             this.testImageView();
         } else if (task === 2) {
             this.testAnimationView();
         } else if (task === 3) {
             this.testListView();
+        } else if (task === 4) {
         }
     }
 
     testImageView() {
         this.props.navigation.navigate('ImageView', {
-            onGoBack: () => this.doingTask(2),
+            onGoBack: (mounted) => mounted && this.doingTask(2),
         });
         this.setState({currentProgress: 0.2});
         this.setState({currentTaskName: 'ImageViewTesting..'});
@@ -51,7 +58,7 @@ class UITestScreen extends React.Component {
 
     testAnimationView() {
         this.props.navigation.navigate('AnimationView', {
-            onGoBack: () => this.doingTask(3),
+            onGoBack: (mounted) => mounted && this.doingTask(3),
         });
         this.setState({currentProgress: 0.5});
         this.setState({currentTaskName: 'AnimationViewTesting..'});
@@ -59,7 +66,7 @@ class UITestScreen extends React.Component {
 
     testListView() {
         this.props.navigation.navigate('ListView', {
-            onGoBack: () => this.doingTask(4),
+            onGoBack: (mounted) => mounted && this.doingTask(4),
         });
         this.setState({currentProgress: 1});
         this.setState({currentTaskName: 'ListViewTesting..'});
