@@ -11,6 +11,7 @@ import {
 // eslint-disable-next-line max-len
 import MapView, { PROVIDER_GOOGLE, Marker, ProviderPropType, Polygon, Polyline, Callout } from 'react-native-maps';
 import PriceMarker from './PriceMarker';
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 const { width, height } = Dimensions.get('window');
 
@@ -43,7 +44,7 @@ Event.propTypes = {
 
 
 // eslint-disable-next-line react/no-multi-comp
-class EventListener extends React.Component {
+class EventListener extends BaseScreenComponent {
     constructor(props) {
         super(props);
 
@@ -80,7 +81,7 @@ class EventListener extends React.Component {
         };
     }
 
-    render() {
+    slotRender() {
         // Events that are dependent on
         let googleProviderProps = {};
         if (this.props.provider === PROVIDER_GOOGLE) {
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
         width: 60,
     },
     container: {
-        ...StyleSheet.absoluteFillObject,
+        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
     },

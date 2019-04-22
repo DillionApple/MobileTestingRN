@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
-import MapView, { MAP_TYPES } from 'react-native-maps';
+import MapView from 'react-native-maps';
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 const { width, height } = Dimensions.get('window');
 
@@ -17,11 +18,7 @@ const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-class DisplayLatLng extends React.Component {
-
-    eachIntervalCount = 5;
-    intervalTimeMs = 500;
-    interval = null;
+class DisplayLatLng extends BaseScreenComponent {
 
     actionMap = {
         0: this.jumpRandom,
@@ -41,7 +38,6 @@ class DisplayLatLng extends React.Component {
                 latitudeDelta: LATITUDE_DELTA,
                 longitudeDelta: LONGITUDE_DELTA,
             },
-            intervalCount: 0,
         };
     }
 
@@ -49,24 +45,24 @@ class DisplayLatLng extends React.Component {
         this.setState({ region });
     }
 
-    jumpRandom(vm) {
-        vm.setState({ region: vm.randomRegion() });
+    jumpRandom() {
+        this.setState({ region: this.randomRegion() });
     }
 
-    animateRandom(vm) {
-        vm.map.animateToRegion(vm.randomRegion());
+    animateRandom() {
+        this.map.animateToRegion(this.randomRegion());
     }
 
-    animateRandomCoordinate(vm) {
-        vm.map.animateCamera({ center: vm.randomCoordinate() });
+    animateRandomCoordinate() {
+        this.map.animateCamera({ center: this.randomCoordinate() });
     }
 
-    animateToRandomBearing(vm) {
-        vm.map.animateCamera({ heading: vm.getRandomFloat(-360, 360) });
+    animateToRandomBearing() {
+        this.map.animateCamera({ heading: this.getRandomFloat(-360, 360) });
     }
 
-    animateToRandomViewingAngle(vm) {
-        vm.map.animateCamera({ pitch: vm.getRandomFloat(0, 90) });
+    animateToRandomViewingAngle() {
+        this.map.animateCamera({ pitch: this.getRandomFloat(0, 90) });
     }
 
     getRandomFloat(min, max) {
@@ -88,23 +84,7 @@ class DisplayLatLng extends React.Component {
         };
     }
 
-    intervalHandler(vm) {
-        let actionIndex = Math.floor(vm.state.intervalCount / vm.eachIntervalCount);
-        let action = vm.actionMap[actionIndex]
-        if (action) {
-            action(vm);
-            vm.setState({intervalCount: vm.state.intervalCount + 1});
-        } else {
-            clearInterval(vm.interval);
-            vm.props.testFinish();
-        }
-    }
-
-    componentDidMount(): void {
-        this.interval = setInterval(this.intervalHandler, this.intervalTimeMs, this);
-    }
-
-    render() {
+    slotRender() {
         return (
             <View style={styles.container}>
                 <MapView
@@ -124,31 +104,31 @@ class DisplayLatLng extends React.Component {
                         onPress={() => this.jumpRandom()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text style={styles.buttonText}>Jump</Text>
+                        <Text style={styles.buttonText}>|-Jump-|</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => this.animateRandom()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text style={styles.buttonText}>Animate (Region)</Text>
+                        <Text style={styles.buttonText}>|-Animate Region-|</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => this.animateRandomCoordinate()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text style={styles.buttonText}>Animate (Coordinate)</Text>
+                        <Text style={styles.buttonText}>|-Animate Coordinate-|</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => this.animateToRandomBearing()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text style={styles.buttonText}>Animate (Bearing)</Text>
+                        <Text style={styles.buttonText}>|-Animate Bearing-|</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => this.animateToRandomViewingAngle()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text style={styles.buttonText}>Animate (View Angle)</Text>
+                        <Text style={styles.buttonText}>|-Animate View Angle-|</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -159,7 +139,7 @@ class DisplayLatLng extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        ...StyleSheet.absoluteFillObject,
+        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
     },

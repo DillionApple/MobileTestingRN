@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import MapView, { Marker, ProviderPropType } from 'react-native-maps';
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 const { width, height } = Dimensions.get('window');
 
@@ -22,11 +23,7 @@ function randomColor() {
     return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}`;
 }
 
-class DefaultMarkers extends React.Component {
-
-    maxIntervalCount = 50;
-    intervalTimeMs = 200;
-    interval = null;
+class DefaultMarkers extends BaseScreenComponent {
 
     constructor(props) {
         super(props);
@@ -39,37 +36,7 @@ class DefaultMarkers extends React.Component {
                 longitudeDelta: LONGITUDE_DELTA,
             },
             markers: [],
-            intervalCount: 0,
         };
-    }
-
-    intervalHandler(vm) {
-        vm.setState({intervalCount: vm.state.intervalCount + 1});
-        if (vm.state.intervalCount <= vm.maxIntervalCount) {
-
-            const newCoordinate = {
-                latitude: LATITUDE + ((Math.random() - 0.5) * (LATITUDE_DELTA / 2)),
-                longitude: LONGITUDE + ((Math.random() - 0.5) * (LONGITUDE_DELTA / 2)),
-            };
-
-            vm.setState({
-                markers: [
-                    ...vm.state.markers,
-                    {
-                        coordinate: newCoordinate,
-                        key: id++,
-                        color: randomColor(),
-                    }
-                ]
-            })
-        } else {
-            clearInterval(vm.interval);
-            vm.props.testFinish();
-        }
-    }
-
-    componentDidMount(): void {
-        this.interval = setInterval(this.intervalHandler, this.intervalTimeMs, this)
     }
 
     onMapPress(e) {
@@ -85,7 +52,23 @@ class DefaultMarkers extends React.Component {
         });
     }
 
-    render() {
+    createRandomMarker() {
+        this.setState({
+            markers: [
+                ...this.state.markers,
+                {
+                    coordinate: {
+                        latitude: LATITUDE + (Math.random() - 0.5) * (LATITUDE_DELTA),
+                        longitude: LONGITUDE + (Math.random() - 0.5)  * (LONGITUDE_DELTA),
+                    },
+                    key: id++,
+                    color: randomColor(),
+                },
+            ],
+        });
+    }
+
+    slotRender() {
         return (
             <View style={styles.container}>
                 <MapView
@@ -104,10 +87,10 @@ class DefaultMarkers extends React.Component {
                 </MapView>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                        onPress={() => this.setState({ markers: [] })}
+                        onPress={() => this.createRandomMarker()}
                         style={styles.bubble}
                     >
-                        <Text>Tap to create a marker of random color</Text>
+                        <Text>|-Tap to create a marker of random color-|</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -121,7 +104,7 @@ DefaultMarkers.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        ...StyleSheet.absoluteFillObject,
+        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
     },

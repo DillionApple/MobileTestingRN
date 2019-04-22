@@ -7,6 +7,7 @@ import {
 
 import MapView, { Marker, ProviderPropType } from 'react-native-maps';
 import PriceMarker from './PriceMarker';
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 const { width, height } = Dimensions.get('window');
 
@@ -21,7 +22,7 @@ function log(eventName, e) {
     console.log(eventName, e.nativeEvent);
 }
 
-class DraggableMarkers extends React.Component {
+class DraggableMarkers extends BaseScreenComponent {
     constructor(props) {
         super(props);
 
@@ -37,7 +38,7 @@ class DraggableMarkers extends React.Component {
         };
     }
 
-    render() {
+    slotRender() {
         return (
             <View style={styles.container}>
                 <MapView
@@ -82,7 +83,7 @@ DraggableMarkers.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        ...StyleSheet.absoluteFillObject,
+        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
     },

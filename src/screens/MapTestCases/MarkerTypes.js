@@ -8,6 +8,7 @@ import {
 import MapView, { Marker, ProviderPropType } from 'react-native-maps';
 import flagBlueImg from './assets/flag-blue.png';
 import flagPinkImg from './assets/flag-pink.png';
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,7 +19,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const SPACE = 0.01;
 
-class MarkerTypes extends React.Component {
+class MarkerTypes extends BaseScreenComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,7 +28,7 @@ class MarkerTypes extends React.Component {
         };
     }
 
-    render() {
+    slotRender() {
         return (
             <View style={styles.container}>
                 <MapView
@@ -85,7 +86,7 @@ MarkerTypes.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        ...StyleSheet.absoluteFillObject,
+        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
     },

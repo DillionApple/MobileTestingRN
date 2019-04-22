@@ -6,6 +6,7 @@ import {
     View,
     Text,
 } from 'react-native';
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 const propTypes = {
     amount: PropTypes.number.isRequired,

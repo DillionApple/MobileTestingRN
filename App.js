@@ -8,27 +8,19 @@
 
 import React, {Component} from 'react'
 import {StyleSheet} from 'react-native'
-import {createStackNavigator, createAppContainer} from "react-navigation"
+import {createAppContainer} from "react-navigation"
 
-import HomeScreen from "./src/screens/HomeScreen"
-import NetworkTestScreen from "./src/screens/NetworkTestScreen"
-import UITestScreen from "./src/screens/UITest/UITestScreen"
-import MapTestScreen from "./src/screens/MapTestCases/MapTestScreen"
-import VideoTestScreen from "./src/screens/VideoTest/VideoTestScreen"
-import WebViewScreen from "./src/screens/WebViewTest/WebViewScreen"
+import AppNavigator from './src/AppNavigator'
 
-const MainNavigator = createStackNavigator({
-  Home: {screen: HomeScreen},
-  NetworkTest: {screen: NetworkTestScreen},
-  UITest: {screen: UITestScreen},
-  MapTest: {screen: MapTestScreen},
-  VideoTest: {screen: VideoTestScreen},
-  WebViewTest: {screen: WebViewScreen}
-});
+const AppContainer = createAppContainer(AppNavigator);
 
-const App = createAppContainer(MainNavigator)
-
-export default App
+export default class App extends Component<Props> {
+  render() {
+    return(
+        <AppContainer/>
+    )
+  }
+}
 
 const styles = StyleSheet.create({
   container: {

@@ -1,11 +1,12 @@
 import React from 'react'
-import {View, Text, StyleSheet} from "react-native"
+import {SafeAreaView, View, Text, StyleSheet} from "react-native"
 
 import UITestNavigator from "./UITestNav";
 import * as Progress from 'react-native-progress';
-import Timeout from 'await-timeout';
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
-class UITestScreen extends React.Component {
+
+class UITestScreen extends BaseScreenComponent {
     static navigationOptions = {
         title: 'UITestScreen',
     };
@@ -19,38 +20,31 @@ class UITestScreen extends React.Component {
         };
     }
 
-    componentWillUnmount() {
-        if (this.timerHandle) {
-            this.timerHandle.clear();
-        }
-    }
-
     componentDidMount() {
-        this.timerHandle = new Timeout();
-        this.start();
+        //this.start();
     }
 
     async start() {
-        await this.timerHandle.set(500);
-        this.setState({indeterminate: false});
+        await new Promise((resolve) => setTimeout(() => {
+            this.setState({indeterminate: false});
+            resolve();
+        }, 500));
         this.doingTask(1);
     }
 
     doingTask(task) {
-        console.log('task:' + task);
         if (task === 1) {
             this.testImageView();
         } else if (task === 2) {
             this.testAnimationView();
         } else if (task === 3) {
             this.testListView();
-        } else if (task === 4) {
         }
     }
 
     testImageView() {
         this.props.navigation.navigate('ImageView', {
-            onGoBack: (mounted) => mounted && this.doingTask(2),
+            onGoBack: () => this.doingTask(2),
         });
         this.setState({currentProgress: 0.2});
         this.setState({currentTaskName: 'ImageViewTesting..'});
@@ -58,7 +52,7 @@ class UITestScreen extends React.Component {
 
     testAnimationView() {
         this.props.navigation.navigate('AnimationView', {
-            onGoBack: (mounted) => mounted && this.doingTask(3),
+            onGoBack: () => this.doingTask(3),
         });
         this.setState({currentProgress: 0.5});
         this.setState({currentTaskName: 'AnimationViewTesting..'});
@@ -66,7 +60,7 @@ class UITestScreen extends React.Component {
 
     testListView() {
         this.props.navigation.navigate('ListView', {
-            onGoBack: (mounted) => mounted && this.doingTask(4),
+            onGoBack: () => this.doingTask(4),
         });
         this.setState({currentProgress: 1});
         this.setState({currentTaskName: 'ListViewTesting..'});
@@ -74,14 +68,14 @@ class UITestScreen extends React.Component {
 
     static router = UITestNavigator.router;
 
-    render() {
+    slotRender() {
         let currentProgress = this.state.currentProgress;
         let currentTaskName = this.state.currentTaskName;
         let props = {
             doingTask: task => this.doingTask(task)
         };
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <View style={styles.progressbar}>
                     <Progress.Bar progress={currentProgress}
                                   indeterminate={this.state.indeterminate}
@@ -96,8 +90,7 @@ class UITestScreen extends React.Component {
                 <View style={styles.UIContainer}>
                     <UITestNavigator navigation={this.props.navigation}/>
                 </View>
-
-            </View>
+            </SafeAreaView>
         )
     }
 }

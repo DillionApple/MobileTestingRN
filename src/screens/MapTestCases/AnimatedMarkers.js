@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
+import BaseScreenComponent from "../../components/BaseScreenComponent";
 
 const screen = Dimensions.get('window');
 
@@ -18,14 +19,10 @@ const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-class AnimatedMarkers extends React.Component {
+class AnimatedMarkers extends BaseScreenComponent {
     static navigationOptions = {
         title: "AnimatedMarkers"
     };
-    maxIntervalCount = 20;
-    intervalTimeMs = 500;
-    animateButton = null;
-    interval = null;
     constructor(props) {
         super(props);
 
@@ -36,21 +33,7 @@ class AnimatedMarkers extends React.Component {
                 latitudeDelta: LATITUDE_DELTA,
                 longitudeDelta: LONGITUDE_DELTA,
             }),
-            intervalCount: 0,
         };
-    }
-
-    componentDidMount(): void {
-        this.interval = setInterval(this.intervalHandler, this.intervalTimeMs, this);
-    }
-
-    intervalHandler(vm) {
-        vm.setState({intervalCount: vm.state.intervalCount + 1});
-        vm.animate();
-        if (vm.state.intervalCount == vm.maxIntervalCount) {
-            clearInterval(vm.interval);
-            vm.props.testFinish();
-        }
     }
 
     animate() {
@@ -69,7 +52,7 @@ class AnimatedMarkers extends React.Component {
         }
     }
 
-    render() {
+    slotRender() {
         return (
             <View style={styles.container}>
                 <MapView
@@ -88,11 +71,10 @@ class AnimatedMarkers extends React.Component {
                 </MapView>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                        ref={(button) => this.animateButton = button}
                         onPress={() => this.animate()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text>Animate</Text>
+                        <Text>|-Animate-|</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -102,9 +84,9 @@ class AnimatedMarkers extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        ...StyleSheet.absoluteFillObject,
         justifyContent: 'flex-end',
         alignItems: 'center',
+        flex: 1
     },
     map: {
         ...StyleSheet.absoluteFillObject,
