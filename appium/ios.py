@@ -1,10 +1,11 @@
 import re
-import time
 from appium import webdriver
 from bs4 import BeautifulSoup
+from time import sleep
 
 from base import BaseTestFlow
 from config import *
+from ios_config import *
 
 class IOSTestFlow(BaseTestFlow):
 
@@ -13,14 +14,14 @@ class IOSTestFlow(BaseTestFlow):
 
     def setup(self):
         self.driver = webdriver.Remote(
-            command_executor='http://127.0.0.1:4723/wd/hub',
-            desired_capabilities={
-                'bundleId': 'com.zelkova.MobileTesting',
-                'platformName': 'iOS',
-                'platformVersion': '12.2',
+            command_executor = COMMAND_EXECUTOR,
+            desired_capabilities = {
+                'bundleId': BUNDLE_ID,
+                'platformName':  PLATFORM_NAME,
+                'platformVersion': PLATFORM_VERSION,
                 # 'udid': '472eb0efd95a196bb99f1aab7d3071691e70f184',
                 # 'deviceName': 'dPhone',
-                'deviceName': 'iPhone 8',
+                'deviceName': DEVICE_NAME,
             })
 
     def __walk_through_xml(self, soup, ret):
@@ -63,13 +64,13 @@ class IOSTestFlow(BaseTestFlow):
             ret['back_btn'] = self.driver.find_element_by_name(ret['back_btn'])
         except:
             ret['back_btn'] = None
-        
-
+            
         return ret
-    
+
+    def navigate_back(self, back_btn):
+        back_btn.click()
+        sleep(1)
 
 if __name__ == '__main__':
     ios_test_flow = IOSTestFlow()
     ios_test_flow.main()
-
-    

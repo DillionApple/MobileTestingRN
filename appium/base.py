@@ -39,12 +39,16 @@ class BaseTestFlow:
         
         raise NotImplementedError()
 
+    def navigate_back(self, back_btn):
+        raise NotImplementedError()
+
     def dfs(self):
+        
+        print("Entered {0}".format(node.name))
+        sleep(10)
         parsed = self.parse_current_screen()
 
         node = Node(parsed['id'])
-
-        print("Entered {0}".format(node.name))
 
         for nav_btn in parsed['nav_btns']:
             nav_btn.click()
@@ -58,11 +62,10 @@ class BaseTestFlow:
                 rand_index = randint(0, len(act_btns) - 1)
                 act_btn = act_btns[rand_index]
                 act_btn.click()
-                print("Button {0} clicked".format(act_btn.text))
+                print("Button {0} clicked".format(act_btn.text))        
 
         if parsed['back_btn']:
-            parsed['back_btn'].click()
-            sleep(1)
+            self.navigate_back(parsed['back_btn'])
 
         print("Exited {0}".format(node.name))
         return node
