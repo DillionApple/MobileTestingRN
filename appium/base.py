@@ -8,10 +8,10 @@ class Node:
         self.name = name
         self.children = []
 
-    def add_child(child):
+    def add_child(self, child):
         self.children.append(child)
 
-class BaseTestFLow:    
+class BaseTestFlow:    
 
     def __init__(self):
         pass
@@ -20,7 +20,7 @@ class BaseTestFLow:
         raise NotImplementedError()
 
     def tear_down(self):
-        print("\nDone\nn")
+        print("\nAll Tests Done\n")
         self.driver.quit()
 
     def parse_current_screen(self):
@@ -40,16 +40,16 @@ class BaseTestFLow:
         raise NotImplementedError()
 
     def dfs(self):
-        parsed = parse_current_screen()
+        parsed = self.parse_current_screen()
 
         node = Node(parsed['id'])
 
         print("Entered {0}".format(node.name))
 
-        for nav_btn in parsed['act_btns']:
+        for nav_btn in parsed['nav_btns']:
             nav_btn.click()
             sleep(1)
-            child = dfs()
+            child = self.dfs()
             node.add_child(child)
 
         act_btns = parsed['act_btns']
@@ -58,7 +58,7 @@ class BaseTestFLow:
                 rand_index = randint(0, len(act_btns) - 1)
                 act_btn = act_btns[rand_index]
                 act_btn.click()
-                print("Button {0} clicked".format(act_btn.text)) # TODO - act_btn.text may not be useable in iOS
+                print("Button {0} clicked".format(act_btn.text))
 
         if parsed['back_btn']:
             parsed['back_btn'].click()
@@ -68,7 +68,7 @@ class BaseTestFLow:
         return node
                 
     def main(self):
-        setup()
-        root = dfs()
-        tear_down()
+        self.setup()
+        root = self.dfs()
+        self.tear_down()
         
