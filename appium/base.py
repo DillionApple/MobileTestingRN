@@ -43,12 +43,10 @@ class BaseTestFlow:
         raise NotImplementedError()
 
     def dfs(self):
-        
-        print("Entered {0}".format(node.name))
         sleep(10)
         parsed = self.parse_current_screen()
-
         node = Node(parsed['id'])
+        print("Entered {0}".format(node.name))
 
         for nav_btn in parsed['nav_btns']:
             nav_btn.click()
@@ -58,7 +56,7 @@ class BaseTestFlow:
 
         act_btns = parsed['act_btns']
         if len(act_btns) > 0:
-            for i in range(CLICK_TIMES_IN_EACH_SCREEN):
+            for i in range(CLICK_TIMES_FOR_EACH_BUTTON * len(act_btns)):
                 rand_index = randint(0, len(act_btns) - 1)
                 act_btn = act_btns[rand_index]
                 act_btn.click()

@@ -6,7 +6,7 @@ import HomeScreen from "./screens/HomeScreen"
 import NetworkTestScreen from "./screens/NetworkTestScreen"
 import MapTestNavigator from "./screens/MapTestCases/MapTestNavigator"
 import UITestScreen from "./screens/UITest/UITestScreen"
-import VideoTestScreen from "./screens/VideoTest/VideoTestScreen"
+import VideoTestNavigator from "./screens/VideoTest/VideoTestNavigator"
 
 const rootRouteConfigMap = {
     Home: {screen: HomeScreen}
@@ -16,7 +16,7 @@ export const routeConfigMap = {
     NetworkTest: {screen: NetworkTestScreen},
     MapTest: {screen: MapTestNavigator},
     UITest: {screen: UITestScreen},
-    VideoTest: {screen: VideoTestScreen},
+    VideoTest: {screen: VideoTestNavigator},
 };
 
 const AppNavigator = createStackNavigator(

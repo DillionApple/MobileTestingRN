@@ -13,13 +13,6 @@ class MapTestRootScreen extends BaseScreenComponent {
         super(props);
     };
 
-    renderButtons() {
-
-        return Object.keys(routeConfigMap).map((key) => {
-           return  <Button key={key} title={key} onPress={() => navigate(key)}/>
-        });
-    }
-
     slotRender() {
         let items = Object.keys(routeConfigMap);
         let {navigate} = this.props.navigation;
@@ -29,7 +22,6 @@ class MapTestRootScreen extends BaseScreenComponent {
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => (
                     <ListItem
-                        key={item}
                         button
                         onPress={() => navigate(item)}
                         title={`[-${item}-]`}

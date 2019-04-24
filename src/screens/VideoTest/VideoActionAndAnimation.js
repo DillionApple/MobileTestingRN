@@ -4,16 +4,25 @@ import { View, StyleSheet, Button, Dimensions, Animated } from 'react-native'
 import Video from 'react-native-video'
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 
-class VideoTestScreen extends BaseScreenComponent {
+class VideoActionAndAnimation extends BaseScreenComponent {
 
-    NUMBER_OF_VIDEOS = 5;
+    NUMBER_OF_VIDEOS = 0;
+
     WINDOW_WIDTH = Dimensions.get('window').width;
 
-    players = Array.apply(null, Array(this.NUMBER_OF_VIDEOS));
-    durations = Array.apply(null, Array(this.NUMBER_OF_VIDEOS));
+    players = null;
+    durations = null;
 
     constructor(props) {
         super(props);
+
+        this.NUMBER_OF_VIDEOS = this.props.navigation.getParam('videoNumber', 1);
+
+        this.navigationConfig.title = `<-${this.constructor.name} ${this.NUMBER_OF_VIDEOS}->`
+
+        this.players = Array.apply(null, Array(this.NUMBER_OF_VIDEOS));
+        this.durations = Array.apply(null, Array(this.NUMBER_OF_VIDEOS));
+
         this.state = {
             aspectRatios: Array.apply(null, Array(this.NUMBER_OF_VIDEOS)).map(() => 0),
             pauseds: Array.apply(null, Array(this.NUMBER_OF_VIDEOS)).map(() => false),
@@ -155,7 +164,7 @@ class VideoTestScreen extends BaseScreenComponent {
     }
 }
 
-export default VideoTestScreen
+export default VideoActionAndAnimation
 
 const styles = StyleSheet.create({
     container: {

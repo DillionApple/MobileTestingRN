@@ -19,8 +19,7 @@ class IOSTestFlow(BaseTestFlow):
                 'bundleId': BUNDLE_ID,
                 'platformName':  PLATFORM_NAME,
                 'platformVersion': PLATFORM_VERSION,
-                # 'udid': '472eb0efd95a196bb99f1aab7d3071691e70f184',
-                # 'deviceName': 'dPhone',
+                'udid': UUID,
                 'deviceName': DEVICE_NAME,
             })
 
