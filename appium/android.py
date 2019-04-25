@@ -1,10 +1,13 @@
 import re
+from time import sleep
+
 from appium import webdriver
 from bs4 import BeautifulSoup
 
 from base import BaseTestFlow
 from config import *
 from android_config import *
+
 
 
 class AndroidTestFlow(BaseTestFlow):
@@ -53,8 +56,15 @@ class AndroidTestFlow(BaseTestFlow):
 
     def navigate_back(self, back_btn):
         self.driver.back()
-
+        
+        
 if __name__ == '__main__':
 
-    android_test_flow = AndroidTestFlow()
-    android_test_flow.main()
+    while True:
+        try:
+            android_test_flow = AndroidTestFlow()
+            android_test_flow.main()
+        except:
+            print("App Crashed")
+
+        sleep(10)
