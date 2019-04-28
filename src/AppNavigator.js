@@ -7,7 +7,7 @@ import NetworkTestScreen from "./screens/NetworkTestScreen"
 import MapTestNavigator from "./screens/MapTestCases/MapTestNavigator"
 import UITestScreen from "./screens/UITest/UITestScreen"
 import VideoTestNavigator from "./screens/VideoTest/VideoTestNavigator"
-import FileDownloader from "./screens/FileDownloaderTest/FileDownloader"
+import FileDownloaderNavigator from "./screens/FileDownloaderTest/FileDownloaderNavigator"
 
 const rootRouteConfigMap = {
     Home: {screen: HomeScreen}
@@ -18,7 +18,7 @@ export const routeConfigMap = {
     MapTest: {screen: MapTestNavigator},
     UITest: {screen: UITestScreen},
     VideoTest: {screen: VideoTestNavigator},
-    FileDownloaderTest: {screen: FileDownloader}
+    FileDownloaderTest: {screen: FileDownloaderNavigator}
 };
 
 const AppNavigator = createStackNavigator(
