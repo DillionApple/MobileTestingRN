@@ -25,7 +25,6 @@ class FileDownloaderItem extends React.Component {
             downloadProgress: 0,
             loaded: 0,
             total: 0,
-            finished: false,
             paused: true,
             speed: "",
         };
@@ -33,12 +32,11 @@ class FileDownloaderItem extends React.Component {
     }
 
     componentWillUnmount() {
-        this.deleteClicked()
     }
 
     startClicked() {
-        if (this.state.finished) {
-            return
+        if (this.promise) {
+            return;
         }
         this.state.paused = false;
         RNFetchBlob.fs.exists(this.downloadDest).then(
@@ -89,10 +87,10 @@ class FileDownloaderItem extends React.Component {
                         return;
                     }
                     this.setState({
-                        finished: true,
                         loaded: this.state.total,
                         downloadProgress: 1,
-                    })
+                    });
+                    this.promise = null
                 })
                 .catch((err) => {})
         });
@@ -101,7 +99,8 @@ class FileDownloaderItem extends React.Component {
     pauseClicked() {
         if (this.promise) {
             this.setState({paused: true, speed: ""});
-            this.promise.cancel((err) => {})
+            this.promise.cancel((err) => {});
+            this.promise = null
         }
     }
 
@@ -112,7 +111,6 @@ class FileDownloaderItem extends React.Component {
             loaded: 0,
             total: 0,
             downloadProgress: 0,
-            finished: false,
         })
     }
 
@@ -123,7 +121,9 @@ class FileDownloaderItem extends React.Component {
                     <Text>{this.filename}</Text>
                     <Text>{(this.state.loaded/1024/1024).toFixed(2)}MB / {(this.state.total/1024/1024).toFixed(2)}MB</Text>
                 </View>
-                <Progress.Bar style={styles.progressBar} progress={this.state.downloadProgress} height={20}/>
+                <View style={styles.progressBarContainer}>
+                    <Progress.Bar style={styles.progressBar} progress={this.state.downloadProgress} height={5}/>
+                </View>
                 <View style={styles.footerContainer}>
                     <Text>{this.state.speed}</Text>
                     <View style={styles.footerButtons}>
@@ -149,6 +149,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 10,
+    },
+    progressBarContainer: {
+        justifyContent: 'center',
+        alignItems: 'stretch',
     },
     progressBar: {
         width: null,
