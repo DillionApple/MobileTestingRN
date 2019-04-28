@@ -21,7 +21,8 @@
     "react-native-video": "^4.4.1",
     "react-navigation": "^3.6.1",
     "react-redux": "^6.0.1",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "rn-fetch-blob": "^0.10.15"
   },
   "devDependencies": {
     "@babel/core": "7.4.0",

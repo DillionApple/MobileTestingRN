@@ -12,8 +12,6 @@ class VideoTestRootScreen extends BaseScreenComponent {
         {title: "Online Video", data: [1,2,4,8]},
     ];
 
-    VIDEO_COUNT_LIST = [1,2,4,8];
-
     slotRender() {
 
         let { navigate } = this.props.navigation;

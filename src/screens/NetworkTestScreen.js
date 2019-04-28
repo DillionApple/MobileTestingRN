@@ -20,7 +20,7 @@ class NetworkTestScreen extends BaseScreenComponent {
 
     slotRender() {
         return (<SectionList
-            renderItem={({item, index, section}) => <ListItem button key={index} title={item}/>}
+            renderItem={({item, index, section}) => <ListItem button key={index} title={`${item}`}/>}
             renderSectionHeader={({section: {title}}) => (
                 <Text style={styles.sectionHeader}>{title}</Text>
             )}
