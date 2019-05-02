@@ -4,6 +4,11 @@ import android.app.Application;
 
 import com.airbnb.android.react.lottie.LottiePackage;
 import com.facebook.react.ReactApplication;
+import com.avishayil.rnrestart.ReactNativeRestartPackage;
+import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
+import com.reactlibrary.RNThreadPackage;
+import com.rnfs.RNFSPackage;
+import com.rnziparchive.RNZipArchivePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.airbnb.android.react.maps.MapsPackage;
@@ -28,6 +33,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeRestartPackage(),
+            new ReactNativeExceptionHandlerPackage(),
+            new RNThreadPackage(mReactNativeHost),
+            new RNFSPackage(),
+            new RNZipArchivePackage(),
             new VectorIconsPackage(),
             new ReactVideoPackage(),
               new LottiePackage(),

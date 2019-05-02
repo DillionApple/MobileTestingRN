@@ -13,30 +13,36 @@ import {createAppContainer} from "react-navigation"
 import AppNavigator from './src/AppNavigator'
 
 const AppContainer = createAppContainer(AppNavigator);
+import {setHandler} from "./src/components/bugCaptureOnError";
+
 
 export default class App extends Component<Props> {
-  render() {
-    return(
-        <AppContainer/>
-    )
-  }
+    componentWillMount(): void {
+        setHandler();
+    }
+
+    render() {
+        return (
+            <AppContainer/>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+    },
+    welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
+    },
+    instructions: {
+        textAlign: 'center',
+        color: '#333333',
+        marginBottom: 5,
+    },
 });

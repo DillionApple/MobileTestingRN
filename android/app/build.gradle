@@ -138,6 +138,11 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-restart')
+    implementation project(':react-native-exception-handler')
+    implementation project(':react-native-threads')
+    implementation project(':react-native-fs')
+    implementation project(':react-native-zip-archive')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-video')
     implementation project(':react-native-maps')

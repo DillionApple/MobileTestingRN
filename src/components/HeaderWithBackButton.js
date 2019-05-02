@@ -1,28 +1,52 @@
 import React from 'react'
-import { View, Button, StyleSheet, Platform } from 'react-native'
-import {Header} from "react-native-elements";
+import {View, StyleSheet, Platform} from 'react-native'
+import {Header,Button, Tooltip, Text} from "react-native-elements";
+import {Thread} from "react-native-threads";
+import InjectionModule from "./InjectionModule"
 
 class HeaderWithBackButton extends React.Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+        }
     }
 
     render() {
         return (
-            <Header
-                statusBarProps={{ translucent: true }}
-                leftComponent={<Button
-                    color={Platform.select({
-                        ios: '#fff'
-                    })}
-                    title='Back'
-                    style={styles.backButton}
-                    onPress={() => this.props.navigation.pop()}
-                />
-                }
-                centerComponent={{text: this.props.title, style: {color: '#fff'}}}
-            />
+            <View>
+                <View>
+                    <Header
+                        statusBarProps={{translucent: true}}
+                        leftComponent={<Button
+                            color={Platform.select({
+                                ios: '#fff'
+                            })}
+                            title='Back'
+                            style={styles.backButton}
+                            onPress={() => this.props.navigation.pop()}
+                        />
+                        }
+                        rightComponent={
+                            <Button
+                                color={Platform.select({
+                                    ios: '#fff'
+                                })}
+                                title='Injection'
+                                titleStyle={styles.injButton}
+                                onPress={() => {
+                                    this.refs.injectionModuleRef.changeVisibility();
+                                }
+                                }
+                            />
+                        }
+                        centerComponent={{text: this.props.title, style: {color: '#fff'}}}
+                    />
+                </View>
+                <View>
+                    <InjectionModule ref="injectionModuleRef"/>
+                </View>
+            </View>
         )
     }
 }
@@ -33,6 +57,9 @@ export const styles = StyleSheet.create({
     backButton: {
         position: 'absolute',
         zIndex: 1000,
+    },
+    injButton: {
+        fontSize: 15
     }
 });
 

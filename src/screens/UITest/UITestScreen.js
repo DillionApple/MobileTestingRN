@@ -1,10 +1,10 @@
 import React from 'react'
-import {SafeAreaView, View, Text, StyleSheet} from "react-native"
+import {SafeAreaView, View, Text, StyleSheet, Button} from "react-native"
 
 import UITestNavigator from "./UITestNav";
 import * as Progress from 'react-native-progress';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
-
+import Timeout from 'await-timeout';
 
 class UITestScreen extends BaseScreenComponent {
     static navigationOptions = {
@@ -20,17 +20,23 @@ class UITestScreen extends BaseScreenComponent {
         };
     }
 
+    componentWillUnmount() {
+        if (this.timerHandle) {
+            this.timerHandle.clear();
+        }
+    }
+
     componentDidMount() {
-        //this.start();
+        this.timerHandle = new Timeout();
+        this.start();
     }
 
     async start() {
-        await new Promise((resolve) => setTimeout(() => {
-            this.setState({indeterminate: false});
-            resolve();
-        }, 500));
-        this.doingTask(1);
+        await this.timerHandle.set(500);
+        this.setState({indeterminate: false});
+        // this.doingTask(1);
     }
+
 
     doingTask(task) {
         if (task === 1) {
@@ -44,7 +50,7 @@ class UITestScreen extends BaseScreenComponent {
 
     testImageView() {
         this.props.navigation.navigate('ImageView', {
-            onGoBack: () => this.doingTask(2),
+            onGoBack: (mounted) => mounted && this.doingTask(2),
         });
         this.setState({currentProgress: 0.2});
         this.setState({currentTaskName: 'ImageViewTesting..'});
@@ -52,7 +58,7 @@ class UITestScreen extends BaseScreenComponent {
 
     testAnimationView() {
         this.props.navigation.navigate('AnimationView', {
-            onGoBack: () => this.doingTask(3),
+            onGoBack: (mounted) => mounted && this.doingTask(3),
         });
         this.setState({currentProgress: 0.5});
         this.setState({currentTaskName: 'AnimationViewTesting..'});
@@ -60,7 +66,7 @@ class UITestScreen extends BaseScreenComponent {
 
     testListView() {
         this.props.navigation.navigate('ListView', {
-            onGoBack: () => this.doingTask(4),
+            onGoBack: (mounted) => mounted && this.doingTask(4),
         });
         this.setState({currentProgress: 1});
         this.setState({currentTaskName: 'ListViewTesting..'});
@@ -76,6 +82,35 @@ class UITestScreen extends BaseScreenComponent {
         };
         return (
             <SafeAreaView style={styles.container}>
+                <View style={styles.buttonbar}>
+                    <View accessibilityLabel="Task 1">
+                    <Button
+                        onPress={() => {
+                            this.doingTask(1)
+                        }}
+                        title="|-Task 1-|"
+                        color="#841584"
+                    />
+                    </View>
+                    <View accessibilityLabel="Task 2">
+                    <Button
+                        onPress={() => {
+                            this.doingTask(2)
+                        }}
+                        title="|-Task 2-|"
+                        color="#841584"
+                    />
+                    </View>
+                    <View accessibilityLabel="Task 3">
+                    <Button
+                        onPress={() => {
+                            this.doingTask(3)
+                        }}
+                        title="|-Task 3-|"
+                        color="#841584"
+                    />
+                    </View>
+                </View>
                 <View style={styles.progressbar}>
                     <Progress.Bar progress={currentProgress}
                                   indeterminate={this.state.indeterminate}
@@ -100,6 +135,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-between',
+    },
+    buttonBar: {
+        padding: 5,
+        flexDirection: 'row',
     },
     UIContainer: {
         flex: 1,
