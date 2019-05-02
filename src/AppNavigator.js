@@ -9,6 +9,7 @@ import UITestScreen from "./screens/UITest/UITestScreen"
 import VideoTestNavigator from "./screens/VideoTest/VideoTestNavigator"
 import FileSystemScreen from "./screens/FileSystemTest/FileSystemScreen"
 import FileDownloaderNavigator from "./screens/FileDownloaderTest/FileDownloaderNavigator"
+import CameraScreen from "./screens/CameraTest/CameraScreen"
 
 const rootRouteConfigMap = {
     Home: {screen: HomeScreen}
@@ -20,7 +21,8 @@ export const routeConfigMap = {
     UITest: {screen: UITestScreen},
     VideoTest: {screen: VideoTestNavigator},
     BGTaskScreen: {screen: FileSystemScreen},
-    FileDownloaderTest: {screen: FileDownloaderNavigator}
+    FileDownloaderTest: {screen: FileDownloaderNavigator},
+    CameraScreen: {screen: CameraScreen}
 };
 
 const AppNavigator = createStackNavigator(
