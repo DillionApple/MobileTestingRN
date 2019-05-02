@@ -11,7 +11,7 @@ class FileSystemScreen extends BaseScreenComponent {
     }
 
     componentDidMount(): void {
-        this.fsTest1();
+        this.fsTest();
     }
 
     fsTest() {
@@ -31,6 +31,8 @@ class FileSystemScreen extends BaseScreenComponent {
             this.RNFS.writeFile(txtPath, res, 'utf8')
         }).then((success) => {
             console.log('FILE WRITTEN!');
+        }).catch((err) => {
+            console.log(err.message);
         })
     }
 
