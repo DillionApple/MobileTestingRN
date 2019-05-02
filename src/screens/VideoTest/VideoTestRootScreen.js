@@ -1,41 +1,58 @@
 import React from 'react'
 
-import { FlatList } from 'react-native'
+import {SectionList, StyleSheet, Text} from 'react-native'
 
 import BaseScreenComponent from '../../components/BaseScreenComponent'
 import {ListItem} from "react-native-elements";
 
 class VideoTestRootScreen extends BaseScreenComponent {
 
-    VIDEO_COUNT_LIST = [1,2,4,8];
+    sections = [
+        {title: "Offline Video", data: [1,2,4,8]},
+        {title: "Online Video", data: [1,2,4,8]},
+    ];
 
     slotRender() {
 
         let { navigate } = this.props.navigation;
 
         return(
-            <FlatList
-                data={this.VIDEO_COUNT_LIST}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({item}) => (
-                    <ListItem
-                        button
-                        title={`[-VideoNumber ${item}-]`}
-                        bottomDivider
-                        onPress={() => {navigate(
-                            "VideoActionAndAnimation",
-                            {
-                                videoNumber: item
-                            }
-                        )}}
-                    />
+            <SectionList
+                sections={this.sections}
+                keyExtractor={(item, index) =>  item}
+                renderSectionHeader={({section: {title}}) => (
+                    <Text style={styles.sectionHeader}>{title}</Text>
                 )}
-            >
-            </FlatList>
-
+                renderItem={({item, index, section}) => {
+                    return (<ListItem
+                        button
+                        title={`[-${section.title} ${item}-]`}
+                        bottomDivider
+                        onPress={() => {
+                            let navigationPrams = {
+                                videoNumber: item,
+                                navigationTitle: `<-${section.title} ${item}->`,
+                                source: null
+                            };
+                            if (section.title == "Offline Video") {
+                                navigationPrams.source = require('./assets/test_video.mov')
+                            } else {
+                                navigationPrams.source = {uri: "https://fdugeek.com/static/out.mp4"}
+                            }
+                            navigate("VideoActionAndAnimation", navigationPrams)
+                        }}
+                    />)
+                }}
+            />
         )
     }
 
 }
 
 export default VideoTestRootScreen
+
+const styles = StyleSheet.create({
+    sectionHeader: {
+        backgroundColor: "#ABABAB",
+    }
+});

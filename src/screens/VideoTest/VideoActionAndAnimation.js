@@ -18,7 +18,7 @@ class VideoActionAndAnimation extends BaseScreenComponent {
 
         this.NUMBER_OF_VIDEOS = this.props.navigation.getParam('videoNumber', 1);
 
-        this.navigationConfig.title = `<-${this.constructor.name} ${this.NUMBER_OF_VIDEOS}->`
+        this.navigationConfig.title = this.props.navigation.getParam('navigationTitle');
 
         this.players = Array.apply(null, Array(this.NUMBER_OF_VIDEOS));
         this.durations = Array.apply(null, Array(this.NUMBER_OF_VIDEOS));
@@ -148,7 +148,7 @@ class VideoActionAndAnimation extends BaseScreenComponent {
                                     aspectRatios[index] = aspectRatio;
                                     this.setState({aspectRatios: aspectRatios})
                                 }}
-                                source={require('./assets/test_video.mov')}/>
+                                source={this.props.navigation.getParam("source")}/>
                         </Animated.View>
                     )
                 })}

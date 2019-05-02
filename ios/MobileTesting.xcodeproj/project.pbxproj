@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -71,6 +72,7 @@
 		817533BE106B4A82AB2E7246 /* libRNThread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEEDB054DBC49EEAE39A59C /* libRNThread.a */; };
 		59C3CBB22936418A851B4B2C /* libReactNativeExceptionHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA1533940E8482DA91DE171 /* libReactNativeExceptionHandler.a */; };
 		E22146B9290944DE84B39989 /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A70EC2F91B0146BB867CCFE6 /* libRCTRestart.a */; };
+		0480D6CEDA684CD9B8BF5CCC /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C503560896A042DFB03F9139 /* libRNFetchBlob.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -524,6 +526,8 @@
 		2BA1533940E8482DA91DE171 /* libReactNativeExceptionHandler.a */ = {isa = PBXFileReference; name = "libReactNativeExceptionHandler.a"; path = "libReactNativeExceptionHandler.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		3DF36B29DB10403D8193BEF8 /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; name = "RCTRestart.xcodeproj"; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		A70EC2F91B0146BB867CCFE6 /* libRCTRestart.a */ = {isa = PBXFileReference; name = "libRCTRestart.a"; path = "libRCTRestart.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		F1BAED854E1243308624812B /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; name = "RNFetchBlob.xcodeproj"; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		C503560896A042DFB03F9139 /* libRNFetchBlob.a */ = {isa = PBXFileReference; name = "libRNFetchBlob.a"; path = "libRNFetchBlob.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -566,6 +570,7 @@
 				817533BE106B4A82AB2E7246 /* libRNThread.a in Frameworks */,
 				59C3CBB22936418A851B4B2C /* libReactNativeExceptionHandler.a in Frameworks */,
 				E22146B9290944DE84B39989 /* libRCTRestart.a in Frameworks */,
+				0480D6CEDA684CD9B8BF5CCC /* libRNFetchBlob.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,7 +725,6 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
-				2AF6C2652E35417FA9D9BCEC /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -861,6 +865,7 @@
 				61E530719BBB44EDB13FB158 /* RNThread.xcodeproj */,
 				BA660BCDB78F410EA57EA7F2 /* ReactNativeExceptionHandler.xcodeproj */,
 				3DF36B29DB10403D8193BEF8 /* RCTRestart.xcodeproj */,
+				F1BAED854E1243308624812B /* RNFetchBlob.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1624,6 +1629,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-threads\ios",
 					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 				);
 				INFOPLIST_FILE = MobileTestingTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1634,6 +1640,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1671,6 +1678,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-threads\ios",
 					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 				);
 				INFOPLIST_FILE = MobileTestingTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1681,6 +1689,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1720,6 +1729,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-threads\ios",
 					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 				);
 				INFOPLIST_FILE = MobileTesting/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1752,6 +1762,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-threads\ios",
 					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 				);
 				INFOPLIST_FILE = MobileTesting/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1790,6 +1801,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-threads\ios",
 					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 				);
 				INFOPLIST_FILE = "MobileTesting-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1799,6 +1811,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1845,6 +1858,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-threads\ios",
 					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 				);
 				INFOPLIST_FILE = "MobileTesting-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1854,6 +1868,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1899,6 +1914,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-threads\ios",
 					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 				);
 				INFOPLIST_FILE = "MobileTesting-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1908,6 +1924,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1953,6 +1970,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-threads\ios",
 					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
 					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart",
+					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 				);
 				INFOPLIST_FILE = "MobileTesting-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1962,6 +1980,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
