@@ -7,7 +7,7 @@ import InjectionModule from "./InjectionModule"
 class HeaderWithBackButton extends React.Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
         }
     }
@@ -55,8 +55,7 @@ export default HeaderWithBackButton
 
 export const styles = StyleSheet.create({
     backButton: {
-        position: 'absolute',
-        zIndex: 1000,
+        fontSize: 15
     },
     injButton: {
         fontSize: 15
