@@ -55,10 +55,10 @@ export default HeaderWithBackButton
 
 export const styles = StyleSheet.create({
     backButton: {
-        fontSize: 15
+        fontSize: 12
     },
     injButton: {
-        fontSize: 15
+        fontSize: 12
     }
 });
 

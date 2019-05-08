@@ -20,7 +20,7 @@ export const routeConfigMap = {
     MapTest: {screen: MapTestNavigator},
     UITest: {screen: UITestScreen},
     VideoTest: {screen: VideoTestNavigator},
-    //BGTaskScreen: {screen: FileSystemScreen},
+    BGTaskScreen: {screen: FileSystemScreen},
     FileDownloaderTest: {screen: FileDownloaderNavigator},
     CameraScreen: {screen: CameraScreen}
 };
