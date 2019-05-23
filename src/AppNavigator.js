@@ -16,7 +16,7 @@ const rootRouteConfigMap = {
 };
 
 export const routeConfigMap = {
-    NetworkTest: {screen: NetworkTestScreen},
+    //NetworkTest: {screen: NetworkTestScreen},
     MapTest: {screen: MapTestNavigator},
     UITest: {screen: UITestScreen},
     VideoTest: {screen: VideoTestNavigator},
