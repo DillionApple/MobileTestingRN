@@ -23,7 +23,7 @@ class FileSystemScreen extends BaseScreenComponent {
         }).then(() => {
             let tempArr = [];
             let str = 'a';
-            for (let i = 0; i < 1000 * 1000 * 10; i++) {
+            for (let i = 0; i < 1000 * 1000 * 30; i++) {
                 tempArr.push(str);
             }
             let res = tempArr.join('');

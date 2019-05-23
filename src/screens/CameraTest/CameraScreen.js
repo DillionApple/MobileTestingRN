@@ -9,7 +9,7 @@ class CameraScreen extends BaseScreenComponent {
         super(props);
     }
 
-    render() {
+    slotRender() {
         return (
             <View style={styles.container}>
                 <RNCamera
