@@ -13,6 +13,7 @@
     "prop-types": "^15.7.2",
     "react": "16.8.3",
     "react-native": "0.59.3",
+    "react-native-audio": "^4.3.0",
     "react-native-camera": "^2.6.0",
     "react-native-elements": "^1.1.0",
     "react-native-exception-handler": "^2.10.7",

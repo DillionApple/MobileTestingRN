@@ -1,11 +1,13 @@
-import {Alert,Platform} from 'react-native';
+import {Alert, Platform} from 'react-native';
 import {BackHandler} from 'react-native';
 import {setJSExceptionHandler, setNativeExceptionHandler} from 'react-native-exception-handler';
 import RNRestart from 'react-native-restart'; // Import package from node modules
 
 
-export const baseUrl = Platform.OS === 'android' ?
-    'http://10.0.2.2:5000/': 'http://localhost:5000/';
+// export const baseUrl = Platform.OS === 'android' ?
+//     'http://10.0.2.2:5000/': 'http://localhost:5000/';
+
+export const baseUrl = 'http://101.132.109.3:8378/';
 
 const reporter = (error) => {
     // Logic for reporting to devs
@@ -13,6 +15,8 @@ const reporter = (error) => {
     // console.log('reporter:' + error.message); // sample
     fetch(baseUrl + 'log/JSErr:' + error.message).then((res) => {
         console.log(`res : ${res}`);
+    }).catch(err => {
+        console.log(`neterr : ${err}`);
     })
 };
 

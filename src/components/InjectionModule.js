@@ -1,7 +1,8 @@
 import React from "react";
-import {Overlay, ListItem} from "react-native-elements";
-import {View, Platform, StyleSheet} from "react-native";
+import {ListItem, Overlay} from "react-native-elements";
+import {InteractionManager, StyleSheet, View} from "react-native";
 import {Thread} from "react-native-threads";
+import {zip} from "react-native-zip-archive";
 
 class InjectionModule extends React.Component {
 
@@ -21,6 +22,17 @@ class InjectionModule extends React.Component {
         this.setState({visible: !this.state.visible});
     }
 
+
+    randomWord(min) {
+        let str = "";
+        let arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        for (let i = 0; i < min; i++) {
+            let pos = Math.round(Math.random() * (arr.length - 1));
+            str += arr[pos];
+        }
+        return str;
+    }
+
     injection(type) {
         let thread = null;
         switch (type) {
@@ -35,7 +47,45 @@ class InjectionModule extends React.Component {
                 thread.onmessage = (message) => console.log(message);
                 break;
             case 2:
+                InteractionManager.runAfterInteractions(() => {
+                    let RNFS = require('react-native-fs');
+                    let mainPath = `${RNFS.DocumentDirectoryPath}/MobileTesting`;
+                    const sourcePath = `${mainPath}/test.txt`;
+                    const targetPath = `${mainPath}/test.zip`;
+                    console.log(`sourcepath:${sourcePath}`);
+                    for (let i = 0; i < 10; i++) {
+                        console.log(`${i}th zipping`);
+                        zip(sourcePath, targetPath)
+                            .then((path) => {
+                                console.log(`zip completed at ${path}`)
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                            })
+                    }
+                });
                 break;
+            case 3:
+                InteractionManager.runAfterInteractions(() => {
+                    let RNFS = require('react-native-fs');
+                    let mainPath = `${RNFS.DocumentDirectoryPath}/MobileTesting`;
+                    const txtPath = `${mainPath}/test.txt`;
+                    RNFS.mkdir(mainPath).then(res => {
+                        console.log('PATH WRITTEN');
+                    }).then(() => {
+                        let res = this.randomWord(1000 * 1000 * 10);
+                        console.log('BEFORE FILE WRITTEN');
+                        RNFS.writeFile(txtPath, res, 'utf8')
+                    }).then((success) => {
+                        console.log('FILE WRITTEN!');
+                    }).catch((err) => {
+                        console.log(err.message);
+                    })
+                });
+                break;
+            case 4:
+                break;
+
         }
         this.changeVisibility();
     }
@@ -47,7 +97,14 @@ class InjectionModule extends React.Component {
             },
             {
                 name: '|-loop 1000000 times-|',
-            }, {
+            },
+            {
+                name: '|-Zip File-|',
+            },
+            {
+                name: '|-Write File to FS-|',
+            },
+            {
                 name: '|-Back-|',
             },
         ];
