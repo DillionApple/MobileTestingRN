@@ -11,10 +11,11 @@ class Node:
     def add_child(self, child):
         self.children.append(child)
 
-class BaseTestFlow:    
+class BaseTestFlow:
 
     def __init__(self):
-        pass
+        self.complete = set()
+        self.current = None
 
     def setup(self):
         raise NotImplementedError()
@@ -49,10 +50,14 @@ class BaseTestFlow:
         print("Entered {0}".format(node.name))
 
         for nav_btn in parsed['nav_btns']:
+            nav_btn_text = nav_btn.text
+            if nav_btn_text in self.complete:
+                continue
+            self.current = nav_btn_text
             nav_btn.click()
-            sleep(1)
             child = self.dfs()
             node.add_child(child)
+            self.complete.add(nav_btn_text)
 
         act_btns = parsed['act_btns']
         if len(act_btns) > 0:
@@ -60,16 +65,27 @@ class BaseTestFlow:
                 rand_index = randint(0, len(act_btns) - 1)
                 act_btn = act_btns[rand_index]
                 act_btn.click()
-                print("Button {0} clicked".format(act_btn.text))        
+                print("Button {0} clicked".format(act_btn.text))
 
         if parsed['back_btn']:
             self.navigate_back(parsed['back_btn'])
 
         print("Exited {0}".format(node.name))
+        self.complete.add(node.name)
         return node
                 
     def main(self):
-        self.setup()
-        root = self.dfs()
-        self.tear_down()
-        
+        while True:
+            self.complete = set()
+            while True:
+                sleep(60)
+                self.setup()
+                try:
+                    root = self.dfs()
+                except:
+                    print("Broken on screen %s" % self.current)
+                    self.complete.add(self.current)
+                    self.tear_down()
+                else:
+                    self.tear_down()
+                    break
