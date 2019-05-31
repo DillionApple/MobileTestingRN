@@ -16,6 +16,8 @@ class Node:
 
 class BaseTestFlow:
 
+    # TODO - Change button click to position click to avoid the affect dynamic elements
+
     def __init__(self):
         self.complete = set()
         self.current = None
