@@ -48,7 +48,8 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactVideoPackage(),
               new LottiePackage(),
             new MapsPackage(),
-            new RNGestureHandlerPackage()
+            new RNGestureHandlerPackage(),
+              new MemoryInjectionPackage()
       );
     }
 

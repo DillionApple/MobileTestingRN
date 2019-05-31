@@ -98,77 +98,93 @@ class CameraScreen extends BaseScreenComponent {
 
     takePicture = async function () {
         if (this.camera) {
-            const options = {quality: 0.5, base64: true};
-            this.setState({
-                isTakingPicture: true
-            });
-            const data = await this.camera.takePictureAsync(options);
-            console.log(data.uri);
-            this.camera.pausePreview();
+            try {
+                const options = {quality: 0.5, base64: true};
+                this.setState({
+                    isTakingPicture: true
+                });
+                const data = await this.camera.takePictureAsync(options);
+                console.log(data.uri);
+                this.camera.pausePreview();
+            } catch (err) {
+                console.log(`err : ${err}`);
+            }
         }
     };
     retakePicture = async function () {
         if (this.camera) {
-            this.setState({
-                isTakingPicture: false
-            });
-            this.camera.resumePreview();
+            try {
+                this.setState({
+                    isTakingPicture: false
+                });
+                this.camera.resumePreview();
+            } catch (err) {
+                console.log(`err : ${err}`);
+            }
         }
     };
     recordVideo = async function () {
         if (this.camera) {
-            const options = {quality: 'RNCamera.Constants.VideoQuality.720p'};
-            this.setState({
-                isRecording: true
-            });
-            const data = await this.camera.recordAsync(options);
+            try {
+                const options = {quality: 'RNCamera.Constants.VideoQuality.720p'};
+                const options2 = {quality: 'RNCamera.Constants.VideoQuality.1080p'};
+                this.setState({
+                    isRecording: true
+                });
+                const data = await this.camera.recordAsync(options);
+                const data2 = await this.camera.recordAsync(options2);
+            } catch (err) {
+                console.log(`err : ${err}`);
+            }
+
         }
     };
     stopRecordingVideo = async function () {
         if (this.camera && this.state.isRecording) {
-            this.setState({
-                isRecording: false
-            });
-            const data = await this.camera.stopRecording();
+            try {
+                this.setState({
+                    isRecording: false
+                });
+                const data = await this.camera.stopRecording();
+            } catch (err) {
+                console.log(`err : ${err}`);
+            }
         }
     };
-    recordAudio = async function(){
-        let audioPath = AudioUtils.DocumentDirectoryPath + '/MobileTesting/audio.aac';
-        if (this.state.isAudioRecording) {
-            console.warn('Already recording!');
-            return;
-        }else{
-            AudioRecorder.prepareRecordingAtPath(audioPath, {
-                SampleRate: 22050,
-                Channels: 1,
-                AudioQuality: "Low",
-                AudioEncoding: "aac",
-                AudioEncodingBitRate: 32000
-            });
-        }
-
-        this.setState({isAudioRecording: true});
-
+    recordAudio = async function () {
         try {
+            let audioPath = AudioUtils.DocumentDirectoryPath + '/MobileTesting/audio.aac';
+            if (this.state.isAudioRecording) {
+                console.warn('Already recording!');
+                return;
+            } else {
+                AudioRecorder.prepareRecordingAtPath(audioPath, {
+                    SampleRate: 22050,
+                    Channels: 1,
+                    AudioQuality: "Low",
+                    AudioEncoding: "aac",
+                    AudioEncodingBitRate: 32000
+                });
+            }
+
+            this.setState({isAudioRecording: true});
             const filePath = await AudioRecorder.startRecording();
         } catch (error) {
-            console.error(error);
+            console.log(`err : ${err}`);f
         }
     };
 
-    stopRecordingAudio = async function(){
-        if (!this.state.isAudioRecording) {
-            console.warn('Can\'t stop, not recording!');
-            return;
-        }
-
-        this.setState({isAudioRecording: false});
-
+    stopRecordingAudio = async function () {
         try {
+            if (!this.state.isAudioRecording) {
+                console.warn('Can\'t stop, not recording!');
+                return;
+            }
+            this.setState({isAudioRecording: false});
             const filePath = await AudioRecorder.stopRecording();
             return filePath;
         } catch (error) {
-            console.error(error);
+            console.log(`err : ${err}`);
         }
     }
 }
