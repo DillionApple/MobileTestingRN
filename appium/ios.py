@@ -13,6 +13,7 @@ class IOSTestFlow(BaseTestFlow):
         pass
 
     def setup(self):
+        print("\nSetting up the device\n")
         self.driver = webdriver.Remote(
             command_executor = COMMAND_EXECUTOR,
             desired_capabilities = {

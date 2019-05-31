@@ -26,7 +26,7 @@ class FileDownloaderItem extends React.Component {
             loaded: 0,
             total: 0,
             paused: true,
-            speed: "",
+            speed: "Paused",
         };
         RNFetchBlob.fs.unlink(this.downloadDest).catch((err) => {})
     }
@@ -77,6 +77,8 @@ class FileDownloaderItem extends React.Component {
                 let speed = (increase / duration).toFixed(2);
                 if (speed >= 0) {
                     this.setState({speed: `${speed}MB/S`});
+                } else {
+                    this.setState({speed: `Paused`});
                 }
                 this.lastTimestamp = timestamp;
                 this.lastLoaded = this.state.loaded;
@@ -98,7 +100,7 @@ class FileDownloaderItem extends React.Component {
 
     pauseClicked() {
         if (this.promise) {
-            this.setState({paused: true, speed: ""});
+            this.setState({paused: true, speed: "Paused"});
             this.promise.cancel((err) => {});
             this.promise = null
         }

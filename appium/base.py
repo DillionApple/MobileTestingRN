@@ -1,6 +1,9 @@
+import re
 from config import *
 from random import randint
 from time import sleep
+
+from exception import AppCrashedException
 
 class Node:
 
@@ -21,7 +24,7 @@ class BaseTestFlow:
         raise NotImplementedError()
 
     def tear_down(self):
-        print("\nAll Tests Done\n")
+        print("\nTearing down the device\n")
         self.driver.quit()
 
     def parse_current_screen(self):
@@ -64,6 +67,9 @@ class BaseTestFlow:
             for i in range(CLICK_TIMES_FOR_EACH_BUTTON * len(act_btns)):
                 rand_index = randint(0, len(act_btns) - 1)
                 act_btn = act_btns[rand_index]
+                act_btn_text = act_btn.text
+                if not re.match(r"\|-.*-\|", act_btn_text):
+                    raise AppCrashedException("App crashed in screen {0}".format(node.name))
                 act_btn.click()
                 print("Button {0} clicked".format(act_btn.text))
 
@@ -78,7 +84,7 @@ class BaseTestFlow:
         while True:
             self.complete = set()
             while True:
-                sleep(60)
+                sleep(1)
                 self.setup()
                 try:
                     root = self.dfs()
