@@ -1,8 +1,9 @@
 import React from "react";
 import {ListItem, Overlay} from "react-native-elements";
-import {InteractionManager, StyleSheet, View} from "react-native";
+import {InteractionManager, StyleSheet, View, Platform} from "react-native";
 import {Thread} from "react-native-threads";
 import {zip} from "react-native-zip-archive";
+import MemoryInjection from "./MemoryModule";
 
 class InjectionModule extends React.Component {
 
@@ -84,6 +85,26 @@ class InjectionModule extends React.Component {
                 });
                 break;
             case 4:
+                const baseUrl = Platform.OS === 'android' ?
+                    'http://192.168.56.1:8080/' : 'http://localhost:8080/';
+                console.log(`baseUrl : ${baseUrl}ping`);
+                for (let i = 0; i < 10; i++) {
+                    fetch(`https://www.baidu.com`)
+                        .then((response) => {
+                            response.json()
+                        })
+                        .then((responseJson) => {
+                            console.log(`respose Json : ${responseJson}`);
+                        }).catch((err) => {
+                        console.log(`network error : ${err}`);
+                    })
+                }
+                break;
+            case 5:
+                let arr = MemoryInjection.castStress(1000000);
+                console.log(`memory arr : ${arr}`);
+                break;
+            case 6:
                 break;
 
         }
@@ -103,6 +124,12 @@ class InjectionModule extends React.Component {
             },
             {
                 name: '|-Write File to FS-|',
+            },
+            {
+                name: '|-Network Flooding-|',
+            },
+            {
+                name: '|-Memory Injection-|',
             },
             {
                 name: '|-Back-|',
