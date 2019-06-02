@@ -1,4 +1,7 @@
+import os
 import re
+from datetime import datetime
+from multiprocessing import Process
 from config import *
 from random import randint
 from time import sleep
@@ -16,11 +19,12 @@ class Node:
 
 class BaseTestFlow:
 
-    # TODO - Change button click to position click to avoid the affect dynamic elements
+    CURRENT_LOG_FILENAME = "current_log.txt"
 
     def __init__(self):
         self.complete = set()
         self.current = None
+
 
     def setup(self):
         raise NotImplementedError()
@@ -48,6 +52,9 @@ class BaseTestFlow:
     def navigate_back(self, back_btn):
         raise NotImplementedError()
 
+    def collect_device_log_process_target(self):
+        raise NotImplementedError()
+
     def dfs(self):
         sleep(10)
         parsed = self.parse_current_screen()
@@ -69,7 +76,7 @@ class BaseTestFlow:
             for i in range(CLICK_TIMES_FOR_EACH_BUTTON * len(act_btns)):
                 rand_index = randint(0, len(act_btns) - 1)
                 act_btn = act_btns[rand_index]
-                act_btn_text = act_btn.text
+                act_btn_text = act_btn.text.strip()
                 if not re.match(r"\|-.*-\|", act_btn_text):
                     raise AppCrashedException("App crashed in screen {0}".format(node.name))
                 act_btn.click()
@@ -83,17 +90,31 @@ class BaseTestFlow:
         return node
                 
     def main(self):
+        round = 0
+        self.complete = set()
         while True:
-            self.complete = set()
-            while True:
-                sleep(1)
-                self.setup()
-                try:
-                    root = self.dfs()
-                except:
-                    print("Broken on screen %s" % self.current)
-                    self.complete.add(self.current)
-                    self.tear_down()
-                else:
-                    self.tear_down()
-                    break
+            sleep(1)
+            self.setup()
+            # start log process
+            log_proc = Process(target=self.collect_device_log_process_target)
+            log_proc.start()
+            crash_occured = False
+            try:
+                root = self.dfs()
+            except:
+                crash_occured = True
+                print("Broken on screen %s" % self.current)
+                self.complete.add(self.current)
+            finally:
+                self.tear_down()
+                log_proc.terminate()
+
+            if crash_occured:
+                time_str = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+                log_filename = "round_%d_%s_%s.txt" % (round, time_str, self.current)
+                command = "mv '%s' '%s'" % (self.CURRENT_LOG_FILENAME, log_filename)
+                os.system(command)
+            else:
+                print("All tests in round %d done" % round)
+                round += 1
+                self.complete = set()

@@ -8,11 +8,21 @@ import ImageViewer from 'react-native-image-zoom-viewer'
 export default class ImageViewerScreen extends BaseScreenComponent {
 
     images = [{
-        url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460',
+        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-desktop-v1.png',
     }, {
-        url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460',
+        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-desktop-v2.png',
     }, {
-        url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460',
+        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-desktop-v3.png',
+    }, {
+        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-desktop-v4.png',
+    }, {
+        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-Desktop-v1-White.png',
+    }, {
+        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-Desktop-v2-Black.png',
+    }, {
+        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-Desktop-v3-White.png',
+    }, {
+        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-Desktop-v4-Black.png',
     }];
 
     constructor(props) {
@@ -24,13 +34,13 @@ export default class ImageViewerScreen extends BaseScreenComponent {
 
     renderArrowLeft() {
         return (
-            <Text style={styles.buttonText}> {"|-<-|"} </Text>
+            <Text style={styles.buttonText}>{"|-previous-|"}</Text>
         )
     }
 
     renderArrowRight() {
         return (
-            <Text style={styles.buttonText}> {"|->-|"} </Text>
+            <Text style={styles.buttonText}>{"|-next-|"}</Text>
         )
     }
 
@@ -54,7 +64,7 @@ styles = StyleSheet.create({
         flex: 1
     },
     buttonText: {
-        backgroundColor: "#00DDDD",
+        backgroundColor: "rgba(200, 200, 200, 0.1)",
         fontSize: 20
     }
 });

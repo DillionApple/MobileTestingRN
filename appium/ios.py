@@ -27,7 +27,7 @@ class IOSTestFlow(BaseTestFlow):
     def __walk_through_xml(self, soup, ret):
         if not hasattr(soup, 'children') or len(list(soup.children)) == 0:
             try:
-                name = soup.attrs['name']
+                name = soup.attrs['name'].strip()
             except:
                 return
             id_match = re.match(ID_RE_PATTERN, name)
