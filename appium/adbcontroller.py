@@ -49,8 +49,8 @@ def read_cpu():
 
 
 if __name__ == '__main__':
-    read_mem()
+    # read_mem()
     read_cpu()
-    volume_mute()
+    # volume_mute()
     # for i in range(10):
     #     volume_up()
