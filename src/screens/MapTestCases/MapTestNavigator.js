@@ -22,11 +22,11 @@ export const routeConfigMap = {
     AnimatedNavigation: {screen : AnimatedNavigation},
     DefaultMarkers: {screen: DefaultMarkers},
     ViewsAsMarkers: {screen: ViewsAsMarkers},
-    DisplayLatLng: {screen: DisplayLatLng},
-    EventListener: {screen: EventListener},
-    MarkerTypes: {screen: MarkerTypes},
-    DraggableMarkers: {screen: DraggableMarkers},
-    PolygonCreator: {screen: PolygonCreator},
+    //DisplayLatLng: {screen: DisplayLatLng},
+    //EventListener: {screen: EventListener},
+    //MarkerTypes: {screen: MarkerTypes},
+    //DraggableMarkers: {screen: DraggableMarkers},
+    //PolygonCreator: {screen: PolygonCreator},
 };
 
 

@@ -5,7 +5,6 @@ import { View, Text, Button, Dimensions, StyleSheet } from 'react-native'
 import * as Progress from 'react-native-progress'
 import RNFetchBlob from "rn-fetch-blob";
 
-
 class FileDownloaderItem extends React.Component {
 
     filename = null;
@@ -26,7 +25,7 @@ class FileDownloaderItem extends React.Component {
             loaded: 0,
             total: 0,
             paused: true,
-            speed: "",
+            speed: "Paused",
         };
         RNFetchBlob.fs.unlink(this.downloadDest).catch((err) => {})
     }
@@ -57,6 +56,11 @@ class FileDownloaderItem extends React.Component {
                     Range: `bytes=${stat.size}-`
                 });
             this.promise.progress((loaded, total) => {
+                let timestamp = Date.now();
+                let duration = (timestamp - this.lastTimestamp) / 1000;
+                if (duration < 4) {
+                    return
+                }
                 loaded = parseInt(loaded);
                 total = parseInt(total);
                 if (this.state.total != 0) {
@@ -71,12 +75,12 @@ class FileDownloaderItem extends React.Component {
                         downloadProgress: loaded / total
                     })
                 }
-                let timestamp = Date.now();
-                let duration = (timestamp - this.lastTimestamp) / 1000;
                 let increase = (this.state.loaded - this.lastLoaded) / 1024 / 1024;
                 let speed = (increase / duration).toFixed(2);
                 if (speed >= 0) {
                     this.setState({speed: `${speed}MB/S`});
+                } else {
+                    this.setState({speed: `Paused`});
                 }
                 this.lastTimestamp = timestamp;
                 this.lastLoaded = this.state.loaded;
@@ -98,7 +102,7 @@ class FileDownloaderItem extends React.Component {
 
     pauseClicked() {
         if (this.promise) {
-            this.setState({paused: true, speed: ""});
+            this.setState({paused: true, speed: "Paused"});
             this.promise.cancel((err) => {});
             this.promise = null
         }
@@ -122,7 +126,7 @@ class FileDownloaderItem extends React.Component {
                     <Text>{(this.state.loaded/1024/1024).toFixed(2)}MB / {(this.state.total/1024/1024).toFixed(2)}MB</Text>
                 </View>
                 <View style={styles.progressBarContainer}>
-                    <Progress.Bar style={styles.progressBar} progress={this.state.downloadProgress} height={5}/>
+                    <Progress.Bar progress={this.state.downloadProgress} height={5} width={Dimensions.get('window').width * 0.95}/>
                 </View>
                 <View style={styles.footerContainer}>
                     <Text>{this.state.speed}</Text>
@@ -153,9 +157,6 @@ const styles = StyleSheet.create({
     progressBarContainer: {
         justifyContent: 'center',
         alignItems: 'stretch',
-    },
-    progressBar: {
-        width: null,
     },
     footerContainer: {
         flexDirection: 'row',

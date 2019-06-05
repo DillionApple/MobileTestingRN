@@ -1,5 +1,6 @@
 import re
 from time import sleep
+import subprocess
 
 from appium import webdriver
 from bs4 import BeautifulSoup
@@ -13,9 +14,10 @@ from android_config import *
 class AndroidTestFlow(BaseTestFlow):
 
     def __init__(self):
-        pass
+        super().__init__()
     
     def setup(self):
+        print("\nSetting up the device\n")
         self.driver = webdriver.Remote(
             command_executor=COMMAND_EXECUTOR,
             desired_capabilities={
@@ -25,8 +27,17 @@ class AndroidTestFlow(BaseTestFlow):
                 'uuid': UUID,
                 'appPackage': APP_PACKAGE,
                 'appActivity': APP_ACTIVITY,
+                'autoGrantPermissions': 'true'
             }                
         )
+
+    def collect_device_log_process_target(self):
+        proc = subprocess.Popen(['adb', 'logcat'], stdout=subprocess.PIPE)
+        with open(self.CURRENT_LOG_FILENAME, "w") as f:
+            while True:
+                line = proc.stdout.readline()
+                f.write(line.decode('utf-8'))
+
 
     def parse_current_screen(self):
         source = self.driver.page_source
@@ -39,7 +50,7 @@ class AndroidTestFlow(BaseTestFlow):
         ret['back_btn'] = None
         
         for el in elements:
-            text = el.text
+            text = el.text.strip()
             id_match = re.match(ID_RE_PATTERN, text)
             act_btn_match = re.match(ACT_BTN_RE_PATTERN, text)
             nav_btn_match = re.match(NAV_BTN_RE_PATTERN, text)
@@ -59,12 +70,5 @@ class AndroidTestFlow(BaseTestFlow):
         
         
 if __name__ == '__main__':
-
-    while True:
-        try:
-            android_test_flow = AndroidTestFlow()
-            android_test_flow.main()
-        except:
-            print("App Crashed")
-
-        sleep(10)
+    android_test_flow = AndroidTestFlow()
+    android_test_flow.main()

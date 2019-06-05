@@ -1,0 +1,2 @@
+class AppCrashedException(Exception):
+    pass
