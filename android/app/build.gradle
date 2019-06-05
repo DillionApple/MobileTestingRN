@@ -108,6 +108,11 @@ android {
         versionCode 1
         versionName "1.0"
         missingDimensionStrategy 'react-native-camera', 'general'
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
+        }
     }
     splits {
         abi {
@@ -134,6 +139,11 @@ android {
                 output.versionCodeOverride =
                         versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
             }
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
         }
     }
 }

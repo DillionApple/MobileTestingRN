@@ -8,8 +8,15 @@ import com.facebook.react.bridge.ReactMethod;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Random;
 
 public class MemoryInjectionModule extends ReactContextBaseJavaModule {
+
+    static {
+        System.loadLibrary("jni_funcs");
+    }
+
+    public native String startMemoryStress();
 
     public MemoryInjectionModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -22,9 +29,12 @@ public class MemoryInjectionModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void castStress(int size) {
-        int[] arr = new int[size];
-        for (int i = 0; i < size; i++) {
-                arr[i] = i;
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String ret = startMemoryStress();
+                System.out.println(ret);
+            }
+        }).start();
     }
 }
