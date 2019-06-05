@@ -40,7 +40,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNCameraPackage(),
               new ReactNativeRestartPackage(),
               new ReactNativeExceptionHandlerPackage(),
-              new RNThreadPackage(mReactNativeHost),
+              new RNThreadPackage(mReactNativeHost,new RNFSPackage(),new RNZipArchivePackage(),new RNCameraPackage(),new MemoryInjectionPackage()),
               new RNFSPackage(),
               new RNZipArchivePackage(),
               new RNFetchBlobPackage(),

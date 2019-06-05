@@ -10,8 +10,9 @@ class InjectionModule extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible: false
-        }
+            visible: false,
+        };
+        this.threadList = [];
     }
 
     componentWillMount(): void {
@@ -36,77 +37,35 @@ class InjectionModule extends React.Component {
 
     injection(type) {
         let thread = null;
-        switch (type) {
-            case 0:
-                thread = new Thread('BGTaskWorkerTest.js');
-                thread.postMessage('100000');
-                thread.onmessage = (message) => console.log(message);
-                break;
-            case 1:
-                thread = new Thread('BGTaskWorkerTest.js');
-                thread.postMessage('1000000');
-                thread.onmessage = (message) => console.log(message);
-                break;
-            case 2:
-                InteractionManager.runAfterInteractions(() => {
-                    let RNFS = require('react-native-fs');
-                    let mainPath = `${RNFS.DocumentDirectoryPath}/MobileTesting`;
-                    const sourcePath = `${mainPath}/test.txt`;
-                    const targetPath = `${mainPath}/test.zip`;
-                    console.log(`sourcepath:${sourcePath}`);
-                    for (let i = 0; i < 10; i++) {
-                        console.log(`${i}th zipping`);
-                        zip(sourcePath, targetPath)
-                            .then((path) => {
-                                console.log(`zip completed at ${path}`)
-                            })
-                            .catch((error) => {
-                                console.log(error)
-                            })
+        console.log(`Injection Type : ${type}`);
+        try {
+            switch (type) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    thread = new Thread('BGTaskWorker.js');
+                    thread.postMessage(type.toString());
+                    thread.onmessage = (message) => console.log(message);
+                    this.threadList.push(thread);
+                    break;
+                case 5:
+                    let arr = MemoryInjection.castStress(1000000);
+                    console.log(`memory arr : ${arr}`);
+                    break;
+                case 6:
+                    for (let i = 0; i < this.threadList.length; i++) {
+                        console.log(`thread${i} terminated`);
+                        this.threadList[i].terminate();
                     }
-                });
-                break;
-            case 3:
-                InteractionManager.runAfterInteractions(() => {
-                    let RNFS = require('react-native-fs');
-                    let mainPath = `${RNFS.DocumentDirectoryPath}/MobileTesting`;
-                    const txtPath = `${mainPath}/test.txt`;
-                    RNFS.mkdir(mainPath).then(res => {
-                        console.log('PATH WRITTEN');
-                    }).then(() => {
-                        let res = this.randomWord(1000 * 1000 * 10);
-                        console.log('BEFORE FILE WRITTEN');
-                        RNFS.writeFile(txtPath, res, 'utf8')
-                    }).then((success) => {
-                        console.log('FILE WRITTEN!');
-                    }).catch((err) => {
-                        console.log(err.message);
-                    })
-                });
-                break;
-            case 4:
-                const baseUrl = Platform.OS === 'android' ?
-                    'http://192.168.56.1:8080/' : 'http://localhost:8080/';
-                console.log(`baseUrl : ${baseUrl}ping`);
-                for (let i = 0; i < 10; i++) {
-                    fetch(`https://www.baidu.com`)
-                        .then((response) => {
-                            response.json()
-                        })
-                        .then((responseJson) => {
-                            console.log(`respose Json : ${responseJson}`);
-                        }).catch((err) => {
-                        console.log(`network error : ${err}`);
-                    })
-                }
-                break;
-            case 5:
-                let arr = MemoryInjection.castStress(1000000);
-                console.log(`memory arr : ${arr}`);
-                break;
-            case 6:
-                break;
-
+                    this.threadList = [];
+                    break;
+                case 7:
+                    break;
+            }
+        }catch (e) {
+            console.log(`Injection Exception : ${e}`);
         }
         this.changeVisibility();
     }
@@ -117,7 +76,7 @@ class InjectionModule extends React.Component {
                 name: '|-loop 100000 times-|',
             },
             {
-                name: '|-loop 1000000 times-|',
+                name: '|-infinite loop-|',
             },
             {
                 name: '|-Zip File-|',
@@ -130,6 +89,9 @@ class InjectionModule extends React.Component {
             },
             {
                 name: '|-Memory Injection-|',
+            },
+            {
+                name: '|-Clear All Threads-|',
             },
             {
                 name: '|-Back-|',
