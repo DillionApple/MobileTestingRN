@@ -24,10 +24,12 @@ self.onmessage = (task) => {
                 }
                 break;
             case 1:
-                let i = 0;
-                while (true) {
-                    i += 1;
-                }
+                setInterval(function () {
+                    let j;
+                    for (let i = 0; i < 1000000; ++i) {
+                        j = Math.random() * Math.random();
+                    }
+                }, 0);
                 break;
             case 2:
                 RNFS = require('react-native-fs');
