@@ -41,6 +41,7 @@ class InjectionModule extends React.Component {
         try {
             switch (type) {
                 case 0:
+                    break;
                 case 1:
                 case 2:
                 case 3:
@@ -73,10 +74,10 @@ class InjectionModule extends React.Component {
     render() {
         const injectionList = [
             {
-                name: '|-loop 100000 times-|',
+                name: '|-Empty-|',
             },
             {
-                name: '|-infinite loop-|',
+                name: '|-Infinite Loop-|',
             },
             {
                 name: '|-Zip File-|',
@@ -91,18 +92,18 @@ class InjectionModule extends React.Component {
                 name: '|-Memory Injection-|',
             },
             {
-                name: '|-Clear All Threads-|',
+                name: 'Clear',
             },
             {
-                name: '|-Back-|',
-            },
+                name: 'Back',
+            }
         ];
         return (
             <View>
                 <Overlay
                     isVisible={this.state.visible}
-                    width={250}
-                    height='auto'
+                    width={'100%'}
+                    height={'100%'}
                 >
                     <View>
                         {

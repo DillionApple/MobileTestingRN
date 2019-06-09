@@ -48,6 +48,8 @@ class AndroidTestFlow(BaseTestFlow):
         ret['act_btns'] = []
         ret['nav_btns'] = []
         ret['back_btn'] = None
+        ret['injection_btn'] = None
+        ret['clear_btn'] = None
         
         for el in elements:
             text = el.text.strip()
@@ -55,6 +57,8 @@ class AndroidTestFlow(BaseTestFlow):
             act_btn_match = re.match(ACT_BTN_RE_PATTERN, text)
             nav_btn_match = re.match(NAV_BTN_RE_PATTERN, text)
             back_btn_match = re.match(BACK_BTN_RE_PATTERN, text, re.IGNORECASE)
+            injection_btn_match = re.match(INJECTION_BTN_RE_PATTERN, text, re.IGNORECASE)
+            injection_clear_btn_match = re.match(INJECTION_CLEAR_BTN_RE_PATTERN, text, re.IGNORECASE)
             if id_match:
                 ret['id'] = id_match.group()
             elif act_btn_match:
@@ -63,6 +67,10 @@ class AndroidTestFlow(BaseTestFlow):
                 ret['nav_btns'].append(el)
             elif back_btn_match:
                 ret['back_btn'] = el
+            elif injection_btn_match:
+                ret['injection_btn'] = el
+            elif injection_clear_btn_match:
+                ret['clear_btn'] = el
         return ret
 
     def navigate_back(self, back_btn):
