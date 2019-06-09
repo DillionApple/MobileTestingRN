@@ -150,7 +150,11 @@ class BaseTestFlow:
             if crash_occured:
                 time_str = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
                 log_filename = "round_%d_%s_%s_%s.txt" % (round, time_str, self.current_screen, self.current_stress)
-                command = "mv '%s' '%s'" % (self.CURRENT_LOG_FILENAME, log_filename)
+                if os.name == "nt":# running in windows
+                    log_filename = log_filename.replace(" ", "_")
+                    command = "move %s %s" % (self.CURRENT_LOG_FILENAME, log_filename)
+                else:# running in linux
+                    command = "mv '%s' '%s'" % (self.CURRENT_LOG_FILENAME, log_filename)
                 os.system(command)
             else:
                 print("All tests in round %d done" % round)

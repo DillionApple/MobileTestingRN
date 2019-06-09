@@ -1,4 +1,5 @@
 import re
+import os
 from time import sleep
 import subprocess
 
@@ -36,7 +37,11 @@ class AndroidTestFlow(BaseTestFlow):
         with open(self.CURRENT_LOG_FILENAME, "w") as f:
             while True:
                 line = proc.stdout.readline()
-                f.write(line.decode('utf-8'))
+                if os.name == "nt":# on windows
+                    f.write("%s\n" % str(line)[2:-5])
+                else:# on linux
+                    f.write(line.decode('utf-8'))
+
 
 
     def parse_current_screen(self):
