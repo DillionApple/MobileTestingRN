@@ -1,5 +1,6 @@
 import re
 import os
+import sys
 from time import sleep
 import subprocess
 
@@ -10,31 +11,30 @@ from base import BaseTestFlow
 from config import *
 from android_config import *
 
-
-
 class AndroidTestFlow(BaseTestFlow):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, device_name):
+        super().__init__(device_name)
     
     def setup(self):
-        print("\nSetting up the device\n")
+        print("\nSetting up the device %s\n" % self.device_name)
+        desired_capabilities = {
+            'platformName': PLATFORM_NAME,
+            'platformVersion': DEVICE_DICT[self.device_name]["PLATFORM_VERSION"],
+            'deviceName': self.device_name,
+            'uuid': DEVICE_DICT[self.device_name]["UUID"],
+            'appPackage': APP_PACKAGE,
+            'appActivity': APP_ACTIVITY,
+            'autoGrantPermissions': 'true'
+        }
         self.driver = webdriver.Remote(
             command_executor=COMMAND_EXECUTOR,
-            desired_capabilities={
-                'platformName': PLATFORM_NAME,
-                'platformVersion': PLATFORM_VERSION,
-                'deviceName': DEVICE_NAME,
-                'uuid': UUID,
-                'appPackage': APP_PACKAGE,
-                'appActivity': APP_ACTIVITY,
-                'autoGrantPermissions': 'true'
-            }                
+            desired_capabilities=desired_capabilities
         )
 
     def collect_device_log_process_target(self):
         proc = subprocess.Popen(['adb', 'logcat'], stdout=subprocess.PIPE)
-        with open(self.CURRENT_LOG_FILENAME, "w") as f:
+        with open(self.current_log_filename, "w") as f:
             while True:
                 line = proc.stdout.readline()
                 if os.name == "nt":# on windows
@@ -83,5 +83,6 @@ class AndroidTestFlow(BaseTestFlow):
         
         
 if __name__ == '__main__':
-    android_test_flow = AndroidTestFlow()
+    device_name = sys.argv[1]
+    android_test_flow = AndroidTestFlow(device_name)
     android_test_flow.main()
