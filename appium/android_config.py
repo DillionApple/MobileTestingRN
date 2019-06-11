@@ -5,10 +5,10 @@ APP_PACKAGE = "com.mobiletesting"
 APP_ACTIVITY = "MainActivity"
 
 
-def __build_device_dict(uuid, platform_version):
+def __build_device_dict(udid, platform_version):
     return {
-        "UUID": uuid,
-        "PLATFORM_VERSION": platform_version
+        "UDID": udid,
+        "PLATFORM_VERSION": platform_version,
     }
 
 DEVICE_DICT = {

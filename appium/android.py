@@ -22,10 +22,11 @@ class AndroidTestFlow(BaseTestFlow):
             'platformName': PLATFORM_NAME,
             'platformVersion': DEVICE_DICT[self.device_name]["PLATFORM_VERSION"],
             'deviceName': self.device_name,
-            'uuid': DEVICE_DICT[self.device_name]["UUID"],
+            'udid': DEVICE_DICT[self.device_name]["UDID"],
             'appPackage': APP_PACKAGE,
             'appActivity': APP_ACTIVITY,
-            'autoGrantPermissions': 'true'
+            'autoGrantPermissions': True,
+            'automationName': "UiAutomator2",
         }
         self.driver = webdriver.Remote(
             command_executor=COMMAND_EXECUTOR,
