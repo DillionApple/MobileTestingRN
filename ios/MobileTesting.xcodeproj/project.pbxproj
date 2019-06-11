@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -26,6 +27,7 @@
 		16AF68D146014D3482534583 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ECE007C521BC45758220E5B0 /* libRNFS.a */; };
 		181C6F75E46C40D4A0F84A5A /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 208CC169CEF942AEA8F6CFB3 /* libRNVectorIcons.a */; };
 		1E3FF6C81CC34E77B0955A87 /* libLottieReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7110172DFF5448EDAB9B532B /* libLottieReactNative.a */; };
+		1FCD310760F442B0BC8AA942 /* libRNAudio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C4DC6E71C9431E8892CFF0 /* libRNAudio.a */; };
 		22D84D80D2FD409F95ABF21C /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B9BC5EF89F8D44EB8DF1BCCE /* Entypo.ttf */; };
 		2590ECC0C9104102874755B9 /* libRNGestureHandler-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A78B0050F2134199BFF839FF /* libRNGestureHandler-tvOS.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -51,6 +53,7 @@
 		663D8F1DD15C40A7B04D24C2 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2F6F17A35324B238507E2C1 /* EvilIcons.ttf */; };
 		73E8AFF8794F429C8A274892 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF83D4C291BC4176908A241A /* libRNCamera.a */; };
 		74070858979543ED860E2276 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 58B47D60CD07498E90E980C8 /* FontAwesome5_Regular.ttf */; };
+		748149DC22AE40500015AFBE /* DB_HOLDER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748149DB22AE40500015AFBE /* DB_HOLDER.swift */; };
 		74AFD5BB2259F18D0095BAB9 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74AFD5B12259F1750095BAB9 /* Lottie.framework */; };
 		74AFD5BC2259F18D0095BAB9 /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74AFD5B12259F1750095BAB9 /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		75520FC1CEF84329BC4CF8B3 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC7661C3FE684B0E82FB7AA6 /* libAirMaps.a */; };
@@ -58,6 +61,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		949EFB6B87124EBCA6857391 /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F361A58B09B24B7681BF7AF2 /* libRCTVideo.a */; };
 		970BCE06856348F4AFB901E9 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDFC4DDDC8694A04981E9BE2 /* AntDesign.ttf */; };
+		A4A4B60AA4944163BF83B8ED /* libWatermelonDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2820D7A19C4249DEBFC9DA74 /* libWatermelonDB.a */; };
 		AA0951733ACE4D109F790945 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F935FE48E9244E4297CAB866 /* FontAwesome5_Brands.ttf */; };
 		AC0E5091A92B4A7B88FFF3D3 /* libRNZipArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAEE99C805284D9AB54FAC7B /* libRNZipArchive.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
@@ -73,7 +77,6 @@
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 		F96AA4B0F9BF4860A9B7F07E /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 532B72D5EC07463BAC652994 /* libRNVectorIcons-tvOS.a */; };
 		FD653BDD7660467CA10A0487 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A585F56D8944EC48950AFB3 /* libRNGestureHandler.a */; };
-		1FCD310760F442B0BC8AA942 /* libRNAudio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C4DC6E71C9431E8892CFF0 /* libRNAudio.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -371,6 +374,20 @@
 			remoteGlobalIDString = 641E28441F0EEC8500443AF6;
 			remoteInfo = "RCTVideo-tvOS";
 		};
+		748149D822AE3ECC0015AFBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26F7248DE6A24832B7F17F99 /* RNAudio.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 42F559BA1CFC90C400DC3F84;
+			remoteInfo = RNAudio;
+		};
+		74814A3322AE407A0015AFBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 378BC9A71C1C481E8ED33C36 /* WatermelonDB.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6E660D5E213BCCD300189354;
+			remoteInfo = WatermelonDB;
+		};
 		74819C682254E8BB00F9AA9A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -536,12 +553,15 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		18D5C349D0A848C2AA1F7E26 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		208CC169CEF942AEA8F6CFB3 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
+		26F7248DE6A24832B7F17F99 /* RNAudio.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAudio.xcodeproj; path = "../node_modules/react-native-audio/ios/RNAudio.xcodeproj"; sourceTree = "<group>"; };
+		2820D7A19C4249DEBFC9DA74 /* libWatermelonDB.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libWatermelonDB.a; sourceTree = "<group>"; };
 		2AF6C2652E35417FA9D9BCEC /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2BA1533940E8482DA91DE171 /* libReactNativeExceptionHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeExceptionHandler.a; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* MobileTesting-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MobileTesting-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* MobileTesting-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MobileTesting-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DF6FF4752CA49B0B8C1481C /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
+		378BC9A71C1C481E8ED33C36 /* WatermelonDB.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = WatermelonDB.xcodeproj; path = "../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB.xcodeproj"; sourceTree = "<group>"; };
 		3DF36B29DB10403D8193BEF8 /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
 		430D55173B9F4DE6B74758D3 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		4D69C3E3899C455B838C4443 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
@@ -551,8 +571,11 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		60F92A70C85342F981F94788 /* RNZipArchive.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNZipArchive.xcodeproj; path = "../node_modules/react-native-zip-archive/ios/RNZipArchive.xcodeproj"; sourceTree = "<group>"; };
 		61E530719BBB44EDB13FB158 /* RNThread.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNThread.xcodeproj; path = "../node_modules/react-native-threads/ios/RNThread.xcodeproj"; sourceTree = "<group>"; };
+		64C4DC6E71C9431E8892CFF0 /* libRNAudio.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNAudio.a; sourceTree = "<group>"; };
 		659ADAF82FBB4831BF635332 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		7110172DFF5448EDAB9B532B /* libLottieReactNative.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libLottieReactNative.a; sourceTree = "<group>"; };
+		748149DA22AE40500015AFBE /* MobileTesting-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MobileTesting-Bridging-Header.h"; sourceTree = "<group>"; };
+		748149DB22AE40500015AFBE /* DB_HOLDER.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DB_HOLDER.swift; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7A585F56D8944EC48950AFB3 /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -587,8 +610,6 @@
 		F2F74E891BBD4AF99D9B18C5 /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		F361A58B09B24B7681BF7AF2 /* libRCTVideo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTVideo.a; sourceTree = "<group>"; };
 		F935FE48E9244E4297CAB866 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
-		26F7248DE6A24832B7F17F99 /* RNAudio.xcodeproj */ = {isa = PBXFileReference; name = "RNAudio.xcodeproj"; path = "../node_modules/react-native-audio/ios/RNAudio.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		64C4DC6E71C9431E8892CFF0 /* libRNAudio.a */ = {isa = PBXFileReference; name = "libRNAudio.a"; path = "libRNAudio.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -634,6 +655,7 @@
 				0480D6CEDA684CD9B8BF5CCC /* libRNFetchBlob.a in Frameworks */,
 				73E8AFF8794F429C8A274892 /* libRNCamera.a in Frameworks */,
 				1FCD310760F442B0BC8AA942 /* libRNAudio.a in Frameworks */,
+				A4A4B60AA4944163BF83B8ED /* libWatermelonDB.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -755,6 +777,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				748149DB22AE40500015AFBE /* DB_HOLDER.swift */,
+				748149DA22AE40500015AFBE /* MobileTesting-Bridging-Header.h */,
 			);
 			name = MobileTesting;
 			sourceTree = "<group>";
@@ -889,6 +913,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		748149D522AE3ECC0015AFBE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				748149D922AE3ECC0015AFBE /* libRNAudio.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		74814A3022AE407A0015AFBE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				74814A3422AE407A0015AFBE /* libWatermelonDB.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		74819C422254E8BB00F9AA9A /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -909,6 +949,8 @@
 				A70EC2F91B0146BB867CCFE6 /* libRCTRestart.a */,
 				C503560896A042DFB03F9139 /* libRNFetchBlob.a */,
 				AF83D4C291BC4176908A241A /* libRNCamera.a */,
+				64C4DC6E71C9431E8892CFF0 /* libRNAudio.a */,
+				2820D7A19C4249DEBFC9DA74 /* libWatermelonDB.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -996,6 +1038,7 @@
 				F1BAED854E1243308624812B /* RNFetchBlob.xcodeproj */,
 				5811D7453E3D45A69D7B8385 /* RNCamera.xcodeproj */,
 				26F7248DE6A24832B7F17F99 /* RNAudio.xcodeproj */,
+				378BC9A71C1C481E8ED33C36 /* WatermelonDB.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1137,6 +1180,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = TCEB344BV6;
+						LastSwiftMigration = 1020;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1235,6 +1279,10 @@
 					ProjectRef = BA660BCDB78F410EA57EA7F2 /* ReactNativeExceptionHandler.xcodeproj */;
 				},
 				{
+					ProductGroup = 748149D522AE3ECC0015AFBE /* Products */;
+					ProjectRef = 26F7248DE6A24832B7F17F99 /* RNAudio.xcodeproj */;
+				},
+				{
 					ProductGroup = 743088CC227EA4A4003BF0D8 /* Products */;
 					ProjectRef = 5811D7453E3D45A69D7B8385 /* RNCamera.xcodeproj */;
 				},
@@ -1261,6 +1309,10 @@
 				{
 					ProductGroup = 743088CE227EA4A4003BF0D8 /* Products */;
 					ProjectRef = 60F92A70C85342F981F94788 /* RNZipArchive.xcodeproj */;
+				},
+				{
+					ProductGroup = 74814A3022AE407A0015AFBE /* Products */;
+					ProjectRef = 378BC9A71C1C481E8ED33C36 /* WatermelonDB.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1554,6 +1606,20 @@
 			remoteRef = 74586753225F4AEE005B59F9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		748149D922AE3ECC0015AFBE /* libRNAudio.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNAudio.a;
+			remoteRef = 748149D822AE3ECC0015AFBE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		74814A3422AE407A0015AFBE /* libWatermelonDB.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libWatermelonDB.a;
+			remoteRef = 74814A3322AE407A0015AFBE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		74819C692254E8BB00F9AA9A /* libjsi.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1768,6 +1834,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				748149DC22AE40500015AFBE /* DB_HOLDER.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -1826,6 +1893,7 @@
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1845,7 +1913,8 @@
 					"$(SRCROOT)..\node_modules\neact-native-restartiosRCTRestart",
 					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
-					"$(SRCROOT)\..\node_modules\react-native-audio\ios",
+					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 				INFOPLIST_FILE = MobileTestingTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1856,6 +1925,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1882,6 +1952,7 @@
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1898,7 +1969,8 @@
 					"$(SRCROOT)..\node_modules\neact-native-restartiosRCTRestart",
 					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
-					"$(SRCROOT)\..\node_modules\react-native-audio\ios",
+					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 				INFOPLIST_FILE = MobileTestingTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1909,6 +1981,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1936,6 +2009,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = TCEB344BV6;
@@ -1953,7 +2027,8 @@
 					"$(SRCROOT)..\node_modules\neact-native-restartiosRCTRestart",
 					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
-					"$(SRCROOT)\..\node_modules\react-native-audio\ios",
+					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 				INFOPLIST_FILE = MobileTesting/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1964,6 +2039,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zelkova.MobileTesting;
 				PRODUCT_NAME = MobileTesting;
+				SWIFT_OBJC_BRIDGING_HEADER = "MobileTesting-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1972,6 +2050,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TCEB344BV6;
 				HEADER_SEARCH_PATHS = (
@@ -1988,7 +2067,8 @@
 					"$(SRCROOT)..\node_modules\neact-native-restartiosRCTRestart",
 					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
-					"$(SRCROOT)\..\node_modules\react-native-audio\ios",
+					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 				INFOPLIST_FILE = MobileTesting/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1999,6 +2079,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zelkova.MobileTesting;
 				PRODUCT_NAME = MobileTesting;
+				SWIFT_OBJC_BRIDGING_HEADER = "MobileTesting-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -2029,7 +2111,8 @@
 					"$(SRCROOT)..\node_modules\neact-native-restartiosRCTRestart",
 					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
-					"$(SRCROOT)\..\node_modules\react-native-audio\ios",
+					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 				INFOPLIST_FILE = "MobileTesting-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2039,6 +2122,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2090,7 +2174,8 @@
 					"$(SRCROOT)..\node_modules\neact-native-restartiosRCTRestart",
 					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
-					"$(SRCROOT)\..\node_modules\react-native-audio\ios",
+					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 				INFOPLIST_FILE = "MobileTesting-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2100,6 +2185,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2150,7 +2236,8 @@
 					"$(SRCROOT)..\node_modules\neact-native-restartiosRCTRestart",
 					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
-					"$(SRCROOT)\..\node_modules\react-native-audio\ios",
+					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 				INFOPLIST_FILE = "MobileTesting-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -2160,6 +2247,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2210,7 +2298,8 @@
 					"$(SRCROOT)..\node_modules\neact-native-restartiosRCTRestart",
 					"$(SRCROOT)/../node_modules/rn-fetch-blob/ios/**",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
-					"$(SRCROOT)\..\node_modules\react-native-audio\ios",
+					"$(SRCROOT)..\node_modules\neact-native-audioios",
+					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
 				);
 				INFOPLIST_FILE = "MobileTesting-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -2220,6 +2309,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
