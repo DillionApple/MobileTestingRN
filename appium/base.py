@@ -10,13 +10,14 @@ from exception import AppCrashedException
 
 class BaseTestFlow:
 
-    CURRENT_LOG_FILENAME = "current_log.txt"
 
-    def __init__(self):
+    def __init__(self, device_name):
         self.complete = set()
         self.current_screen = None
         self.current_stress = None
         self.stresses = []
+        self.device_name = device_name
+        self.current_log_filename = "current_log_{0}.txt".format(device_name)
 
     def setup(self):
         raise NotImplementedError()
@@ -148,13 +149,14 @@ class BaseTestFlow:
                 log_proc.terminate()
 
             if crash_occured:
-                time_str = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-                log_filename = "round_%d_%s_%s_%s.txt" % (round, time_str, self.current_screen, self.current_stress)
+                time_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+                log_filename = "%s_round_%d_%s_%s_%s.txt" % (self.device_name, round, time_str, self.current_screen, self.current_stress)
                 if os.name == "nt":# running in windows
                     log_filename = log_filename.replace(" ", "_")
-                    command = "move %s %s" % (self.CURRENT_LOG_FILENAME, log_filename)
+                    log_filename = log_filename.replace("|", "-")
+                    command = "move %s %s" % (self.current_log_filename, log_filename)
                 else:# running in linux
-                    command = "mv '%s' '%s'" % (self.CURRENT_LOG_FILENAME, log_filename)
+                    command = "mv '%s' '%s'" % (self.current_log_filename, log_filename)
                 os.system(command)
             else:
                 print("All tests in round %d done" % round)
