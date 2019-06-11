@@ -45,7 +45,7 @@ class ImageViewTest extends React.Component {
                 }
             } else {
                 this.setState({pressure: true});
-                const elementsCount = 300;
+                const elementsCount = 30;
                 for (const j of Array(elementsCount).keys()) {
                     await this.timerHandle.set(1);
                     let list = this.state.imageListStyle;

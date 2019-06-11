@@ -5,6 +5,11 @@ ALIGNED_APK_PATH=./app/build/outputs/apk/release/app-release-aligned.apk
 SIGNED_APK_PATH=./app/build/outputs/apk/release/app-release-signed.apk
 APK_DST_PATH=~/Desktop/mobile_testing.apk
 
+rm $UNSIGNED_APK_PATH
+rm $ALIGNED_APK_PATH
+rm $SIGNED_APK_PATH
+rm $APK_DST_PATH
+
 ./gradlew assembleRelease
 
 $ZIP_ALIGN -v -p 4 $UNSIGNED_APK_PATH $ALIGNED_APK_PATH
