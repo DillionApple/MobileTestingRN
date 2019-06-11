@@ -41,8 +41,7 @@ class AndroidTestFlow(BaseTestFlow):
                 if os.name == "nt":# on windows
                     f.write("%s\n" % str(line)[2:-5])
                 else:# on linux
-                    f.write(line.decode('utf-8'))
-
+                    f.write("%s\n" % str(line)[2:-3])
 
 
     def parse_current_screen(self):

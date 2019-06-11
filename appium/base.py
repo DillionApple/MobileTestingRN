@@ -114,11 +114,15 @@ class BaseTestFlow:
                         rand_index = randint(0, len(act_btns) - 1)
                         act_btn = act_btns[rand_index]
                         act_btn_text = act_btn.text.strip()
-                        print(act_btn_text)
                         if not re.match(ACT_BTN_RE_PATTERN, act_btn_text):
                             raise AppCrashedException("App crashed in screen {0}, with stress {1}".format(screen_name, stress))
+                        time_before_click = datetime.now()
                         act_btn.click()
-                        print("Button {0} clicked".format(act_btn.text))
+                        print("Button {0} clicked".format(act_btn_text))
+                        time_after_click = datetime.now()
+                        time_delta_microseconds = (time_after_click - time_before_click).microseconds
+                        if time_delta_microseconds < 500000:# 0.5s
+                            sleep(0.5 - (time_delta_microseconds / 1000000))
 
                     self.clear_stress(parsed)
                     parsed = self.parse_current_screen()
@@ -150,13 +154,19 @@ class BaseTestFlow:
 
             if crash_occured:
                 time_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-                log_filename = "%s_round_%d_%s_%s_%s.txt" % (self.device_name, round, time_str, self.current_screen, self.current_stress)
+                log_filename = "{device_name}_round_{round}_{time_str}_{current_screen}_{current_stress}.txt".format(
+                               device_name=self.device_name,
+                               round=round,
+                               time_str=time_str,
+                               current_screen=self.current_screen,
+                               current_stress=self.current_stress)
+                log_filename = log_filename.replace(" ", "_")
+                log_filename = log_filename.replace("|", "_")
+
                 if os.name == "nt":# running in windows
-                    log_filename = log_filename.replace(" ", "_")
-                    log_filename = log_filename.replace("|", "-")
-                    command = "move %s %s" % (self.current_log_filename, log_filename)
+                    command = "gc %s | select -last 10000 > %s" % (self.current_log_filename, log_filename)
                 else:# running in linux
-                    command = "mv '%s' '%s'" % (self.current_log_filename, log_filename)
+                    command = "tail -n 10000 %s > %s" % (self.current_log_filename, log_filename)
                 os.system(command)
             else:
                 print("All tests in round %d done" % round)

@@ -17,5 +17,3 @@ DEVICE_DICT = {
     "huawei_p9_plus": __build_device_dict("8FS5T16C26002998", "8.0.0"),
     "samsung_s9": __build_device_dict("281b4b90cc0d7ece", "9"),
 }
-
-print(DEVICE_DICT)
