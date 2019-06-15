@@ -12,76 +12,59 @@ let randomWord = function (min) {
     return str;
 };
 
-self.onmessage = (task) => {
-    let RNFS = null;
-    let mainPath = null;
+self.onmessage = (stressName) => {
+    let RNFS = require('react-native-fs');
+    let mainPath = `${RNFS.DocumentDirectoryPath}/MobileTesting`;
     console.log(`background task start!`);
+    let writing = false;
     try {
-        switch (parseInt(task)) {
-            case 0:
-                for (let i = 0; i < 100000; i++) {
-                    console.log(`${i}th running`);
-                }
-                break;
-            case 1:
+        switch (stressName) {
+            case 'cpu':
                 setInterval(function () {
-                    let j;
                     for (let i = 0; i < 1000000; ++i) {
                         j = Math.random() * Math.random();
                     }
+                    console.log("finished 1 round")
                 }, 0);
                 break;
-            case 2:
-                RNFS = require('react-native-fs');
-                mainPath = `${RNFS.DocumentDirectoryPath}/MobileTesting`;
-                const sourcePath = `${mainPath}/test.txt`;
-                const targetPath = `${mainPath}/test.zip`;
-                console.log(`sourcepath:${sourcePath}`);
-                for (let i = 0; i < 10; i++) {
-                    console.log(`${i}th zipping`);
-                    zip(sourcePath, targetPath)
-                        .then((path) => {
-                            console.log(`zip completed at ${path}`)
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        })
-                }
-                break;
-            case 3:
-                RNFS = require('react-native-fs');
-                mainPath = `${RNFS.DocumentDirectoryPath}/MobileTesting`;
-                const txtPath = `${mainPath}/test.txt`;
+            case 'disk_write':
+                const writeToPath = `${mainPath}/disk_write.txt`;
                 RNFS.mkdir(mainPath).then(res => {
-                    console.log('PATH WRITTEN');
-                }).then(() => {
+                    console.log('PATH CREATED');
+                });
+                setInterval(function() {
+                    if (writing) return;
                     let res = randomWord(1000 * 1000 * 10);
                     console.log('BEFORE FILE WRITTEN');
-                    RNFS.writeFile(txtPath, res, 'utf8')
-                }).then((success) => {
-                    console.log('FILE WRITTEN!');
-                }).catch((err) => {
-                    console.log(err.message);
-                });
+                    writing = true;
+                    RNFS.writeFile(writeToPath, res, 'utf8').then(
+                        (success) => {
+                            console.log('FILE WRITTEN!');
+                            writing = false;
+                        }).catch(
+                        (err) => {
+                            console.log(err.message);
+                        });
+                }, 0);
                 break;
-            case 4:
-                const baseUrl = Platform.OS === 'android' ?
-                    'http://10.0.3.2:8080/ping' : 'http://localhost:8080/ping';
-                for (let i = 0; i < 10; i++) {
-                    fetch(`http://gerald.fun:5010/get/`)
-                        .then((response) => {
-                            response.text()
-                        })
-                        .then((responseJson) => {
-                            console.log(`respose Json : ${responseJson}`);
-                        }).catch((err) => {
-                        console.log(`network error : ${err}`);
-                    })
-                }
+            case 'network_download':
+                const downloadUrl = "https://dl.google.com/dl/android/studio/install/3.4.0.18/android-studio-ide-183.5452501-mac.dmg";
+                const downloadToPath = `${mainPath}/network_download`;
+                let downloadFileOptions = {
+                    fromUrl: downloadUrl,
+                    toFile: downloadToPath,
+                };
+                setInterval(function() {
+                    let result = RNFS.downloadFile(downloadFileOptions);
+                    result.promise.then(() => {
+                        console.log("Download finished")
+                    });
+                }, 0);
                 break;
-            case 5:
-                break;
-            case 6:
+            case 'memory':
+                setInterval(function () {
+                    let array = randomWord(1000 * 1000 * 10);
+                }, 0);
                 break;
         }
     } catch (e) {

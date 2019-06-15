@@ -5,10 +5,14 @@ ALIGNED_APK_PATH=./app/build/outputs/apk/release/app-release-aligned.apk
 SIGNED_APK_PATH=./app/build/outputs/apk/release/app-release-signed.apk
 APK_DST_PATH=~/Desktop/mobile_testing.apk
 
+
+
 rm $UNSIGNED_APK_PATH
 rm $ALIGNED_APK_PATH
 rm $SIGNED_APK_PATH
 rm $APK_DST_PATH
+
+node ../node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./app/src/main/res/ --entry-file ../BGTaskWorker.js --platform android --bundle-output ./app/src/main/assets/threads/BGTaskWorker.bundle
 
 ./gradlew assembleRelease
 

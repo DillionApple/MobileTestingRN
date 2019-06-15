@@ -24,78 +24,69 @@ class InjectionModule extends React.Component {
         this.setState({visible: !this.state.visible});
     }
 
-
-    randomWord(min) {
-        let str = "";
-        let arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-        for (let i = 0; i < min; i++) {
-            let pos = Math.round(Math.random() * (arr.length - 1));
-            str += arr[pos];
-        }
-        return str;
-    }
-
-    injection(type) {
+    injection(stress_name) {
         let thread = null;
-        console.log(`Injection Type : ${type}`);
+        console.log(`Injection name : ${stress_name}`);
         try {
-            switch (type) {
-                case 0:
+            switch (stress_name) {
+                case 'empty':
                     break;
-                case 1:
-                case 2:
-                case 3:
-                case 4:
+                case 'back':
+                    this.changeVisibility();
+                    break;
+                case 'cpu':
+                case 'disk_write':
+                case 'network_download':
+                case 'memory':
                     thread = new Thread('BGTaskWorker.js');
-                    thread.postMessage(type.toString());
+                    thread.postMessage(stress_name);
                     thread.onmessage = (message) => console.log(message);
                     this.threadList.push(thread);
                     break;
-                case 5:
-                    let arr = MemoryInjection.castStress(1000000);
-                    console.log(`memory arr : ${arr}`);
-                    break;
-                case 6:
+                case 'clear':
+                    console.log(`Clearing ${this.threadList.length} threads`);
                     for (let i = 0; i < this.threadList.length; i++) {
                         console.log(`thread${i} terminated`);
                         this.threadList[i].terminate();
                     }
                     this.threadList = [];
-                    break;
-                case 7:
+                    console.log("Stress cleared");
                     break;
             }
-        }catch (e) {
+        } catch (e) {
             console.log(`Injection Exception : ${e}`);
         }
-        this.changeVisibility();
     }
 
     render() {
         const injectionList = [
             {
-                name: '|-Empty-|',
+                name: 'empty',
+                title: '|-Empty-|',
             },
             {
-                name: '|-Infinite Loop-|',
+                name: 'cpu',
+                title: '|-CPU-|',
             },
             {
-                name: '|-Zip File-|',
+                name: 'disk_write',
+                title: '|-Disk Write-|'
             },
             {
-                name: '|-Write File to FS-|',
+                name: 'network_download',
+                title: '|-Network Download-|',
             },
             {
-                name: '|-Network Flooding-|',
+                name: 'memory',
+                title: '|-Memory-|'
             },
             {
-                name: '|-Memory Injection-|',
+                name: 'clear',
+                title: 'Clear',
             },
             {
-                name: 'Clear',
-            },
-            {
-                name: 'Back',
+                name: 'back',
+                title: 'Back',
             }
         ];
         return (
@@ -110,9 +101,9 @@ class InjectionModule extends React.Component {
                             injectionList.map((l, i) => (
                                 <ListItem
                                     key={i}
-                                    title={l.name}
+                                    title={l.title}
                                     onPress={() => {
-                                        this.injection(i);
+                                        this.injection(l.name);
                                     }}
                                 />
                             ))
