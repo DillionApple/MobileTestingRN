@@ -34,7 +34,7 @@ class AndroidTestFlow(BaseTestFlow):
         )
 
     def collect_device_log_process_target(self):
-        proc = subprocess.Popen(['adb', 'logcat'], stdout=subprocess.PIPE)
+        proc = subprocess.Popen(['adb', '-s', DEVICE_DICT[self.device_name]['UDID'], 'logcat'], stdout=subprocess.PIPE)
         with open(self.current_log_filename, "w") as f:
             while True:
                 line = proc.stdout.readline()

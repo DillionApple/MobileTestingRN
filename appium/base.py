@@ -163,11 +163,15 @@ class BaseTestFlow:
                 log_filename = log_filename.replace(" ", "_")
                 log_filename = log_filename.replace("|", "_")
 
-                if os.name == "nt":# running in windows
-                    command = "gc %s | select -last 10000 > %s" % (self.current_log_filename, log_filename)
-                else:# running in linux
-                    command = "tail -n 10000 %s > %s" % (self.current_log_filename, log_filename)
-                os.system(command)
+                print("Recording log, please do not terminate the program")
+                with open(self.current_log_filename, "r") as f:
+                    log_content = f.readlines()
+                    log_content = log_content[-10000:]
+
+                with open(log_filename, "w") as f:
+                    for line in log_content:
+                        f.write(line)
+                print("Recording done")
             else:
                 print("All tests in round %d done" % round)
                 round += 1
