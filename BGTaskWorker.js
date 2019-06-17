@@ -12,7 +12,15 @@ let randomWord = function (min) {
     return str;
 };
 
-self.onmessage = (stressName) => {
+function sleep(x) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve();
+        }, x);
+    })
+}
+
+self.onmessage = async (stressName) => {
     let RNFS = require('react-native-fs');
     let mainPath = `${RNFS.DocumentDirectoryPath}/MobileTesting`;
     console.log(`background task start!`);
@@ -20,32 +28,30 @@ self.onmessage = (stressName) => {
     try {
         switch (stressName) {
             case 'cpu':
-                setInterval(function () {
+                while (true) {
                     for (let i = 0; i < 1000000; ++i) {
                         j = Math.random() * Math.random();
                     }
-                    console.log("finished 1 round")
-                }, 0);
+                    await sleep(0);
+                }
                 break;
             case 'disk_write':
-                const writeToPath = `${mainPath}/disk_write.txt`;
-                RNFS.mkdir(mainPath).then(res => {
-                    console.log('PATH CREATED');
-                });
-                setInterval(function() {
-                    if (writing) return;
-                    let res = randomWord(1000 * 1000 * 10);
-                    console.log('BEFORE FILE WRITTEN');
+                const writeToPath = `${mainPath}/disk_write_${randomWord(16)}.txt`;
+                const str = randomWord(1000 * 1000 * 1);
+                let writing = false;
+                while (true) {
+                    if (writing) {
+                        await sleep(1000);
+                        continue;
+                    }
                     writing = true;
-                    RNFS.writeFile(writeToPath, res, 'utf8').then(
-                        (success) => {
-                            console.log('FILE WRITTEN!');
-                            writing = false;
-                        }).catch(
-                        (err) => {
-                            console.log(err.message);
-                        });
-                }, 0);
+                    console.log('BEFORE FILE WRITTEN');
+                    RNFS.mkdir(mainPath).then(res => {
+                        console.log('PATH CREATED');
+                    }).then(() => {
+                        RNFS.writeFile(writeToPath, str, 'utf8')
+                    })
+                }
                 break;
             case 'network_download':
                 const downloadUrl = "https://dl.google.com/dl/android/studio/install/3.4.0.18/android-studio-ide-183.5452501-mac.dmg";
@@ -54,17 +60,29 @@ self.onmessage = (stressName) => {
                     fromUrl: downloadUrl,
                     toFile: downloadToPath,
                 };
-                setInterval(function() {
-                    let result = RNFS.downloadFile(downloadFileOptions);
-                    result.promise.then(() => {
-                        console.log("Download finished")
+                let processing = false;
+                while (true) {
+                    if (processing) {
+                        await sleep(1000);
+                        continue;
+                    }
+                    processing = true;
+                    RNFS.mkdir(mainPath).then(res => {
+                        let result = RNFS.downloadFile(downloadFileOptions);
+                        result.promise.then(() => {
+                            console.log("Download finished");
+                            RNFS.unlink(downloadToPath).then(() => {
+                                processing = false;
+                            })
+                        });
                     });
-                }, 0);
+                }
                 break;
             case 'memory':
-                setInterval(function () {
-                    let array = randomWord(1000 * 1000 * 10);
-                }, 0);
+                let array = randomWord(1000 * 1000 * 10);
+                while (true) {
+                    await sleep(10000);
+                }
                 break;
         }
     } catch (e) {
