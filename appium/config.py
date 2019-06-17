@@ -8,4 +8,11 @@ BACK_BTN_RE_PATTERN = r"Back"
 INJECTION_BTN_RE_PATTERN = r"Injection"
 INJECTION_CLEAR_BTN_RE_PATTERN = r"Clear"
 
+CHARGING_SECONDS_AFTER_ON_CASE = 2 * 60 # charge for 2 minutes
 
+STRESS_PATTERNS = {
+    "CPU": [0, 4],
+    "Disk Write": [0, 4],
+    "Network Download": [0, 4],
+    "Memory": [0, 4],
+}

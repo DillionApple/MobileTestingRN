@@ -10,14 +10,13 @@ from exception import AppCrashedException
 
 class BaseTestFlow:
 
-
     def __init__(self, device_name):
         self.complete = set()
         self.current_screen = None
-        self.current_stress = None
-        self.stresses = []
+        self.current_stress_combination_index = 0
         self.device_name = device_name
         self.current_log_filename = "current_log_{0}.txt".format(device_name)
+        self.stress_combinations = []
 
     def setup(self):
         raise NotImplementedError()
@@ -32,6 +31,8 @@ class BaseTestFlow:
         # find action buttons |- -|
         # find navigation buttons [- -]
         # find back button
+        # find injection button
+        # find clear button
 
         # return {
         #   id: <str>
@@ -47,32 +48,42 @@ class BaseTestFlow:
     def navigate_back(self, back_btn):
         raise NotImplementedError()
 
-
-    def init_stresses(self, parsed):
-        parsed['injection_btn'].click()
-        sleep(2)
-        injection_parsed = self.parse_current_screen() # all injection buttons are stored in act_btns
-        for injection_btn in injection_parsed["act_btns"]:
-            self.stresses.append(injection_btn.text)
-        injection_parsed['back_btn'].click()
-        sleep(2)
-
-
     def collect_device_log_process_target(self):
         raise NotImplementedError()
 
-    def inject_stress(self, parsed, stress):
-        print("Injecting stress %s" % stress)
+    def init_stress_combinations(self):
+
+        def dfs_combination(stress_names, index, stress_dict):
+            if (index == len(stress_names)):
+                stress_signature = ""
+                for stress_name in stress_names:
+                    stress_signature = stress_signature + "({0}-{1})".format(stress_name, stress_dict[stress_name])
+                new_stress_dict = stress_dict.copy()
+                new_stress_dict["signature"] = stress_signature
+                self.stress_combinations.append(new_stress_dict)
+                return
+            stress_name = stress_names[index]
+            for value in STRESS_PATTERNS[stress_name]:
+                new_stress_dict = stress_dict.copy()
+                new_stress_dict[stress_name] = value
+                dfs_combination(stress_names, index + 1, new_stress_dict)
+
+        stress_names = sorted([key for key in STRESS_PATTERNS])
+        dfs_combination(stress_names, 0, {})
+
+    def inject_stress(self, parsed, stress_dict):
+        print("Injecting stress %s" % stress_dict["signature"])
         parsed['injection_btn'].click()
         sleep(2)
         injection_parsed = self.parse_current_screen()
         for injection_btn in injection_parsed["act_btns"]:
-            if injection_btn.text == stress:
-                injection_btn.click()
-                break
-        sleep(2)
+            stress_name = injection_btn.text[2:-2]
+            for i in range(stress_dict[stress_name]):
+                print("Clicking %s" % stress_name)
+                injection_btn.click() # TODO - check whether the app is crashed
+                sleep(5)
+        injection_parsed["back_btn"].click()
         print("Injection complete")
-        self.current_stress = stress
 
     def clear_stress(self, parsed):
         print("Clearing stress")
@@ -80,6 +91,8 @@ class BaseTestFlow:
         sleep(2)
         injection_parsed = self.parse_current_screen()
         injection_parsed['clear_btn'].click()
+        sleep(2)
+        injection_parsed['back_btn'].click()
         sleep(2)
         print("Clearing complete")
         self.current_stress = "Empty"
@@ -100,12 +113,11 @@ class BaseTestFlow:
                 self.complete.add(nav_btn_text)
         else:
             if len(parsed['act_btns']) > 0:
-                if not self.stresses: # initial stresses list
-                    self.init_stresses(parsed)
-                    parsed = self.parse_current_screen() # the "parsed" will be broken after new model is shown
 
-                for stress in self.stresses:
-                    self.inject_stress(parsed, stress)
+                for stress_index in range(self.current_stress_combination_index, len(self.stress_combinations)):
+                    self.current_stress_combination_index = stress_index
+                    stress_dict = self.stress_combinations[stress_index]
+                    self.inject_stress(parsed, stress_dict)
                     parsed = self.parse_current_screen()
 
                     act_btns = parsed['act_btns']
@@ -115,7 +127,9 @@ class BaseTestFlow:
                         act_btn = act_btns[rand_index]
                         act_btn_text = act_btn.text.strip()
                         if not re.match(ACT_BTN_RE_PATTERN, act_btn_text):
-                            raise AppCrashedException("App crashed in screen {0}, with stress {1}".format(screen_name, stress))
+                            raise AppCrashedException("App crashed in screen {0}, with stress {1}".format(
+                                screen_name,
+                                stress_dict["signature"]))
                         time_before_click = datetime.now()
                         act_btn.click()
                         print("Button {0} clicked".format(act_btn_text))
@@ -126,13 +140,17 @@ class BaseTestFlow:
 
                     self.clear_stress(parsed)
                     parsed = self.parse_current_screen()
+                sleep(CHARGING_SECONDS_AFTER_ON_CASE) # sleep for 10 minutes for charging
+
+            self.current_stress_combination_index = 0
 
         if parsed['back_btn']:
             self.navigate_back(parsed['back_btn'])
 
         print("Exited {0}".format(screen_name))
-                
+
     def main(self):
+        self.init_stress_combinations()
         round = 0
         self.complete = set()
         while True:
@@ -146,20 +164,25 @@ class BaseTestFlow:
                 self.dfs("[-MobileTesting-]")
             except:
                 crash_occured = True
-                print("Broken on screen %s" % self.current_screen)
-                self.complete.add(self.current_screen)
+                stress_signature = self.stress_combinations[self.current_stress_combination_index]["signature"]
+                print("Broken on screen %s, stress %s" % (
+                    self.current_screen,
+                    stress_signature
+                    ))
+                self.current_stress_combination_index += 1
             finally:
                 self.tear_down()
                 log_proc.terminate()
 
             if crash_occured:
                 time_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+                stress_signature = self.stress_combinations[self.current_stress_combination_index]["signature"]
                 log_filename = "{device_name}_round_{round}_{time_str}_{current_screen}_{current_stress}.txt".format(
                                device_name=self.device_name,
                                round=round,
                                time_str=time_str,
                                current_screen=self.current_screen,
-                               current_stress=self.current_stress)
+                               current_stress=stress_signature)
                 log_filename = log_filename.replace(" ", "_")
                 log_filename = log_filename.replace("|", "_")
 

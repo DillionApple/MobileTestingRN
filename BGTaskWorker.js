@@ -55,7 +55,7 @@ self.onmessage = async (stressName) => {
                 break;
             case 'network_download':
                 const downloadUrl = "https://dl.google.com/dl/android/studio/install/3.4.0.18/android-studio-ide-183.5452501-mac.dmg";
-                const downloadToPath = `${mainPath}/network_download`;
+                const downloadToPath = `${mainPath}/network_download_${randomWord(16)}`;
                 let downloadFileOptions = {
                     fromUrl: downloadUrl,
                     toFile: downloadToPath,

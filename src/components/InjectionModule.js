@@ -7,12 +7,15 @@ import MemoryInjection from "./MemoryModule";
 
 class InjectionModule extends React.Component {
 
+
     constructor(props) {
         super(props);
         this.state = {
             visible: false,
         };
         this.threadList = [];
+        this.RNFS = require("react-native-fs");
+        this.mainPath = `${this.RNFS.DocumentDirectoryPath}/MobileTesting`;
     }
 
     componentWillMount(): void {
@@ -29,8 +32,6 @@ class InjectionModule extends React.Component {
         console.log(`Injection name : ${stress_name}`);
         try {
             switch (stress_name) {
-                case 'empty':
-                    break;
                 case 'back':
                     this.changeVisibility();
                     break;
@@ -50,6 +51,7 @@ class InjectionModule extends React.Component {
                         this.threadList[i].terminate();
                     }
                     this.threadList = [];
+                    this.RNFS.unlink(this.mainPath);
                     console.log("Stress cleared");
                     break;
             }
@@ -60,10 +62,6 @@ class InjectionModule extends React.Component {
 
     render() {
         const injectionList = [
-            {
-                name: 'empty',
-                title: '|-Empty-|',
-            },
             {
                 name: 'cpu',
                 title: '|-CPU-|',

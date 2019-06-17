@@ -12,12 +12,16 @@ rm $ALIGNED_APK_PATH
 rm $SIGNED_APK_PATH
 rm $APK_DST_PATH
 
-node ../node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./app/src/main/res/ --entry-file ../BGTaskWorker.js --platform android --bundle-output ./app/src/main/assets/threads/BGTaskWorker.bundle
+cd ../
+node ./node_modules/react-native/local-cli/cli.js bundle --dev false --assets-dest ./android/app/src/main/res/ --entry-file ./BGTaskWorker.js --platform android --bundle-output ./android/app/src/main/assets/threads/BGTaskWorker.bundle
+cd android
 
 ./gradlew assembleRelease
 
 $ZIP_ALIGN -v -p 4 $UNSIGNED_APK_PATH $ALIGNED_APK_PATH
 
-$APK_SIGNER sign --ks release-key.jks --out $SIGNED_APK_PATH $ALIGNED_APK_PATH
+echo -e "curidemo\n" | $APK_SIGNER sign --ks release-key.jks --out $SIGNED_APK_PATH $ALIGNED_APK_PATH
 
 cp $SIGNED_APK_PATH $APK_DST_PATH
+
+# adb install $APK_DST_PATH
