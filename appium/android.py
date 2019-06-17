@@ -27,6 +27,7 @@ class AndroidTestFlow(BaseTestFlow):
             'appActivity': APP_ACTIVITY,
             'autoGrantPermissions': True,
             'automationName': "UiAutomator2",
+            'systemPort': DEVICE_DICT[self.device_name]["SYSTEM_PORT"]
         }
         self.driver = webdriver.Remote(
             command_executor=COMMAND_EXECUTOR,
