@@ -111,6 +111,7 @@ class BaseTestFlow:
                     continue
                 nav_btn.click()
                 self.dfs(nav_btn_text)
+                self.current_screen = screen_name
                 self.complete.add(nav_btn_text)
         else:
             self.have_case_tested = True
@@ -140,6 +141,9 @@ class BaseTestFlow:
                         if time_delta_microseconds < 500000:# 0.5s
                             sleep(0.5 - (time_delta_microseconds / 1000000))
                     raise OneTestCaseCompleteException(self.current_screen)
+
+        self.navigate_back(parsed['back_btn'])
+        print("Exited {0}".format(screen_name))
 
     def main(self):
         self.init_stress_combinations()
