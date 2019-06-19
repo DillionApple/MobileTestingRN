@@ -6,7 +6,7 @@ from config import *
 from random import randint
 from time import sleep
 
-from exception import AppCrashedException
+from exception import AppCrashedException, OneTestCaseCompleteException
 
 class BaseTestFlow:
 
@@ -17,6 +17,7 @@ class BaseTestFlow:
         self.device_name = device_name
         self.current_log_filename = "current_log_{0}.txt".format(device_name)
         self.stress_combinations = []
+        self.have_case_tested = False
 
     def setup(self):
         raise NotImplementedError()
@@ -112,6 +113,7 @@ class BaseTestFlow:
                 self.dfs(nav_btn_text)
                 self.complete.add(nav_btn_text)
         else:
+            self.have_case_tested = True
             if len(parsed['act_btns']) > 0:
 
                 for stress_index in range(self.current_stress_combination_index, len(self.stress_combinations)):
@@ -137,22 +139,11 @@ class BaseTestFlow:
                         time_delta_microseconds = (time_after_click - time_before_click).microseconds
                         if time_delta_microseconds < 500000:# 0.5s
                             sleep(0.5 - (time_delta_microseconds / 1000000))
-
-                    self.clear_stress(parsed)
-                    parsed = self.parse_current_screen()
-                sleep(CHARGING_SECONDS_AFTER_ON_CASE) # sleep for 10 minutes for charging
-
-            self.current_stress_combination_index = 0
-
-        if parsed['back_btn']:
-            self.navigate_back(parsed['back_btn'])
-
-        print("Exited {0}".format(screen_name))
+                    raise OneTestCaseCompleteException(self.current_screen)
 
     def main(self):
         self.init_stress_combinations()
         round = 0
-        self.complete = set()
         while True:
             sleep(1)
             self.setup()
@@ -160,17 +151,24 @@ class BaseTestFlow:
             log_proc = Process(target=self.collect_device_log_process_target)
             log_proc.start()
             crash_occured = False
+            self.have_case_tested = False
             try:
                 self.dfs("[-MobileTesting-]")
-            except:
+            except AppCrashedException as e:
                 crash_occured = True
-                stress_signature = self.stress_combinations[self.current_stress_combination_index]["signature"]
                 print("Broken on screen %s, stress %s" % (
                     self.current_screen,
-                    stress_signature
+                    self.stress_combinations[self.current_stress_combination_index]["signature"]
                     ))
-                self.current_stress_combination_index += 1
+            except OneTestCaseCompleteException as e:
+                print("One test case is done on screen %s, stress %s" % (
+                    self.current_screen,
+                    self.stress_combinations[self.current_stress_combination_index]["signature"],
+                ))
             finally:
+                self.current_stress_combination_index = (self.current_stress_combination_index + 1) % len(self.stress_combinations)
+                if self.current_stress_combination_index == 0:
+                    self.complete.add(self.current_screen)
                 self.tear_down()
                 log_proc.terminate()
 
@@ -196,6 +194,9 @@ class BaseTestFlow:
                         f.write(line)
                 print("Recording done")
             else:
-                print("All tests in round %d done" % round)
-                round += 1
-                self.complete = set()
+                if not self.have_case_tested:
+                    print("All test cases are done in round %d, starting a new round" % round)
+                    round += 1
+                    self.complete = set()
+                print("Sleep for %d seconds to charge" % CHARGING_SECONDS_AFTER_EACH_CASE)
+                sleep(CHARGING_SECONDS_AFTER_EACH_CASE)
