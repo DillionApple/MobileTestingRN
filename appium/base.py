@@ -176,7 +176,7 @@ class BaseTestFlow:
 
             if crash_occured:
                 time_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-                stress_signature = self.stress_combinations[self.current_stress_combination_index]["signature"]
+                stress_signature = self.stress_combinations[self.current_stress_combination_index-1]["signature"]
                 log_filename = "{device_name}_round_{round}_{time_str}_{current_screen}_{current_stress}.txt".format(
                                device_name=self.device_name,
                                round=round,
