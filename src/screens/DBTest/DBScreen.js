@@ -15,20 +15,27 @@ const enhance = withObservables(['comment'], ({comment}) => ({
 }))
 const EnhancedComment = enhance(Comment)
 
+const PostList = ({posts}) => {
+    return (
+        posts.map(post =>
+            <EnhancedPost key={post.id} post={post}/>
+        ))
+}
 
 const Post = ({post, comments}) => (
     <View>
-        <Text>{post.title}</Text>
-        <Text>{post.body}</Text>
-        <Text>Comments</Text>
-        {/*{comments.map(comment =>*/}
-        {/*    <EnhancedComment key={comment.id} comment={comment}/>*/}
-        {/*)}*/}
+        <Text>Title:{post.title}</Text>
+        <Text>Body:{post.body}</Text>
+        <Text>Author:{post.author}</Text>
+        {/*<Text>Comments</Text>*/}
+        {comments.map(comment =>
+            <EnhancedComment key={comment.id} comment={comment}/>
+        )}
     </View>
 )
 const enhancePost = withObservables(['post'], ({post}) => ({
     post,
-    // comments: post.comments, // Shortcut syntax for `post.comments.observe()`
+    comments: post.comments, // Shortcut syntax for `post.comments.observe()`
 }))
 
 const EnhancedPost = enhancePost(Post)
@@ -38,38 +45,65 @@ class DBScreen extends BaseScreenComponent {
     constructor(props) {
         super(props);
         this.state = {
-            posts: null
+            posts: []
         }
     }
 
-    componentWillMount(): void {
-        const postsCollection = database.collections.get('posts')
+    randInt = (min, max) => {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+
+    async componentWillMount(): void {
+        const posts = await database.collections.get('posts').query().fetch();
         this.setState({
-            posts: postsCollection.query().fetch()
+            posts: posts
         })
     }
 
     slotRender() {
         return (<View style={styles.container}>
-            <EnhancedPost post={this.state.posts}/>
+            <PostList posts={this.state.posts}/>
             <Button title="|-ADD POST-|" onPress={this.addNewPost}/>
+            <Button title="|-DELETE POSTS-|" onPress={this.deletePost}/>
+            {/*<Button title="|-UPDATE POSTS-|" onPress={this.updatePosts}/>*/}
         </View>)
 
     }
 
-    async addNewPost() {
+    updatePosts = async () => {
+        const posts = await database.collections.get('posts').query().fetch()
+        this.setState({
+            posts: posts
+        });
+        console.log(`posts : ${this.state.posts}`);
+    };
+
+    addNewPost = async () => {
         const postsCollection = database.collections.get('posts')
         await database.action(async () => {
             const newPost = await postsCollection.create(post => {
-                post.title = 'New post';
-                post.body = 'Lorem ipsum...';
+                post.title = 'I am title';
+                post.body = 'I am body:' + this.randInt(0, 100);
                 post.author = 'gerald';
                 post.isPinned = false;
-            })
+            });
             console.log(`newPost : ${newPost}`);
-        })
-    }
+        });
+        this.updatePosts();
+    };
 
+    deletePost = async () => {
+        let posts = this.state.posts;
+        {
+            posts.length !== 0 &&
+            await database.action(async () => {
+                await posts[this.randInt(0, posts.length - 1)].destroyPermanently();
+            });
+        }
+        this.updatePosts();
+    }
 }
 
 

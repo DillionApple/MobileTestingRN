@@ -12,6 +12,7 @@ import FileDownloaderNavigator from "./screens/FileDownloaderTest/FileDownloader
 import CameraScreen from "./screens/CameraTest/CameraScreen"
 import ImageViewerScreen from "./screens/ImageViewerTest/ImageViewerScreen";
 import DBScreen from "./screens/DBTest/DBScreen";
+import WebGLScreen from "./screens/WebGLTest/WebGLScreen";
 
 const rootRouteConfigMap = {
     Home: {screen: HomeScreen}
@@ -26,7 +27,8 @@ export const routeConfigMap = {
     BGTaskScreen: {screen: FileSystemScreen},
     FileDownloaderTest: {screen: FileDownloaderNavigator},
     CameraScreen: {screen: CameraScreen},
-    DBScreen: {screen: DBScreen}
+    DBScreen: {screen: DBScreen},
+    WebGLScreen: {screen: WebGLScreen}
 };
 
 const AppNavigator = createStackNavigator(

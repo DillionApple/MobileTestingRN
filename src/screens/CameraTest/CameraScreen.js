@@ -99,6 +99,7 @@ class CameraScreen extends BaseScreenComponent {
     takePicture = async function () {
         if (this.camera) {
             try {
+                console.log(`function takePicture starts`);
                 const options = {quality: 0.5, base64: true};
                 this.setState({
                     isTakingPicture: true
@@ -126,6 +127,7 @@ class CameraScreen extends BaseScreenComponent {
     recordVideo = async function () {
         if (this.camera) {
             try {
+                console.log(`function recordVideo starts`);
                 const options = {quality: 'RNCamera.Constants.VideoQuality.720p'};
                 const options2 = {quality: 'RNCamera.Constants.VideoQuality.1080p'};
                 this.setState({

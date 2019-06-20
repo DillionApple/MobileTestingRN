@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.airbnb.android.react.lottie.LottiePackage;
 import com.facebook.react.ReactApplication;
+import com.rnglmodelview.RNGLModelViewPackage;
 import com.rnim.rn.audio.ReactNativeAudioPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
@@ -37,6 +38,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNGLModelViewPackage(),
             new ReactNativeAudioPackage(),
             new RNCameraPackage(),
               new ReactNativeRestartPackage(),
