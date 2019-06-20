@@ -158,17 +158,17 @@ class BaseTestFlow:
             self.have_case_tested = False
             try:
                 self.dfs("[-MobileTesting-]")
-            except AppCrashedException as e:
-                crash_occured = True
-                print("Broken on screen %s, stress %s" % (
-                    self.current_screen,
-                    self.stress_combinations[self.current_stress_combination_index]["signature"]
-                    ))
             except OneTestCaseCompleteException as e:
                 print("One test case is done on screen %s, stress %s" % (
                     self.current_screen,
                     self.stress_combinations[self.current_stress_combination_index]["signature"],
                 ))
+            except Exception as e:
+                crash_occured = True
+                print("Broken on screen %s, stress %s" % (
+                    self.current_screen,
+                    self.stress_combinations[self.current_stress_combination_index]["signature"]
+                    ))
             finally:
                 self.current_stress_combination_index = (self.current_stress_combination_index + 1) % len(self.stress_combinations)
                 if self.current_stress_combination_index == 0:
