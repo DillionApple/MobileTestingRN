@@ -1,13 +1,20 @@
 import React from 'react';
-import {StyleSheet, Button, Text, View} from 'react-native';
+import {StyleSheet, Button, Text, View, ScrollView} from 'react-native';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 import withObservables from '@nozbe/with-observables'
 import {database} from "../../../index";
 
 const Comment = ({comment}) => (
-    <div>
-        <Text>{comment.body} ¡ª by {comment.author}</Text>
-    </div>
+    <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between' }}>
+        <View>
+            <Text style={styles.medFont}>{comment.body} -- by {comment.author}</Text>
+        </View>
+        <View>
+            <Button onPress={() => {
+                deleteComment(comment)
+            }} title="|-X-|"/>
+        </View>
+    </View>
 )
 
 const enhance = withObservables(['comment'], ({comment}) => ({
@@ -15,30 +22,42 @@ const enhance = withObservables(['comment'], ({comment}) => ({
 }))
 const EnhancedComment = enhance(Comment)
 
-const PostList = ({posts}) => {
+const PostList = ({posts, addNewComment}) => {
     return (
         posts.map(post =>
-            <EnhancedPost key={post.id} post={post}/>
+            <ScrollView>
+                <EnhancedPost key={post.id} post={post}/>
+                <Button title="|-ADD COMMENT-|" onPress={() => {
+                    addNewComment(post)
+                }}/>
+            </ScrollView>
         ))
 }
 
 const Post = ({post, comments}) => (
     <View>
-        <Text>Title:{post.title}</Text>
-        <Text>Body:{post.body}</Text>
-        <Text>Author:{post.author}</Text>
-        {/*<Text>Comments</Text>*/}
+        <Text style={styles.largeFont}>Title:{post.title}</Text>
+        <Text style={styles.largeFont}>Body:{post.body}</Text>
+        <Text style={styles.largeFont}>Author:{post.author}</Text>
+        <Text style={styles.largeFont}>Comments:</Text>
         {comments.map(comment =>
             <EnhancedComment key={comment.id} comment={comment}/>
         )}
+
     </View>
-)
+);
+
 const enhancePost = withObservables(['post'], ({post}) => ({
     post,
     comments: post.comments, // Shortcut syntax for `post.comments.observe()`
 }))
 
 const EnhancedPost = enhancePost(Post)
+const deleteComment = async (comment) => {
+    await database.action(async () => {
+        await comment.destroyPermanently();
+    });
+}
 
 class DBScreen extends BaseScreenComponent {
 
@@ -63,12 +82,12 @@ class DBScreen extends BaseScreenComponent {
     }
 
     slotRender() {
-        return (<View style={styles.container}>
-            <PostList posts={this.state.posts}/>
+        return (<ScrollView style={styles.container}>
+            <PostList posts={this.state.posts} addNewComment={this.addNewComment}/>
             <Button title="|-ADD POST-|" onPress={this.addNewPost}/>
             <Button title="|-DELETE POSTS-|" onPress={this.deletePost}/>
             {/*<Button title="|-UPDATE POSTS-|" onPress={this.updatePosts}/>*/}
-        </View>)
+        </ScrollView>)
 
     }
 
@@ -81,17 +100,31 @@ class DBScreen extends BaseScreenComponent {
     };
 
     addNewPost = async () => {
-        const postsCollection = database.collections.get('posts')
+        const postsCollection = database.collections.get('posts');
         await database.action(async () => {
             const newPost = await postsCollection.create(post => {
                 post.title = 'I am title';
-                post.body = 'I am body:' + this.randInt(0, 100);
+                post.body = 'I am body--' + this.randInt(0, 100);
                 post.author = 'gerald';
                 post.isPinned = false;
             });
             console.log(`newPost : ${newPost}`);
         });
         this.updatePosts();
+    };
+
+    addNewComment = async (post) => {
+        const commentsCollection = database.collections.get('comments');
+        const comments = await commentsCollection.query().fetch();
+        await database.action(async () => {
+            const newComments = await commentsCollection.create(comments => {
+                comments.post.set(post);
+                comments.body = 'I am comment body--' + this.randInt(0, 100);
+                comments.author = 'gerald' + this.randInt(0, 100);
+            });
+            console.log(`newComments : ${newComments}`);
+        });
+        // this.updatePosts();
     };
 
     deletePost = async () => {
@@ -104,6 +137,7 @@ class DBScreen extends BaseScreenComponent {
         }
         this.updatePosts();
     }
+
 }
 
 
@@ -111,6 +145,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column'
+    },
+    medFont: {
+        fontSize: 16
+    },
+    largeFont: {
+        fontSize: 20
     }
 });
 

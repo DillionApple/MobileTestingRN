@@ -11,5 +11,5 @@ export default class Post extends Model {
     @field('body') body
     @field('author') author
     @field('is_pinned') isPinned
-    @children('comments')comments
+    @children('comments') comments
 }
