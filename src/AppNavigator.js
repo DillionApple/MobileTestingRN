@@ -10,6 +10,7 @@ import VideoTestNavigator from "./screens/VideoTest/VideoTestNavigator"
 import FileSystemScreen from "./screens/FileSystemTest/FileSystemScreen"
 import FileDownloaderNavigator from "./screens/FileDownloaderTest/FileDownloaderNavigator"
 import CameraScreen from "./screens/CameraTest/CameraScreen"
+import AudioScreen from "./screens/AudioTest/AudioScreen"
 import ImageViewerScreen from "./screens/ImageViewerTest/ImageViewerScreen";
 import DBScreen from "./screens/DBTest/DBScreen";
 import WebGLScreen from "./screens/WebGLTest/WebGLScreen";
@@ -20,13 +21,14 @@ const rootRouteConfigMap = {
 
 export const routeConfigMap = {
     //NetworkTest: {screen: NetworkTestScreen},
-    MapTest: {screen: MapTestNavigator},
     UITest: {screen: UITestScreen},
     ImageViewerTest: {screen: ImageViewerScreen},
-    VideoTest: {screen: VideoTestNavigator},
-    BGTaskScreen: {screen: FileSystemScreen},
-    FileDownloaderTest: {screen: FileDownloaderNavigator},
     CameraScreen: {screen: CameraScreen},
+    VideoTest: {screen: VideoTestNavigator},
+    AudioTest: {screen: AudioScreen},
+    MapTest: {screen: MapTestNavigator},
+    FileSystemScreen: {screen: FileSystemScreen},
+    FileDownloaderTest: {screen: FileDownloaderNavigator},
     DBScreen: {screen: DBScreen},
     WebGLScreen: {screen: WebGLScreen}
 };
