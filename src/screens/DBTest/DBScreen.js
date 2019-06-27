@@ -83,9 +83,9 @@ class DBScreen extends BaseScreenComponent {
 
     slotRender() {
         return (<ScrollView style={styles.container}>
-            <PostList posts={this.state.posts} addNewComment={this.addNewComment}/>
             <Button title="|-ADD POST-|" onPress={this.addNewPost}/>
             <Button title="|-DELETE POSTS-|" onPress={this.deletePost}/>
+            <PostList posts={this.state.posts} addNewComment={this.addNewComment}/>
             {/*<Button title="|-UPDATE POSTS-|" onPress={this.updatePosts}/>*/}
         </ScrollView>)
 
