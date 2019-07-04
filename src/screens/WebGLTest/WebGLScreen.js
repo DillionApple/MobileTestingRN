@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import ModelView from 'react-native-gl-model-view';
+import MTLogger from "../../components/Logger";
 
 const AnimatedModelView = Animated.createAnimatedComponent(ModelView);
 
@@ -34,6 +35,7 @@ class WebGLScreen extends BaseScreenComponent {
             this.state[key] instanceof Animated.Value &&
             this.state[key].__makeNative()
         );
+        this.logger = new MTLogger(this.constructor.name);
     }
 
     onMoveEnd = () => {
@@ -59,7 +61,8 @@ class WebGLScreen extends BaseScreenComponent {
         }
     };
 
-    zoom = (action) => {
+    zoomIn = (action) => {
+        this.logger.start('zoomIn');
         let {zoom, translateZ} = this.state;
 
         this.state.zoom += action;
@@ -69,9 +72,17 @@ class WebGLScreen extends BaseScreenComponent {
                 toValue: zoom, useNativeDriver: true, duration: 300
             }
         ).start();
+        this.logger.end('zoomIn');
+    };
+
+    zoomOut = (action) => {
+        this.logger.start('zoomOut');
+        this.zoomIn(-action);
+        this.logger.end('zoomOut');
     };
 
     goCrazy = () => {
+        this.logger.start('goCrazy');
         let {rotateZ, rotateX, translateZ} = this.state;
 
         const crazy = (value, toValue) =>
@@ -84,9 +95,11 @@ class WebGLScreen extends BaseScreenComponent {
             crazy(translateZ, -2 - Math.random() * 3),
             crazy(rotateZ, Math.random() * 1000),
         ]).start();
+        this.logger.end('goCrazy');
     };
 
     turnAround = () => {
+        this.logger.start('turnAround');
         let {turns, rotateZ} = this.state;
 
         this.state.turns += 1;
@@ -96,6 +109,7 @@ class WebGLScreen extends BaseScreenComponent {
                 toValue: turns * 180, useNativeDriver: true, duration: 500
             }
         ).start();
+        this.logger.end('turnAround');
     };
 
     componentDidMount() {
@@ -161,8 +175,8 @@ class WebGLScreen extends BaseScreenComponent {
                     style={styles.view}
                 />
                 <Animated.View style={[styles.buttons, {transform: [{translateY: uiPosition}]}]}>
-                    {this.renderButton('|-zoom in-|', this.zoom.bind(this, 0.8))}
-                    {this.renderButton('|-zoom out-|', this.zoom.bind(this, -0.8))}
+                    {this.renderButton('|-zoom in-|', this.zoomIn.bind(this, 0.8))}
+                    {this.renderButton('|-zoom out-|', this.zoomOut.bind(this, 0.8))}
                     {this.renderButton('|-turn around-|', this.turnAround.bind(this))}
                     {this.renderButton('|-random move-|', this.goCrazy.bind(this))}
                 </Animated.View>

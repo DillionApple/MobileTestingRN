@@ -3,9 +3,10 @@ import {StyleSheet, Button, Text, View, ScrollView} from 'react-native';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 import withObservables from '@nozbe/with-observables'
 import {database} from "../../../index";
+import MTLogger from "../../components/Logger";
 
 const Comment = ({comment}) => (
-    <View style={{flex: 1, flexDirection: 'row',justifyContent: 'space-between' }}>
+    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
         <View>
             <Text style={styles.medFont}>{comment.body} -- by {comment.author}</Text>
         </View>
@@ -57,7 +58,7 @@ const deleteComment = async (comment) => {
     await database.action(async () => {
         await comment.destroyPermanently();
     });
-}
+};
 
 class DBScreen extends BaseScreenComponent {
 
@@ -66,6 +67,7 @@ class DBScreen extends BaseScreenComponent {
         this.state = {
             posts: []
         }
+        this.logger = new MTLogger(this.constructor.name);
     }
 
     randInt = (min, max) => {
@@ -83,35 +85,53 @@ class DBScreen extends BaseScreenComponent {
 
     slotRender() {
         return (<ScrollView style={styles.container}>
-            <Button title="|-ADD POST-|" onPress={this.addNewPost}/>
+            <Button title="|-ADD POST-|" onPress={this.addOnePost}/>
+            <Button title="|-ADD 100 POSTS-|" onPress={this.add100Posts}/>
             <Button title="|-DELETE POSTS-|" onPress={this.deletePost}/>
+            <Button title="|-DELETE ALL POSTS-|" onPress={this.deleteALLPost}/>
             <PostList posts={this.state.posts} addNewComment={this.addNewComment}/>
-            {/*<Button title="|-UPDATE POSTS-|" onPress={this.updatePosts}/>*/}
+            {/*<Button title="|-UPDATE POSTS-|" onPress={this._updatePosts}/>*/}
         </ScrollView>)
 
     }
 
-    updatePosts = async () => {
-        const posts = await database.collections.get('posts').query().fetch()
+    _updatePosts = async () => {
+        const posts = await database.collections.get('posts').query().fetch();
         this.setState({
             posts: posts
         });
         console.log(`posts : ${this.state.posts}`);
     };
 
-    addNewPost = async () => {
-        const postsCollection = database.collections.get('posts');
-        await database.action(async () => {
-            const newPost = await postsCollection.create(post => {
-                post.title = 'I am title';
-                post.body = 'I am body--' + this.randInt(0, 100);
-                post.author = 'gerald';
-                post.isPinned = false;
-            });
-            console.log(`newPost : ${newPost}`);
-        });
-        this.updatePosts();
+    addOnePost = () => {
+        this.logger.start('addOnePost');
+        this.addNewPost(1);
+        this.logger.end('addOnePost');
     };
+
+    add100Posts = () => {
+        this.logger.start('add100Posts');
+        this.addNewPost(100);
+        this.logger.end('add100Posts');
+    };
+
+    addNewPost = async (num = 1) => {
+        const postsCollection = database.collections.get('posts');
+
+        await database.action(async () => {
+            for (let i = 0; i < num; i++) {
+                const newPost = await postsCollection.create(post => {
+                    post.title = 'I am title';
+                    post.body = 'I am body--' + this.randInt(0, 100);
+                    post.author = 'gerald';
+                    post.isPinned = false;
+                });
+            }
+            // console.log(`newPost : ${newPost}`);
+        });
+        this._updatePosts();
+    };
+
 
     addNewComment = async (post) => {
         const commentsCollection = database.collections.get('comments');
@@ -122,12 +142,13 @@ class DBScreen extends BaseScreenComponent {
                 comments.body = 'I am comment body--' + this.randInt(0, 100);
                 comments.author = 'gerald' + this.randInt(0, 100);
             });
-            console.log(`newComments : ${newComments}`);
+            // console.log(`newComments : ${newComments}`);
         });
-        // this.updatePosts();
+        // this._updatePosts();
     };
 
     deletePost = async () => {
+        this.logger.start('deletePost');
         let posts = this.state.posts;
         {
             posts.length !== 0 &&
@@ -135,9 +156,21 @@ class DBScreen extends BaseScreenComponent {
                 await posts[this.randInt(0, posts.length - 1)].destroyPermanently();
             });
         }
-        this.updatePosts();
-    }
+        this._updatePosts();
+        this.logger.end('deletePost');
+    };
 
+    deleteALLPost = async () => {
+        this.logger.start('deleteALLPost');
+        let posts = this.state.posts;
+        await database.action(async () => {
+            for (let i = 0; i < posts.length; i++) {
+                await posts[i].destroyPermanently();
+            }
+        });
+        this._updatePosts();
+        this.logger.end('deleteALLPost');
+    };
 }
 
 

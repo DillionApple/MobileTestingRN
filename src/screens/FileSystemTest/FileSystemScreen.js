@@ -2,6 +2,7 @@ import React from 'react'
 import {View, Text, Platform, SafeAreaView, StyleSheet, Button} from "react-native"
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 import {zip, unzip} from "react-native-zip-archive";
+import MTLogger from "../../components/Logger";
 
 class FileSystemScreen extends BaseScreenComponent {
 
@@ -17,35 +18,38 @@ class FileSystemScreen extends BaseScreenComponent {
         this.zipPath = `${this.mainPath}/test.zip`;
         this.txtSubPath = `${this.mainSubPath}/test.txt`;
         this.zipSubPath = `${this.mainSubPath}/test.zip`;
+        this.logger = new MTLogger(this.constructor.name);
     }
 
 
-    fsTest() {
-        this.readDir();
-        this.mkDir(this.mainPath);
-        this.mkDir(this.mainSubPath);
-        this.delDir(this.mainSubPath);
-        this.mkDir(this.mainSubPath);
-        this.mkFile(this.txtPath);
-        this.zipFile(this.txtPath, this.zipPath);
-        this.delFile(this.txtPath);
-        this.unzipFile(this.zipPath, this.txtPath);
-        this.copyFile(this.txtPath, this.txtSubPath);
-        this.zipFile(this.txtSubPath, this.zipSubPath);
-        this.delFile(this.txtSubPath);
-        this.unzipFile(this.zipSubPath, this.txtSubPath);
-        this.delFile(this.txtSubPath);
-        this.moveFile(this.txtPath, this.txtSubPath);
-        this.mkFile(this.txtPath);
-        this.delDir(this.mainPath);
+    async fsTest() {
+        this.logger.start('fsTest');
+        await this.readDir();
+        await this.mkDir(this.mainPath);
+        await this.mkDir(this.mainSubPath);
+        await this.delDir(this.mainSubPath);
+        await this.mkDir(this.mainSubPath);
+        await this.mkFile(this.txtPath);
+        await this.zipFile(this.txtPath, this.zipPath);
+        await this.delFile(this.txtPath);
+        await this.unzipFile(this.zipPath, this.txtPath);
+        await this.copyFile(this.txtPath, this.txtSubPath);
+        await this.zipFile(this.txtSubPath, this.zipSubPath);
+        await this.delFile(this.txtSubPath);
+        await this.unzipFile(this.zipSubPath, this.txtSubPath);
+        await this.delFile(this.txtSubPath);
+        await this.moveFile(this.txtPath, this.txtSubPath);
+        await this.mkFile(this.txtPath);
+        await this.delDir(this.mainPath);
         this.setState({
             progressText: 'FS TEST DONE!'
         })
+        this.logger.end('fsTest');
     }
 
 
     zipFile(src, dst) {
-        zip(src, dst)
+        return zip(src, dst)
             .then((path) => {
                 console.log(`zip completed at ${path}`);
                 this.setState({
@@ -58,7 +62,7 @@ class FileSystemScreen extends BaseScreenComponent {
     }
 
     unzipFile(src, dst) {
-        unzip(src, dst)
+        return unzip(src, dst)
             .then((path) => {
                 console.log(`unzip completed at ${path}`);
                 this.setState({
@@ -71,7 +75,7 @@ class FileSystemScreen extends BaseScreenComponent {
     }
 
     mkDir(dirPath) {
-        this.RNFS.mkdir(dirPath).then(res => {
+        return this.RNFS.mkdir(dirPath).then(res => {
             console.log('mkDir Success');
             this.setState({
                 progressText: 'makeDir DONE!'
@@ -82,7 +86,7 @@ class FileSystemScreen extends BaseScreenComponent {
     }
 
     delDir(dirPath) {
-        this.RNFS.unlink(dirPath)
+        return this.RNFS.unlink(dirPath)
             .then(() => {
                 console.log('DIR DELETED');
                 this.setState({
@@ -103,7 +107,7 @@ class FileSystemScreen extends BaseScreenComponent {
         }
         let res = tempArr.join('');
         console.log('BEFORE FILE WRITTEN');
-        this.RNFS.writeFile(txtPath, res, 'utf8').then((success) => {
+        return this.RNFS.writeFile(txtPath, res, 'utf8').then((success) => {
             console.log('FILE WRITTEN!');
             this.setState({
                 progressText: 'makeFile DONE!'
@@ -115,7 +119,7 @@ class FileSystemScreen extends BaseScreenComponent {
 
 
     delFile(txtPath) {
-        this.RNFS.unlink(txtPath)
+        return this.RNFS.unlink(txtPath)
             .then(() => {
                 console.log('FILE DELETED');
                 this.setState({
@@ -129,7 +133,7 @@ class FileSystemScreen extends BaseScreenComponent {
     }
 
     moveFile(src, dst) {
-        this.RNFS.moveFile(src, dst)
+        return this.RNFS.moveFile(src, dst)
             .then(() => {
                 console.log('FILE MOVED');
                 this.setState({
@@ -142,7 +146,7 @@ class FileSystemScreen extends BaseScreenComponent {
     }
 
     copyFile(src, dst) {
-        this.RNFS.copyFile(src, dst)
+        return this.RNFS.copyFile(src, dst)
             .then(() => {
                 console.log('FILE COPIED');
                 this.setState({
@@ -155,7 +159,7 @@ class FileSystemScreen extends BaseScreenComponent {
     }
 
     readDir() {
-        this.RNFS.readDir(this.RNFS.DocumentDirectoryPath) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+        return this.RNFS.readDir(this.RNFS.DocumentDirectoryPath) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
             .then((result) => {
                 // stat the first file
                 return Promise.all([this.RNFS.stat(result[0].path), result[0].path]);
@@ -170,13 +174,13 @@ class FileSystemScreen extends BaseScreenComponent {
             .then((contents) => {
                 // log the file contents
                 console.log(contents);
+                this.setState({
+                    progressText: 'readDir DONE!'
+                })
             })
             .catch((err) => {
                 console.log(err.message, err.code);
             });
-        this.setState({
-            progressText: 'readDir DONE!'
-        })
     }
 
     slotRender() {
