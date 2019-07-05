@@ -1,5 +1,7 @@
 import React from 'react'
 
+import {Platform} from 'react-native'
+
 import {createStackNavigator} from 'react-navigation'
 
 import HomeScreen from "./screens/HomeScreen"
@@ -32,8 +34,12 @@ export const routeConfigMap = {
     FileSystemScreen: {screen: FileSystemScreen},
     FileDownloaderTest: {screen: FileDownloaderNavigator},
     DBScreen: {screen: DBScreen},
-    WebGLScreen: {screen: WebGLScreen}
 };
+
+if (Platform.OS === 'android') {
+    routeConfigMap.WebGLScreen = {screen: WebGLScreen}
+}
+
 
 const AppNavigator = createStackNavigator(
     {

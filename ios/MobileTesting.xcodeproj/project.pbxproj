@@ -68,6 +68,7 @@
 		BDF0349BA48F4B3AAE9488A0 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D69C3E3899C455B838C4443 /* Ionicons.ttf */; };
 		C052190CAAE745B4A9DBD3C1 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9735A193B57495285FD14B9 /* Foundation.ttf */; };
 		C527B06FA7F949FFBF92788F /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E80858907D1A48FBA2DB0120 /* FontAwesome.ttf */; };
+		D07C772FA6B747DD8E375081 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53151AEFC6264AEE97520FAB /* libRNSound.a */; };
 		DD32D5817722474F92A30C63 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5D7E328068341B4985B5B2E /* MaterialCommunityIcons.ttf */; };
 		E22146B9290944DE84B39989 /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A70EC2F91B0146BB867CCFE6 /* libRCTRestart.a */; };
 		E99F310FCE4D49A3972D4CFE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AF6C2652E35417FA9D9BCEC /* libz.tbd */; };
@@ -76,8 +77,6 @@
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 		F96AA4B0F9BF4860A9B7F07E /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 532B72D5EC07463BAC652994 /* libRNVectorIcons-tvOS.a */; };
 		FD653BDD7660467CA10A0487 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A585F56D8944EC48950AFB3 /* libRNGestureHandler.a */; };
-		EC9981D1FDF44367B5E6785D /* libRNGLModelView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FEDE1A6912B4AC7B1FC8145 /* libRNGLModelView.a */; };
-		D07C772FA6B747DD8E375081 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53151AEFC6264AEE97520FAB /* libRNSound.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -304,6 +303,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 2D2A28201D9B03D100D4039D;
 			remoteInfo = "RCTAnimation-tvOS";
+		};
+		741CE7ED22CF495800FF6183 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 479876CF21D64A7A9469A23C /* RNSound.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
+			remoteInfo = RNSound;
 		};
 		743088D3227EA4A4003BF0D8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -565,7 +571,9 @@
 		378BC9A71C1C481E8ED33C36 /* WatermelonDB.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = WatermelonDB.xcodeproj; path = "../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB.xcodeproj"; sourceTree = "<group>"; };
 		3DF36B29DB10403D8193BEF8 /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
 		430D55173B9F4DE6B74758D3 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		479876CF21D64A7A9469A23C /* RNSound.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		4D69C3E3899C455B838C4443 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		53151AEFC6264AEE97520FAB /* libRNSound.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSound.a; sourceTree = "<group>"; };
 		532B72D5EC07463BAC652994 /* libRNVectorIcons-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNVectorIcons-tvOS.a"; sourceTree = "<group>"; };
 		5811D7453E3D45A69D7B8385 /* RNCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
 		58B47D60CD07498E90E980C8 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
@@ -611,10 +619,6 @@
 		F2F74E891BBD4AF99D9B18C5 /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		F361A58B09B24B7681BF7AF2 /* libRCTVideo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTVideo.a; sourceTree = "<group>"; };
 		F935FE48E9244E4297CAB866 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
-		047490D87542440FB9A260D8 /* RNGLModelView.xcodeproj */ = {isa = PBXFileReference; name = "RNGLModelView.xcodeproj"; path = "../node_modules/react-native-gl-model-view/ios/RNGLModelView.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		0FEDE1A6912B4AC7B1FC8145 /* libRNGLModelView.a */ = {isa = PBXFileReference; name = "libRNGLModelView.a"; path = "libRNGLModelView.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		479876CF21D64A7A9469A23C /* RNSound.xcodeproj */ = {isa = PBXFileReference; name = "RNSound.xcodeproj"; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		53151AEFC6264AEE97520FAB /* libRNSound.a */ = {isa = PBXFileReference; name = "libRNSound.a"; path = "libRNSound.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -661,7 +665,6 @@
 				73E8AFF8794F429C8A274892 /* libRNCamera.a in Frameworks */,
 				1FCD310760F442B0BC8AA942 /* libRNAudio.a in Frameworks */,
 				A4A4B60AA4944163BF83B8ED /* libWatermelonDB.a in Frameworks */,
-				EC9981D1FDF44367B5E6785D /* libRNGLModelView.a in Frameworks */,
 				D07C772FA6B747DD8E375081 /* libRNSound.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -854,6 +857,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		741CE7E722CF495800FF6183 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				741CE7EE22CF495800FF6183 /* libRNSound.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		743088C6227EA4A4003BF0D8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -958,6 +969,8 @@
 				AF83D4C291BC4176908A241A /* libRNCamera.a */,
 				64C4DC6E71C9431E8892CFF0 /* libRNAudio.a */,
 				2820D7A19C4249DEBFC9DA74 /* libWatermelonDB.a */,
+				0FEDE1A6912B4AC7B1FC8145 /* libRNGLModelView.a */,
+				53151AEFC6264AEE97520FAB /* libRNSound.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1046,7 +1059,6 @@
 				5811D7453E3D45A69D7B8385 /* RNCamera.xcodeproj */,
 				26F7248DE6A24832B7F17F99 /* RNAudio.xcodeproj */,
 				378BC9A71C1C481E8ED33C36 /* WatermelonDB.xcodeproj */,
-				047490D87542440FB9A260D8 /* RNGLModelView.xcodeproj */,
 				479876CF21D64A7A9469A23C /* RNSound.xcodeproj */,
 			);
 			name = Libraries;
@@ -1308,6 +1320,10 @@
 					ProjectRef = 2DF6FF4752CA49B0B8C1481C /* RNGestureHandler.xcodeproj */;
 				},
 				{
+					ProductGroup = 741CE7E722CF495800FF6183 /* Products */;
+					ProjectRef = 479876CF21D64A7A9469A23C /* RNSound.xcodeproj */;
+				},
+				{
 					ProductGroup = 743088CA227EA4A4003BF0D8 /* Products */;
 					ProjectRef = 61E530719BBB44EDB13FB158 /* RNThread.xcodeproj */;
 				},
@@ -1543,6 +1559,13 @@
 			fileType = archive.ar;
 			path = libRCTAnimation.a;
 			remoteRef = 5E9157341DD0AC6500FF2AA8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		741CE7EE22CF495800FF6183 /* libRNSound.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSound.a;
+			remoteRef = 741CE7ED22CF495800FF6183 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		743088D4227EA4A4003BF0D8 /* libRCTRestart.a */ = {
@@ -1924,33 +1947,15 @@
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
-					"$(SRCROOT)\..\node_modules\react-native-gl-model-view\ios",
-					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)..\node_modules\neact-native-gl-model-viewios",
+					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 				);
 				INFOPLIST_FILE = MobileTestingTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1984,33 +1989,15 @@
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
-					"$(SRCROOT)\..\node_modules\react-native-gl-model-view\ios",
-					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)..\node_modules\neact-native-gl-model-viewios",
+					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 				);
 				INFOPLIST_FILE = MobileTestingTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2046,8 +2033,8 @@
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
-					"$(SRCROOT)\..\node_modules\react-native-gl-model-view\ios",
-					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)..\node_modules\neact-native-gl-model-viewios",
+					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 				);
 				INFOPLIST_FILE = MobileTesting/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2088,8 +2075,8 @@
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
-					"$(SRCROOT)\..\node_modules\react-native-gl-model-view\ios",
-					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)..\node_modules\neact-native-gl-model-viewios",
+					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 				);
 				INFOPLIST_FILE = MobileTesting/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2134,32 +2121,14 @@
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
-					"$(SRCROOT)\..\node_modules\react-native-gl-model-view\ios",
-					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)..\node_modules\neact-native-gl-model-viewios",
+					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 				);
 				INFOPLIST_FILE = "MobileTesting-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2201,32 +2170,14 @@
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
-					"$(SRCROOT)\..\node_modules\react-native-gl-model-view\ios",
-					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)..\node_modules\neact-native-gl-model-viewios",
+					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 				);
 				INFOPLIST_FILE = "MobileTesting-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2267,32 +2218,14 @@
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
-					"$(SRCROOT)\..\node_modules\react-native-gl-model-view\ios",
-					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)..\node_modules\neact-native-gl-model-viewios",
+					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 				);
 				INFOPLIST_FILE = "MobileTesting-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2333,32 +2266,14 @@
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
 					"$(SRCROOT)/../node_modules/@nozbe/watermelondb/native/ios/WatermelonDB/SupportingFiles/**",
-					"$(SRCROOT)\..\node_modules\react-native-gl-model-view\ios",
-					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
+					"$(SRCROOT)..\node_modules\neact-native-gl-model-viewios",
+					"$(SRCROOT)..\node_modules\neact-native-soundRNSound",
 				);
 				INFOPLIST_FILE = "MobileTesting-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)/System/Library/Frameworks\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
