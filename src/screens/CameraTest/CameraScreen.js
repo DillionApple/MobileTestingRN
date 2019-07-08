@@ -83,13 +83,13 @@ class CameraScreen extends BaseScreenComponent {
                             <TouchableOpacity onPress={this.stopRecordingVideo.bind(this)} style={styles.capture}>
                                 <Text style={{fontSize: 10}}> |-STOPRECORDING-| </Text>
                             </TouchableOpacity>}
-                        {!this.state.isAudioRecording ?
-                            <TouchableOpacity onPress={this.recordAudio.bind(this)} style={styles.capture}>
-                                <Text style={{fontSize: 10}}> |-AUDIOREC-| </Text>
-                            </TouchableOpacity> :
-                            <TouchableOpacity onPress={this.stopRecordingAudio.bind(this)} style={styles.capture}>
-                                <Text style={{fontSize: 10}}> |-STOPAUDIOREC-| </Text>
-                            </TouchableOpacity>}
+                        {/*{!this.state.isAudioRecording ?*/}
+                        {/*    <TouchableOpacity onPress={this.recordAudio.bind(this)} style={styles.capture}>*/}
+                        {/*        <Text style={{fontSize: 10}}> |-AUDIOREC-| </Text>*/}
+                        {/*    </TouchableOpacity> :*/}
+                        {/*    <TouchableOpacity onPress={this.stopRecordingAudio.bind(this)} style={styles.capture}>*/}
+                        {/*        <Text style={{fontSize: 10}}> |-STOPAUDIOREC-| </Text>*/}
+                        {/*    </TouchableOpacity>}*/}
                     </View>
                 </View>
             );

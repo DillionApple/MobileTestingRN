@@ -89,7 +89,7 @@ class DBScreen extends BaseScreenComponent {
             <Button title="|-ADD 100 POSTS-|" onPress={this.add100Posts}/>
             <Button title="|-DELETE POSTS-|" onPress={this.deletePost}/>
             <Button title="|-DELETE ALL POSTS-|" onPress={this.deleteALLPost}/>
-            <PostList posts={this.state.posts} addNewComment={this.addNewComment}/>
+            {/*<PostList posts={this.state.posts} addNewComment={this.addNewComment}/>*/}
             {/*<Button title="|-UPDATE POSTS-|" onPress={this._updatePosts}/>*/}
         </ScrollView>)
 

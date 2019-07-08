@@ -15,6 +15,7 @@ import AudioPlayScreen from 'react-native-sound-playerview'
 import ImageViewerScreen from "./screens/ImageViewerTest/ImageViewerScreen";
 import DBScreen from "./screens/DBTest/DBScreen";
 import WebGLScreen from "./screens/WebGLTest/WebGLScreen";
+import AudioPlayList from "./screens/AudioTest/AudioPlayList";
 
 const rootRouteConfigMap = {
     Home: {screen: HomeScreen},
@@ -28,6 +29,7 @@ export const routeConfigMap = {
     CameraScreen: {screen: CameraScreen},
     VideoTest: {screen: VideoTestNavigator},
     AudioTest: {screen: AudioScreen},
+    AudioPlayList: {screen: AudioPlayList},
     MapTest: {screen: MapTestNavigator},
     FileSystemScreen: {screen: FileSystemScreen},
     FileDownloaderTest: {screen: FileDownloaderNavigator},

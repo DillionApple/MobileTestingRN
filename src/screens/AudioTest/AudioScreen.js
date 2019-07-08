@@ -49,7 +49,7 @@ class AudioScreen extends BaseScreenComponent {
         this.RNFS = require('react-native-fs');
         this.RNFS.readDir(this.RNFS.DocumentDirectoryPath) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
             .then((result) => {
-                console.log(result);
+                // console.log(result);
                 let fileArray = [];
                 for (let file of result) {
                     if (file.name.includes('.aac')) {
@@ -159,6 +159,13 @@ class AudioScreen extends BaseScreenComponent {
         }
     }
 
+    async _randomDelete(){
+        let audioList = this.state.audioList;
+        if (audioList.length !== 0){
+            let randPath = audioList[this.randInt(0, audioList.length - 1)].path;
+            this._onDeleteClip(randPath);
+        }
+    }
 
     async _record() {
         if (this.state.recording) {
@@ -235,6 +242,9 @@ class AudioScreen extends BaseScreenComponent {
                     {/* {this._renderButton("PAUSE", () => {this._pause()} )} */}
                     {this._renderPauseButton(() => {
                         this.state.paused ? this._resume() : this._pause()
+                    })}
+                    {this._renderButton("|-RANDDEL-|", () => {
+                        this._randomDelete()
                     })}
                     <Text style={styles.progressText}>{this.state.currentTime}s</Text>
                 </View>

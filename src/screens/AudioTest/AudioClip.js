@@ -13,16 +13,16 @@ class AudioClipItem extends React.PureComponent {
                 <View style={styles.button}>
                     <Text style={styles.largeFont}>{this.props.title}</Text>
                 </View>
-                <TouchableHighlight style={styles.button} onPress={() => {
-                    this.props.onPlay(this.props.path)
-                }}>
-                    <Text style={styles.largeFont}>|-PLAY-|</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button} onPress={() => {
-                    this.props.onDelete(this.props.path)
-                }}>
-                    <Text style={styles.largeFont}>|-DELETE-|</Text>
-                </TouchableHighlight>
+                {/*<TouchableHighlight style={styles.button} onPress={() => {*/}
+                {/*    this.props.onPlay(this.props.path)*/}
+                {/*}}>*/}
+                {/*    <Text style={styles.largeFont}>PLAY</Text>*/}
+                {/*</TouchableHighlight>*/}
+                {/*<TouchableHighlight style={styles.button} onPress={() => {*/}
+                {/*    this.props.onDelete(this.props.path)*/}
+                {/*}}>*/}
+                {/*    <Text style={styles.largeFont}>DELETE</Text>*/}
+                {/*</TouchableHighlight>*/}
             </View>
         )
     }
