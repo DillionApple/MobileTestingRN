@@ -265,8 +265,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#2b608a"
     },
     controls: {
-        height: 50,
-        flexDirection: 'row'
+        flexDirection: 'column',
     },
     button: {
         paddingLeft: 10,

@@ -62,13 +62,13 @@ class ViewsAsMarkers extends BaseScreenComponent {
                         onPress={() => this.decrement()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>|-Dec-|</Text>
+                        <Text>|-Dec-|</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => this.increment()}
                         style={[styles.bubble, styles.button]}
                     >
-                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>|-Inc-|</Text>
+                        <Text>|-Inc-|</Text>
                     </TouchableOpacity>
                 </View>
             </View>

@@ -2,17 +2,13 @@ import React from "react";
 import {ListItem, Overlay} from "react-native-elements";
 import {InteractionManager, StyleSheet, View, Platform} from "react-native";
 import {Thread} from "react-native-threads";
-import {zip} from "react-native-zip-archive";
-import MemoryInjection from "./MemoryModule";
+import BaseScreenComponent from "./BaseScreenComponent";
 
-class InjectionModule extends React.Component {
+class InjectionModule extends BaseScreenComponent {
 
 
     constructor(props) {
         super(props);
-        this.state = {
-            visible: false,
-        };
         this.threadList = [];
         this.RNFS = require("react-native-fs");
         this.mainPath = `${this.RNFS.DocumentDirectoryPath}/MobileTesting`;
@@ -22,19 +18,11 @@ class InjectionModule extends React.Component {
         console.log(`props : ${this.props.isShow}`);
     }
 
-
-    changeVisibility() {
-        this.setState({visible: !this.state.visible});
-    }
-
     injection(stress_name) {
         let thread = null;
         console.log(`Injection name : ${stress_name}`);
         try {
             switch (stress_name) {
-                case 'back':
-                    this.changeVisibility();
-                    break;
                 case 'cpu':
                 case 'disk_write':
                 case 'network_download':
@@ -60,7 +48,7 @@ class InjectionModule extends React.Component {
         }
     }
 
-    render() {
+    slotRender() {
         const injectionList = [
             {
                 name: 'cpu',
@@ -82,32 +70,22 @@ class InjectionModule extends React.Component {
                 name: 'clear',
                 title: 'Clear',
             },
-            {
-                name: 'back',
-                title: 'Back',
-            }
         ];
         return (
             <View>
-                <Overlay
-                    isVisible={this.state.visible}
-                    width={'100%'}
-                    height={'100%'}
-                >
-                    <View>
-                        {
-                            injectionList.map((l, i) => (
-                                <ListItem
-                                    key={i}
-                                    title={l.title}
-                                    onPress={() => {
-                                        this.injection(l.name);
-                                    }}
-                                />
-                            ))
-                        }
-                    </View>
-                </Overlay>
+                <View>
+                    {
+                        injectionList.map((l, i) => (
+                            <ListItem
+                                key={i}
+                                title={l.title}
+                                onPress={() => {
+                                    this.injection(l.name);
+                                }}
+                            />
+                        ))
+                    }
+                </View>
             </View>
         )
     }

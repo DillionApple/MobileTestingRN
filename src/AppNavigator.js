@@ -13,15 +13,15 @@ import FileSystemScreen from "./screens/FileSystemTest/FileSystemScreen"
 import FileDownloaderNavigator from "./screens/FileDownloaderTest/FileDownloaderNavigator"
 import CameraScreen from "./screens/CameraTest/CameraScreen"
 import AudioScreen from "./screens/AudioTest/AudioScreen"
-import AudioPlayScreen from 'react-native-sound-playerview'
 import ImageViewerScreen from "./screens/ImageViewerTest/ImageViewerScreen";
 import DBScreen from "./screens/DBTest/DBScreen";
 import WebGLScreen from "./screens/WebGLTest/WebGLScreen";
 import AudioPlayList from "./screens/AudioTest/AudioPlayList";
+import InjectionModule from "./components/InjectionModule";
 
 const rootRouteConfigMap = {
     Home: {screen: HomeScreen},
-    AudioPlay:{screen: AudioPlayScreen},
+    Injection: {screen: InjectionModule}
 };
 
 export const routeConfigMap = {

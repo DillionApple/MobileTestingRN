@@ -35,16 +35,12 @@ class HeaderWithBackButton extends React.Component {
                                 title='Injection'
                                 titleStyle={styles.injButton}
                                 onPress={() => {
-                                    this.refs.injectionModuleRef.changeVisibility();
-                                }
-                                }
+                                    this.props.navigation.navigate("Injection")
+                                }}
                             />
                         }
                         centerComponent={{text: this.props.title, style: {color: '#fff'}}}
                     />
-                </View>
-                <View>
-                    <InjectionModule ref="injectionModuleRef"/>
                 </View>
             </View>
         )
