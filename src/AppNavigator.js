@@ -5,7 +5,6 @@ import {Platform} from 'react-native'
 import {createStackNavigator} from 'react-navigation'
 
 import HomeScreen from "./screens/HomeScreen"
-import NetworkTestScreen from "./screens/NetworkTestScreen"
 import MapTestNavigator from "./screens/MapTestCases/MapTestNavigator"
 import UITestScreen from "./screens/UITest/UITestScreen"
 import VideoTestNavigator from "./screens/VideoTest/VideoTestNavigator"
@@ -15,6 +14,7 @@ import CameraScreen from "./screens/CameraTest/CameraScreen"
 import AudioScreen from "./screens/AudioTest/AudioScreen"
 import ImageViewerScreen from "./screens/ImageViewerTest/ImageViewerScreen";
 import DBScreen from "./screens/DBTest/DBScreen";
+import EndScreen from "./screens/EndScreen"
 import WebGLScreen from "./screens/WebGLTest/WebGLScreen";
 import AudioPlayList from "./screens/AudioTest/AudioPlayList";
 import InjectionModule from "./components/InjectionModule";
@@ -25,7 +25,6 @@ const rootRouteConfigMap = {
 };
 
 export const routeConfigMap = {
-    //NetworkTest: {screen: NetworkTestScreen},
     UITest: {screen: UITestScreen},
     ImageViewerTest: {screen: ImageViewerScreen},
     CameraScreen: {screen: CameraScreen},
@@ -36,7 +35,7 @@ export const routeConfigMap = {
     FileSystemScreen: {screen: FileSystemScreen},
     FileDownloaderTest: {screen: FileDownloaderNavigator},
     DBScreen: {screen: DBScreen},
-    End: {screen: NetworkTestScreen},
+    End: {screen: EndScreen},
 };
 
 if (Platform.OS === 'android') {

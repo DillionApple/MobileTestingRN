@@ -1,8 +1,6 @@
 import React from 'react'
 import {View, StyleSheet, Platform} from 'react-native'
 import {Header,Button, Tooltip, Text} from "react-native-elements";
-import {Thread} from "react-native-threads";
-import InjectionModule from "./InjectionModule"
 
 class HeaderWithBackButton extends React.Component {
 
