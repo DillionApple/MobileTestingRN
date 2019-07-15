@@ -100,7 +100,7 @@ class AudioScreen extends BaseScreenComponent {
 
     _renderPauseButton(onPress, active) {
         let style = (active) ? styles.activeButtonText : styles.buttonText;
-        let title = this.state.paused ? "|-RESUME-|" : "|-PAUSE-|";
+        let title = "|-PAUSE-|";
         return (
             <TouchableHighlight style={styles.button} onPress={onPress}>
                 <Text style={style}>
@@ -246,11 +246,6 @@ class AudioScreen extends BaseScreenComponent {
                     {this._renderButton("|-RANDDEL-|", () => {
                         this._randomDelete()
                     })}
-                    <Text style={styles.progressText}>{this.state.currentTime}s</Text>
-                </View>
-                <View>
-                    <FlatList data={this.state.audioList} renderItem={this._renderItem}
-                              keyExtractor={this._keyExtractor}/>
                 </View>
             </View>
         )
@@ -285,8 +280,8 @@ const styles = StyleSheet.create({
         color: "#fff"
     },
     activeButtonText: {
-        fontSize: 20,
-        color: "#B81F00"
+        fontSize: 18,
+        color: "#fff"
     }
 
 });

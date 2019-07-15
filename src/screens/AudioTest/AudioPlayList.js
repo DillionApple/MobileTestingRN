@@ -151,7 +151,7 @@ class AudioPlayList extends BaseScreenComponent {
                 {!this.state.isPause ? this._renderButton("|-Pause-|", () => {
                         this._onPause()
                     })
-                    : this._renderButton("|-Resume-|", () => {
+                    : this._renderButton("|-Pause-|", () => {
                         this._onResume()
                     })
                 }

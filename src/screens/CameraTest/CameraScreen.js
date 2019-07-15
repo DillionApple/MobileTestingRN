@@ -71,17 +71,17 @@ class CameraScreen extends BaseScreenComponent {
                     <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center'}}>
                         {!this.state.isTakingPicture ?
                             <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
-                                <Text style={{fontSize: 10}}> |-SNAP-| </Text>
+                                <Text style={{fontSize: 10}}>|-SNAP-|</Text>
                             </TouchableOpacity> :
                             <TouchableOpacity onPress={this.retakePicture.bind(this)} style={styles.capture}>
-                                <Text style={{fontSize: 10}}> |-RETAKE-| </Text>
+                                <Text style={{fontSize: 10}}>|-SNAP-|</Text>
                             </TouchableOpacity>}
                         {!this.state.isRecording ?
                             <TouchableOpacity onPress={this.recordVideo.bind(this)} style={styles.capture}>
-                                <Text style={{fontSize: 10}}> |-RECORDING-| </Text>
+                                <Text style={{fontSize: 10}}>|-RECORDING-|</Text>
                             </TouchableOpacity> :
                             <TouchableOpacity onPress={this.stopRecordingVideo.bind(this)} style={styles.capture}>
-                                <Text style={{fontSize: 10}}> |-STOPRECORDING-| </Text>
+                                <Text style={{fontSize: 10}}>|-RECORDING-|</Text>
                             </TouchableOpacity>}
                         {/*{!this.state.isAudioRecording ?*/}
                         {/*    <TouchableOpacity onPress={this.recordAudio.bind(this)} style={styles.capture}>*/}
