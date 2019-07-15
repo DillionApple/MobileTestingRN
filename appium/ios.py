@@ -26,9 +26,7 @@ class IOSTestFlow(BaseTestFlow):
             })
 
     def collect_device_log_process_target(self):
-        return
-        proc = subprocess.Popen(['cfgutil', 'syslog'])
-        print(dir(proc))
+        proc = subprocess.Popen(['cfgutil', 'syslog'], stdout=subprocess.PIPE)
         with open(self.current_log_filename , "w") as f:
             while True:
                 line = proc.stdout.readline()

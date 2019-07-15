@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -55,6 +56,7 @@
 		748149DC22AE40500015AFBE /* DB_HOLDER.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748149DB22AE40500015AFBE /* DB_HOLDER.swift */; };
 		74AFD5BB2259F18D0095BAB9 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74AFD5B12259F1750095BAB9 /* Lottie.framework */; };
 		74AFD5BC2259F18D0095BAB9 /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74AFD5B12259F1750095BAB9 /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		74F10ED122D8734B00B075A4 /* BGTaskWorker.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 74F10E9522D8734B00B075A4 /* BGTaskWorker.jsbundle */; };
 		75520FC1CEF84329BC4CF8B3 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC7661C3FE684B0E82FB7AA6 /* libAirMaps.a */; };
 		817533BE106B4A82AB2E7246 /* libRNThread.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEEDB054DBC49EEAE39A59C /* libRNThread.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -585,6 +587,7 @@
 		7110172DFF5448EDAB9B532B /* libLottieReactNative.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libLottieReactNative.a; sourceTree = "<group>"; };
 		748149DA22AE40500015AFBE /* MobileTesting-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MobileTesting-Bridging-Header.h"; sourceTree = "<group>"; };
 		748149DB22AE40500015AFBE /* DB_HOLDER.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DB_HOLDER.swift; sourceTree = "<group>"; };
+		74F10E9522D8734B00B075A4 /* BGTaskWorker.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BGTaskWorker.jsbundle; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7A585F56D8944EC48950AFB3 /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -780,6 +783,7 @@
 		13B07FAE1A68108700A75B9A /* MobileTesting */ = {
 			isa = PBXGroup;
 			children = (
+				74F10E9522D8734B00B075A4 /* BGTaskWorker.jsbundle */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -969,7 +973,6 @@
 				AF83D4C291BC4176908A241A /* libRNCamera.a */,
 				64C4DC6E71C9431E8892CFF0 /* libRNAudio.a */,
 				2820D7A19C4249DEBFC9DA74 /* libWatermelonDB.a */,
-				0FEDE1A6912B4AC7B1FC8145 /* libRNGLModelView.a */,
 				53151AEFC6264AEE97520FAB /* libRNSound.a */,
 			);
 			name = "Recovered References";
@@ -1787,6 +1790,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				74F10ED122D8734B00B075A4 /* BGTaskWorker.jsbundle in Resources */,
 				970BCE06856348F4AFB901E9 /* AntDesign.ttf in Resources */,
 				22D84D80D2FD409F95ABF21C /* Entypo.ttf in Resources */,
 				663D8F1DD15C40A7B04D24C2 /* EvilIcons.ttf in Resources */,

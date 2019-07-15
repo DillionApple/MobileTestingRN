@@ -6,7 +6,7 @@ from config import *
 from random import randint
 from time import sleep
 
-from exception import AppCrashedException, OneTestCaseCompleteException
+from exception import AppCrashedException, OneTestCaseCompleteException, AllTestsDoneException
 
 class BaseTestFlow:
 
@@ -17,7 +17,6 @@ class BaseTestFlow:
         self.device_name = device_name
         self.current_log_filename = "current_log_{0}.txt".format(device_name)
         self.stress_combinations = []
-        self.have_case_tested = False
 
     def setup(self):
         raise NotImplementedError()
@@ -99,6 +98,8 @@ class BaseTestFlow:
         self.current_stress = "Empty"
 
     def dfs(self, screen_name):
+        if screen_name == "[-End-]":
+            raise AllTestsDoneException()
         print("Entered {0}".format(screen_name))
         self.current_screen = screen_name
         sleep(10)
@@ -114,7 +115,6 @@ class BaseTestFlow:
                 self.current_screen = screen_name
                 self.complete.add(nav_btn_text)
         else:
-            self.have_case_tested = True
             if len(parsed['act_btns']) > 0:
 
                 for stress_index in range(self.current_stress_combination_index, len(self.stress_combinations)):
@@ -155,9 +155,11 @@ class BaseTestFlow:
             log_proc = Process(target=self.collect_device_log_process_target)
             log_proc.start()
             crash_occured = False
-            self.have_case_tested = False
+            all_tests_done = False
             try:
                 self.dfs("[-MobileTesting-]")
+            except AllTestsDoneException as e:
+                all_tests_done = True
             except OneTestCaseCompleteException as e:
                 print("One test case is done on screen %s, stress %s" % (
                     self.current_screen,
@@ -198,7 +200,7 @@ class BaseTestFlow:
                         f.write(line)
                 print("Recording done")
             else:
-                if not self.have_case_tested:
+                if all_tests_done:
                     print("All test cases are done in round %d, starting a new round" % round)
                     round += 1
                     self.complete = set()

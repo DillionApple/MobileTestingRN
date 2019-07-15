@@ -36,6 +36,7 @@ export const routeConfigMap = {
     FileSystemScreen: {screen: FileSystemScreen},
     FileDownloaderTest: {screen: FileDownloaderNavigator},
     DBScreen: {screen: DBScreen},
+    End: {screen: NetworkTestScreen},
 };
 
 if (Platform.OS === 'android') {

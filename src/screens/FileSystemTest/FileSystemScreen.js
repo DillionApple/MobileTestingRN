@@ -186,7 +186,6 @@ class FileSystemScreen extends BaseScreenComponent {
     slotRender() {
         return (
             <SafeAreaView style={styles.container}>
-                <Text style={styles.largeFont}>{this.state.progressText}</Text>
                 <View style={styles.buttonBar}>
                     <Button
                         onPress={() => {
