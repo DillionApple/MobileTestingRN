@@ -91,5 +91,5 @@ class IOSTestFlow(BaseTestFlow):
         sleep(1)
 
 if __name__ == '__main__':
-    ios_test_flow = IOSTestFlow("dPhone")
+    ios_test_flow = IOSTestFlow(DEVICE_NAME)
     ios_test_flow.main()
