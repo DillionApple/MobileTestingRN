@@ -25,6 +25,11 @@ def light_down():
     os.system('adb shell "input keyevent 220"')
 
 
+def download_log():
+    os.system('adb root')
+    os.system('adb pull /data/data/com.mobiletesting/files/log.txt  ./logtt.txt')
+
+
 def read_mem():
     memory_string = os.popen('adb shell "cat /proc/meminfo"').read()
     """ 
@@ -50,7 +55,8 @@ def read_cpu():
 
 if __name__ == '__main__':
     # read_mem()
-    read_cpu()
+    # read_cpu()
     # volume_mute()
     # for i in range(10):
     #     volume_up()
+    download_log()

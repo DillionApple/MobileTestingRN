@@ -5,6 +5,7 @@ import UITestNavigator from "./UITestNav";
 import * as Progress from 'react-native-progress';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 import Timeout from 'await-timeout';
+import MTLogger from "../../components/Logger";
 
 class UITestScreen extends BaseScreenComponent {
     static navigationOptions = {
@@ -18,6 +19,7 @@ class UITestScreen extends BaseScreenComponent {
             currentTaskName: 'initializing..',
             indeterminate: true
         };
+        this.logger = new MTLogger(this.constructor.name);
     }
 
     componentWillUnmount() {
@@ -49,24 +51,42 @@ class UITestScreen extends BaseScreenComponent {
     }
 
     testImageView() {
+        this.logger.start('testImageView');
         this.props.navigation.navigate('ImageView', {
-            onGoBack: (mounted) => mounted && this.doingTask(2),
+            onGoBack: (mounted) => {
+                if (mounted){
+                    this.doingTask(2);
+                }
+                this.logger.end('testImageView');
+            }
         });
         this.setState({currentProgress: 0.2});
         this.setState({currentTaskName: 'ImageViewTesting..'});
     }
 
     testAnimationView() {
+        this.logger.start('testAnimationView');
         this.props.navigation.navigate('AnimationView', {
-            onGoBack: (mounted) => mounted && this.doingTask(3),
+            onGoBack: (mounted) => {
+                if (mounted){
+                    this.doingTask(3);
+                }
+                this.logger.end('testImageView');
+            }
         });
         this.setState({currentProgress: 0.5});
         this.setState({currentTaskName: 'AnimationViewTesting..'});
     }
 
     testListView() {
+        this.logger.start('testListView');
         this.props.navigation.navigate('ListView', {
-            onGoBack: (mounted) => mounted && this.doingTask(4),
+            onGoBack: (mounted) => {
+                if (mounted){
+                    this.doingTask(4);
+                }
+                this.logger.end('testImageView');
+            }
         });
         this.setState({currentProgress: 1});
         this.setState({currentTaskName: 'ListViewTesting..'});

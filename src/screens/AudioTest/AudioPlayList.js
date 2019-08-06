@@ -27,6 +27,7 @@ class AudioPlayList extends BaseScreenComponent {
             require('../../../assets/B.mp3'),
             require('../../../assets/C.mp3')
         ]
+        this.logger = new MTLogger(this.constructor.name);
     }
 
     _renderButton = (title, onPress) => {
@@ -41,6 +42,7 @@ class AudioPlayList extends BaseScreenComponent {
 
     _onPlay = () => {
         try {
+            this.logger.start('_onPlay');
             let index = Math.floor(Math.random() * this.soundList.length);
             this.curSound = new this.Sound(this.soundList[index], (error) => {
                 if (error) {
@@ -53,6 +55,7 @@ class AudioPlayList extends BaseScreenComponent {
                             console.log('successfully finished playing');
                             this.setState({'isPlay': true});
                         }
+                        this.logger.end('_onPlay');
                     });
                 }, 100)
             });
@@ -63,8 +66,10 @@ class AudioPlayList extends BaseScreenComponent {
 
     _onSetVolume = (volumeVal) => {
         try {
+            this.logger.start('_onSetVolume');
             let fixedVolumeVal = volumeVal > 1 ? 1 : volumeVal < 0 ? 0 : volumeVal;
             this.curSound.setVolume(fixedVolumeVal);
+            this.logger.end('_onSetVolume');
         } catch (e) {
             console.log(e);
         }
@@ -72,8 +77,10 @@ class AudioPlayList extends BaseScreenComponent {
 
     _onPause = () => {
         try {
+            this.logger.start('_onPause');
             this.setState({'isPause': true});
             this.curSound.pause();
+            this.logger.end('_onPause');
         } catch (e) {
             console.log(e);
         }
@@ -81,8 +88,10 @@ class AudioPlayList extends BaseScreenComponent {
 
     _onResume = () => {
         try {
+            this.logger.start('_onResume');
             this.curSound.play();
             this.setState({'isPause': false});
+            this.logger.end('_onResume');
         } catch (e) {
             console.log(e);
         }
@@ -90,7 +99,9 @@ class AudioPlayList extends BaseScreenComponent {
 
     _seek = (pos) => {
         try {
+            this.logger.start('_seek');
             this.curSound.setCurrentTime(pos);
+            this.logger.end('_seek');
         } catch (e) {
             console.log(e);
         }
@@ -98,7 +109,9 @@ class AudioPlayList extends BaseScreenComponent {
 
     _forward = (time) => {
         try {
+            this.logger.start('_forward');
             this.curSound.getCurrentTime((seconds) => this._seek(seconds + time));
+            this.logger.end('_forward');
         } catch (e) {
             console.log(e);
         }
@@ -106,18 +119,22 @@ class AudioPlayList extends BaseScreenComponent {
 
     _backward = (time) => {
         try {
+            this.logger.start('_backward');
             this.curSound.getCurrentTime((seconds) => this._seek(seconds + time));
+            this.logger.end('_backward');
         } catch (e) {
             console.log(e);
         }
     };
 
     _onStop = () => {
+        this.logger.start('_onStop');
         this.setState({'isPlay': false});
         try {
             this.curSound.stop();
             this.curSound.release();
             this.curSound = null;
+            this.logger.end('_onStop');
         } catch (e) {
             console.log(e);
         }
@@ -125,14 +142,18 @@ class AudioPlayList extends BaseScreenComponent {
 
     _volumeUp = () => {
         try {
+            this.logger.start('_volumeUp');
             this._onSetVolume(this.curSound.getVolume() + 0.1);
+            this.logger.end('_volumeUp');
         } catch (e) {
             console.log(e);
         }
     };
     _volumeDown = () => {
         try {
+            this.logger.start('_volumeDown');
             this._onSetVolume(this.curSound.getVolume() - 0.1);
+            this.logger.end('_volumeDown');
         } catch (e) {
             console.log(e);
         }

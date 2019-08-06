@@ -17,4 +17,5 @@ DEVICE_DICT = {
     "nexus_6p": __build_device_dict("ENU7N15B05000332", "6.0.1", 8202),
     "huawei_p9_plus": __build_device_dict("8FS5T16C26002998", "8.0.0", 8203),
     "samsung_s9": __build_device_dict("281b4b90cc0d7ece", "9", 8204),
+    "mate10": __build_device_dict("UYT5T18423004274", "9", 8205),
 }

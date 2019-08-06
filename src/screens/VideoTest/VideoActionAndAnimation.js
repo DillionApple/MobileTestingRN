@@ -3,6 +3,7 @@ import React from 'react'
 import { View, StyleSheet, Button, Dimensions, Animated } from 'react-native'
 import Video from 'react-native-video'
 import BaseScreenComponent from "../../components/BaseScreenComponent";
+import MTLogger from "../../components/Logger";
 
 class VideoActionAndAnimation extends BaseScreenComponent {
 
@@ -31,35 +32,44 @@ class VideoActionAndAnimation extends BaseScreenComponent {
             directionAnims: Array.apply(null, Array(this.NUMBER_OF_VIDEOS)).map(() => new Animated.Value(0)),
             topAnims: Array.apply(null, Array(this.NUMBER_OF_VIDEOS)).map(() => new Animated.Value(0)),
         }
+
+        this.logger = new MTLogger(this.constructor.name);
     }
 
     pauseRandomly() {
+        this.logger.start('pauseRandomly');
         for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
             if (Math.random() < 0.5) {
                 this.state.pauseds[i] = !this.state.pauseds[i]
             }
         }
         this.setState({pauseds: this.state.pauseds})
+        this.logger.end('pauseRandomly');
     }
 
     seekRandomly() {
+        this.logger.start('seekRandomly');
         for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
             if (Math.random() < 0.5) {
                 this.players[i].seek(Math.random() * this.durations[i])
             }
         }
+        this.logger.end('seekRandomly');
     }
 
     changeSpeedRandomly() {
+        this.logger.start('changeSpeedRandomly');
         for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
             if (Math.random() < 0.5) {
                 this.state.speeds[i] = Math.random() * 2.0
             }
         }
         this.setState({speeds: this.state.speeds})
+        this.logger.end('changeSpeedRandomly');
     }
 
     changeSizeRandomly() {
+        this.logger.start('changeSizeRandomly');
         for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
             if (Math.random() < 0.5) {
                 let widthToValue = Math.random() * this.WINDOW_WIDTH;
@@ -82,9 +92,11 @@ class VideoActionAndAnimation extends BaseScreenComponent {
                 ]).start()
             }
         }
+        this.logger.end('changeSizeRandomly');
     }
 
     rotateRandomly() {
+        this.logger.start('rotateRandomly');
         for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
             if (Math.random() < 0.5) {
                 let direction =  Math.floor(Math.random() * 4); // 0 1 2 3
@@ -106,6 +118,7 @@ class VideoActionAndAnimation extends BaseScreenComponent {
                 ]).start()
             }
         }
+        this.logger.end('rotateRandomly');
     }
 
     slotRender() {
