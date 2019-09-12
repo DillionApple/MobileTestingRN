@@ -28,7 +28,7 @@ class AudioScreen extends BaseScreenComponent {
             audioList: []
         };
         this._loadAudioClipDir();
-        this.logger = new MTLogger(this.constructor.name);
+        this.logger = new MTLogger('AudioScreen');
     }
 
     randInt = (min, max) => {

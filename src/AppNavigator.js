@@ -39,7 +39,9 @@ export const routeConfigMap = {
 };
 
 if (Platform.OS === 'android') {
-    routeConfigMap.WebGLScreen = {screen: WebGLScreen}
+    delete routeConfigMap.End;
+    routeConfigMap.WebGLScreen = {screen: WebGLScreen};
+    routeConfigMap.End = {screen: EndScreen};
 }
 
 

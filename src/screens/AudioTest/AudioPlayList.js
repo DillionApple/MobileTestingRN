@@ -17,7 +17,7 @@ class AudioPlayList extends BaseScreenComponent {
             isPlay: false,
             isPause: false,
         };
-        this.logger = new MTLogger(this.constructor.name);
+        this.logger = new MTLogger('AudioPlayList');
         this.Sound = require('react-native-sound');
         this.Sound.setCategory('Playback');
         this.curSound = null;
@@ -27,7 +27,7 @@ class AudioPlayList extends BaseScreenComponent {
             require('../../../assets/B.mp3'),
             require('../../../assets/C.mp3')
         ]
-        this.logger = new MTLogger(this.constructor.name);
+        this.logger = new MTLogger('AudioPlayList');
     }
 
     _renderButton = (title, onPress) => {

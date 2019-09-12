@@ -19,7 +19,7 @@ class UITestScreen extends BaseScreenComponent {
             currentTaskName: 'initializing..',
             indeterminate: true
         };
-        this.logger = new MTLogger(this.constructor.name);
+        this.logger = new MTLogger('UITestScreen');
     }
 
     componentWillUnmount() {

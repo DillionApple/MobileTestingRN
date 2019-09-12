@@ -18,7 +18,7 @@ class FileSystemScreen extends BaseScreenComponent {
         this.zipPath = `${this.mainPath}/test.zip`;
         this.txtSubPath = `${this.mainSubPath}/test.txt`;
         this.zipSubPath = `${this.mainSubPath}/test.zip`;
-        this.logger = new MTLogger(this.constructor.name);
+        this.logger = new MTLogger('FileSystemScreen');
     }
 
 

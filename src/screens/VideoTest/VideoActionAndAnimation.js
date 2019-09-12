@@ -33,7 +33,7 @@ class VideoActionAndAnimation extends BaseScreenComponent {
             topAnims: Array.apply(null, Array(this.NUMBER_OF_VIDEOS)).map(() => new Animated.Value(0)),
         }
 
-        this.logger = new MTLogger(this.constructor.name);
+        this.logger = new MTLogger('VideoActionAndAnimation');
     }
 
     pauseRandomly() {

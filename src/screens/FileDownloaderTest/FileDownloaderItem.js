@@ -29,7 +29,7 @@ class FileDownloaderItem extends React.Component {
             speed: "Paused",
         };
         RNFetchBlob.fs.unlink(this.downloadDest).catch((err) => {})
-        this.logger = new MTLogger(this.constructor.name);
+        this.logger = new MTLogger('FileDownloaderItem');
     }
 
     componentWillUnmount() {

@@ -15,7 +15,7 @@ class CameraScreen extends BaseScreenComponent {
             isRecording: false,
             isAudioRecording: false
         }
-        this.logger = new MTLogger(this.constructor.name);
+        this.logger = new MTLogger('CameraScreen');
     }
 
     slotRender() {

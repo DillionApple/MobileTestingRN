@@ -13,7 +13,7 @@ class HomeScreen extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             test: "test"
         }
     }
@@ -21,10 +21,10 @@ class HomeScreen extends React.Component {
     render() {
         const {navigate} = this.props.navigation;
         let items = Object.keys(routeConfigMap);
-        return(
+        return (
             <View style={styles.container}>
                 <Header
-                    statusBarProps={{ translucent: true }}
+                    statusBarProps={{translucent: true}}
                     centerComponent={{text: "<-MobileTesting->", style: {color: '#fff'}}}
                 />
                 <FlatList
@@ -34,7 +34,9 @@ class HomeScreen extends React.Component {
                         <ListItem
                             button
                             onPress={() => navigate(item)}
-                            title={`[-${item}-]`}
+                            title={<Text style={styles.testlist}>
+                                [-${item}-]
+                            </Text>}
                             bottomDivider
                         />
                     )}
@@ -50,5 +52,8 @@ export default HomeScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    testlist: {
+        fontSize: 7
     }
 });
