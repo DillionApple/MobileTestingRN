@@ -67,7 +67,7 @@ class DBScreen extends BaseScreenComponent {
         this.state = {
             posts: []
         }
-        this.logger = new MTLogger(this.constructor.name);
+        this.logger = new MTLogger('DBScreen');
     }
 
     randInt = (min, max) => {

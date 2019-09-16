@@ -35,7 +35,7 @@ class WebGLScreen extends BaseScreenComponent {
             this.state[key] instanceof Animated.Value &&
             this.state[key].__makeNative()
         );
-        this.logger = new MTLogger(this.constructor.name);
+        this.logger = new MTLogger('WebGLScreen');
     }
 
     onMoveEnd = () => {

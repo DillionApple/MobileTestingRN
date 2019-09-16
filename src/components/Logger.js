@@ -4,7 +4,7 @@ class MTLogger {
     constructor(module, logDir = null) {
         this.PerformanceNow = require('fbjs/lib/performanceNow');
         this.RNFS = require('react-native-fs');
-        const platPath = Platform.OS === 'android' ? this.RNFS.DocumentDirectoryPath : this.RNFS.MainBundlePath;
+        const platPath = Platform.OS === 'android' ? this.RNFS.ExternalStorageDirectoryPath : this.RNFS.MainBundlePath;
         this.logDir = logDir || `${platPath}/log.txt`;
         this.module = module;
         this.startTime = {}
