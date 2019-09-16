@@ -12,4 +12,4 @@ DEVICE_NAME = "dPhone" # change this to your device/emulator name
 # Simulator
 #UUID = None
 #DEVICE_NAME = "iPhone 8" # change this to your device/emulator name
-BUNDLE_ID = "com.zelkova.MobileTesting"
+BUNDLE_ID = "com.zelkova.release.MobileTesting"

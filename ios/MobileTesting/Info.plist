@@ -40,7 +40,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Test photo function</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Test audio function</string>
 	<key>UIAppFonts</key>
