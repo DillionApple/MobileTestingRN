@@ -5,7 +5,7 @@ import {zip, unzip} from "react-native-zip-archive";
 import MTLogger from "../../components/Logger";
 
 class FileSystemScreen extends BaseScreenComponent {
-
+    REPEAT_COUNT = 100;
     constructor(props) {
         super(props);
         this.state = {
@@ -24,23 +24,26 @@ class FileSystemScreen extends BaseScreenComponent {
 
     async fsTest() {
         this.logger.start('fsTest');
-        await this.readDir();
-        await this.mkDir(this.mainPath);
-        await this.mkDir(this.mainSubPath);
-        await this.delDir(this.mainSubPath);
-        await this.mkDir(this.mainSubPath);
-        await this.mkFile(this.txtPath);
-        await this.zipFile(this.txtPath, this.zipPath);
-        await this.delFile(this.txtPath);
-        await this.unzipFile(this.zipPath, this.txtPath);
-        await this.copyFile(this.txtPath, this.txtSubPath);
-        await this.zipFile(this.txtSubPath, this.zipSubPath);
-        await this.delFile(this.txtSubPath);
-        await this.unzipFile(this.zipSubPath, this.txtSubPath);
-        await this.delFile(this.txtSubPath);
-        await this.moveFile(this.txtPath, this.txtSubPath);
-        await this.mkFile(this.txtPath);
-        await this.delDir(this.mainPath);
+        // repeater mark
+        for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+            await this.readDir();
+            await this.mkDir(this.mainPath);
+            await this.mkDir(this.mainSubPath);
+            await this.delDir(this.mainSubPath);
+            await this.mkDir(this.mainSubPath);
+            await this.mkFile(this.txtPath);
+            await this.zipFile(this.txtPath, this.zipPath);
+            await this.delFile(this.txtPath);
+            await this.unzipFile(this.zipPath, this.txtPath);
+            await this.copyFile(this.txtPath, this.txtSubPath);
+            await this.zipFile(this.txtSubPath, this.zipSubPath);
+            await this.delFile(this.txtSubPath);
+            await this.unzipFile(this.zipSubPath, this.txtSubPath);
+            await this.delFile(this.txtSubPath);
+            await this.moveFile(this.txtPath, this.txtSubPath);
+            await this.mkFile(this.txtPath);
+            await this.delDir(this.mainPath);
+        }
         this.setState({
             progressText: 'FS TEST DONE!'
         })
@@ -194,97 +197,97 @@ class FileSystemScreen extends BaseScreenComponent {
                         title="|-File Test-|"
                         color="#841584"
                     />
-                    <Button
-                        onPress={() => {
-                            this.readDir();
-                        }}
-                        title="|-Read Dir-|"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={() => {
-                            this.mkDir(this.mainPath);
-                        }}
-                        title="|-Make Main Dir-|"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={() => {
-                            this.mkDir(this.mainSubPath);
-                        }}
-                        title="|-Make Sub Dir-|"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={() => {
-                            this.delDir(this.mainPath);
-                        }}
-                        title="|-Delete Main Dir-|"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={() => {
-                            this.mkFile(this.txtPath);
-                        }}
-                        title="|-Make Main Dir File-|"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={() => {
-                            this.delFile(this.txtPath);
-                        }}
-                        title="|-Delete Main Dir File-|"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={() => {
-                            this.delFile(this.txtSubPath);
-                        }}
-                        title="|-Delete Sub Dir File-|"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={() => {
-                            this.copyFile(this.txtPath, this.txtSubPath);
-                        }}
-                        title="|-Copy Main Dir File To Sub Dir-|"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={() => {
-                            this.moveFile(this.txtPath, this.txtSubPath);
-                        }}
-                        title="|-Move Main Dir File To Sub Dir-|"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={() => {
-                            this.zipFile(this.txtPath, this.zipPath);
-                        }}
-                        title="|-Zip Main Dir File-|"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={() => {
-                            this.zipFile(this.txtSubPath, this.zipSubPath);
-                        }}
-                        title="|-Zip Sub Dir File-|"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={() => {
-                            this.unzipFile(this.zipPath, this.txtPath);
-                        }}
-                        title="|-Unzip Main Dir File-|"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={() => {
-                            this.unzipFile(this.zipSubPath, this.txtSubPath);
-                        }}
-                        title="|-Unzip Sub Dir File-|"
-                        color="#841584"
-                    />
+                    {/*<Button*/}
+                    {/*    onPress={() => {*/}
+                    {/*        this.readDir();*/}
+                    {/*    }}*/}
+                    {/*    title="|-Read Dir-|"*/}
+                    {/*    color="#841584"*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={() => {*/}
+                    {/*        this.mkDir(this.mainPath);*/}
+                    {/*    }}*/}
+                    {/*    title="|-Make Main Dir-|"*/}
+                    {/*    color="#841584"*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={() => {*/}
+                    {/*        this.mkDir(this.mainSubPath);*/}
+                    {/*    }}*/}
+                    {/*    title="|-Make Sub Dir-|"*/}
+                    {/*    color="#841584"*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={() => {*/}
+                    {/*        this.delDir(this.mainPath);*/}
+                    {/*    }}*/}
+                    {/*    title="|-Delete Main Dir-|"*/}
+                    {/*    color="#841584"*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={() => {*/}
+                    {/*        this.mkFile(this.txtPath);*/}
+                    {/*    }}*/}
+                    {/*    title="|-Make Main Dir File-|"*/}
+                    {/*    color="#841584"*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={() => {*/}
+                    {/*        this.delFile(this.txtPath);*/}
+                    {/*    }}*/}
+                    {/*    title="|-Delete Main Dir File-|"*/}
+                    {/*    color="#841584"*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={() => {*/}
+                    {/*        this.delFile(this.txtSubPath);*/}
+                    {/*    }}*/}
+                    {/*    title="|-Delete Sub Dir File-|"*/}
+                    {/*    color="#841584"*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={() => {*/}
+                    {/*        this.copyFile(this.txtPath, this.txtSubPath);*/}
+                    {/*    }}*/}
+                    {/*    title="|-Copy Main Dir File To Sub Dir-|"*/}
+                    {/*    color="#841584"*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={() => {*/}
+                    {/*        this.moveFile(this.txtPath, this.txtSubPath);*/}
+                    {/*    }}*/}
+                    {/*    title="|-Move Main Dir File To Sub Dir-|"*/}
+                    {/*    color="#841584"*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={() => {*/}
+                    {/*        this.zipFile(this.txtPath, this.zipPath);*/}
+                    {/*    }}*/}
+                    {/*    title="|-Zip Main Dir File-|"*/}
+                    {/*    color="#841584"*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={() => {*/}
+                    {/*        this.zipFile(this.txtSubPath, this.zipSubPath);*/}
+                    {/*    }}*/}
+                    {/*    title="|-Zip Sub Dir File-|"*/}
+                    {/*    color="#841584"*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={() => {*/}
+                    {/*        this.unzipFile(this.zipPath, this.txtPath);*/}
+                    {/*    }}*/}
+                    {/*    title="|-Unzip Main Dir File-|"*/}
+                    {/*    color="#841584"*/}
+                    {/*/>*/}
+                    {/*<Button*/}
+                    {/*    onPress={() => {*/}
+                    {/*        this.unzipFile(this.zipSubPath, this.txtSubPath);*/}
+                    {/*    }}*/}
+                    {/*    title="|-Unzip Sub Dir File-|"*/}
+                    {/*    color="#841584"*/}
+                    {/*/>*/}
                 </View>
                 {/*<LottieView*/}
                 {/*    style={styles.lottieView}*/}

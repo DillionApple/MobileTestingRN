@@ -107,6 +107,14 @@ class CameraScreen extends BaseScreenComponent {
                 this.setState({
                     isTakingPicture: true
                 });
+                // repeater mark
+                this.REPEAT_COUNT = 1000;
+                for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+                    const data = await this.camera.takePictureAsync(options);
+                    // console.log(data.uri);
+                    this.camera.pausePreview();
+                    this.camera.resumePreview();
+                }
                 const data = await this.camera.takePictureAsync(options);
                 console.log(data.uri);
                 this.camera.pausePreview();
@@ -119,12 +127,12 @@ class CameraScreen extends BaseScreenComponent {
     retakePicture = async function () {
         if (this.camera) {
             try {
-                this.logger.start('retakePicture');
+                // this.logger.start('retakePicture');
                 this.setState({
                     isTakingPicture: false
                 });
                 this.camera.resumePreview();
-                this.logger.end('retakePicture');
+                // this.logger.end('retakePicture');
             } catch (err) {
                 console.log(`err : ${err}`);
             }

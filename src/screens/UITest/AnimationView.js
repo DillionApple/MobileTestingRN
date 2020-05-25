@@ -26,13 +26,13 @@ class AnimationView extends React.Component {
 
     async startPlay() {
         this.animation.play();
-        await this.timerHandle.set(2000);
+        await this.timerHandle.set(300);
         this.setState({current: 1});
         this.animation.play();
-        await this.timerHandle.set(2000);
-        this.setState({current: 2});
-        this.animation.play();
-        await this.timerHandle.set(2000);
+        await this.timerHandle.set(300);
+        // this.setState({current: 2});
+        // this.animation.play();
+        // await this.timerHandle.set(2000);
         this.props.navigation.state.params.onGoBack(this.mounted);
     }
 

@@ -29,14 +29,14 @@ class ListView extends React.Component {
 
     async startPlay() {
         this._flatList.scrollToOffset({animated: true, offset: 500});
-        await this.timerHandle.set(1000);
+        await this.timerHandle.set(100);
 
         this._flatList.scrollToEnd({animated: true});
-        await this.timerHandle.set(2000);
+        await this.timerHandle.set(200);
         this._flatList.scrollToOffset({animated: true, offset: 0});
 
         for (let i = 0; i < 20; i++) {
-            await this.timerHandle.set(500);
+            await this.timerHandle.set(50);
             this._flatList.scrollToIndex({animated: true, index: this.randomInt(500)});
         }
         this.props.navigation.state.params.onGoBack(this.mounted);

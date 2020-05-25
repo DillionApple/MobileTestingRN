@@ -10,6 +10,8 @@ import MTLogger from "../../components/Logger";
 
 class AudioPlayList extends BaseScreenComponent {
 
+    REPEAT_COUNT = 1000;
+
     constructor() {
         super();
         this.state = {
@@ -42,8 +44,9 @@ class AudioPlayList extends BaseScreenComponent {
 
     _onPlay = () => {
         try {
-            this.logger.start('_onPlay');
-            let index = Math.floor(Math.random() * this.soundList.length);
+            // this.logger.start('_onPlay');
+            // let index = Math.floor(Math.random() * this.soundList.length);
+            let index = 0;
             this.curSound = new this.Sound(this.soundList[index], (error) => {
                 if (error) {
                     console.log('failed to load the sound', error);
@@ -55,7 +58,7 @@ class AudioPlayList extends BaseScreenComponent {
                             console.log('successfully finished playing');
                             this.setState({'isPlay': true});
                         }
-                        this.logger.end('_onPlay');
+                        // this.logger.end('_onPlay');
                     });
                 }, 100)
             });
@@ -66,10 +69,8 @@ class AudioPlayList extends BaseScreenComponent {
 
     _onSetVolume = (volumeVal) => {
         try {
-            this.logger.start('_onSetVolume');
             let fixedVolumeVal = volumeVal > 1 ? 1 : volumeVal < 0 ? 0 : volumeVal;
             this.curSound.setVolume(fixedVolumeVal);
-            this.logger.end('_onSetVolume');
         } catch (e) {
             console.log(e);
         }
@@ -80,6 +81,11 @@ class AudioPlayList extends BaseScreenComponent {
             this.logger.start('_onPause');
             this.setState({'isPause': true});
             this.curSound.pause();
+            // repeater mark
+            for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+                this.curSound.play();
+                this.curSound.pause();
+            }
             this.logger.end('_onPause');
         } catch (e) {
             console.log(e);
@@ -99,9 +105,7 @@ class AudioPlayList extends BaseScreenComponent {
 
     _seek = (pos) => {
         try {
-            this.logger.start('_seek');
             this.curSound.setCurrentTime(pos);
-            this.logger.end('_seek');
         } catch (e) {
             console.log(e);
         }
@@ -110,7 +114,10 @@ class AudioPlayList extends BaseScreenComponent {
     _forward = (time) => {
         try {
             this.logger.start('_forward');
-            this.curSound.getCurrentTime((seconds) => this._seek(seconds + time));
+            // repeater mark
+            for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+                this.curSound.getCurrentTime((seconds) => this._seek(seconds + time));
+            }
             this.logger.end('_forward');
         } catch (e) {
             console.log(e);
@@ -120,7 +127,10 @@ class AudioPlayList extends BaseScreenComponent {
     _backward = (time) => {
         try {
             this.logger.start('_backward');
-            this.curSound.getCurrentTime((seconds) => this._seek(seconds + time));
+            // repeater mark
+            for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+                this.curSound.getCurrentTime((seconds) => this._seek(seconds - time));
+            }
             this.logger.end('_backward');
         } catch (e) {
             console.log(e);
@@ -143,7 +153,10 @@ class AudioPlayList extends BaseScreenComponent {
     _volumeUp = () => {
         try {
             this.logger.start('_volumeUp');
-            this._onSetVolume(this.curSound.getVolume() + 0.1);
+            // repeater mark
+            for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+                this._onSetVolume(this.curSound.getVolume() + 0.1);
+            }
             this.logger.end('_volumeUp');
         } catch (e) {
             console.log(e);
@@ -152,7 +165,10 @@ class AudioPlayList extends BaseScreenComponent {
     _volumeDown = () => {
         try {
             this.logger.start('_volumeDown');
-            this._onSetVolume(this.curSound.getVolume() - 0.1);
+            // repeater mark
+            for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+                this._onSetVolume(this.curSound.getVolume() - 0.1);
+            }
             this.logger.end('_volumeDown');
         } catch (e) {
             console.log(e);

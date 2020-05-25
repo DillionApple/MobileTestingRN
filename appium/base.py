@@ -150,10 +150,14 @@ class BaseTestFlow:
         round = 0
         while True:
             sleep(1)
-            self.setup()
-            # start log process
-            log_proc = Process(target=self.collect_device_log_process_target)
-            log_proc.start()
+            try:
+                self.setup()
+                # start log process
+                log_proc = Process(target=self.collect_device_log_process_target)
+                log_proc.start()
+            except Exception as e:
+                print(e)
+                print('appium setup error')
             crash_occured = False
             all_tests_done = False
             try:
@@ -191,13 +195,13 @@ class BaseTestFlow:
                 log_filename = log_filename.replace("|", "_")
 
                 print("Recording log, please do not terminate the program")
-                with open(self.current_log_filename, "r") as f:
-                    log_content = f.readlines()
-                    log_content = log_content[-10000:]
-
-                with open(log_filename, "w") as f:
-                    for line in log_content:
-                        f.write(line)
+                # with open(self.current_log_filename, "r") as f:
+                #     log_content = f.readlines()
+                #     log_content = log_content[-10000:]
+                #
+                # with open(log_filename, "w") as f:
+                #     for line in log_content:
+                #         f.write(line)
                 print("Recording done")
             else:
                 if all_tests_done:

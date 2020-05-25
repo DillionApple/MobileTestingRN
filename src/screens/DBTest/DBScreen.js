@@ -85,10 +85,10 @@ class DBScreen extends BaseScreenComponent {
 
     slotRender() {
         return (<ScrollView style={styles.container}>
-            <Button title="|-ADD POST-|" onPress={this.addOnePost}/>
-            <Button title="|-ADD 100 POSTS-|" onPress={this.add100Posts}/>
-            <Button title="|-DELETE POSTS-|" onPress={this.deletePost}/>
-            <Button title="|-DELETE ALL POSTS-|" onPress={this.deleteALLPost}/>
+            <Button title="|-ADD 100 POST-|" onPress={this.add100Posts}/>
+            <Button title="|-ADD 10000 POSTS-|" onPress={this.add10000Posts}/>
+            <Button title="|-DELETE 1 POSTS-|" onPress={this.deletePost}/>
+            <Button title="|-DELETE 100 POSTS-|" onPress={this.delete100Posts}/>
             {/*<PostList posts={this.state.posts} addNewComment={this.addNewComment}/>*/}
             {/*<Button title="|-UPDATE POSTS-|" onPress={this._updatePosts}/>*/}
         </ScrollView>)
@@ -103,16 +103,16 @@ class DBScreen extends BaseScreenComponent {
         console.log(`posts : ${this.state.posts}`);
     };
 
-    addOnePost = () => {
-        this.logger.start('addOnePost');
-        this.addNewPost(1);
-        this.logger.end('addOnePost');
-    };
-
     add100Posts = () => {
         this.logger.start('add100Posts');
         this.addNewPost(100);
         this.logger.end('add100Posts');
+    };
+
+    add10000Posts = () => {
+        this.logger.start('add10000Posts');
+        this.addNewPost(10000);
+        this.logger.end('add10000Posts');
     };
 
     addNewPost = async (num = 1) => {
@@ -158,6 +158,21 @@ class DBScreen extends BaseScreenComponent {
         }
         this._updatePosts();
         this.logger.end('deletePost');
+    };
+
+    delete100Posts = async () => {
+        this.logger.start('delete100Posts');
+        for (let cnt = 0; cnt < 100; cnt++) {
+            let posts = this.state.posts;
+            {
+                posts.length !== 0 &&
+                await database.action(async () => {
+                    await posts[this.randInt(0, posts.length - 1)].destroyPermanently();
+                });
+            }
+        }
+        this._updatePosts();
+        this.logger.end('delete100Posts');
     };
 
     deleteALLPost = async () => {

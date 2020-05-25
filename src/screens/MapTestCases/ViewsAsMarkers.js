@@ -6,11 +6,12 @@ import {
     Dimensions,
     TouchableOpacity,
 } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import PriceMarker from './PriceMarker';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
+import MTLogger from "../../components/Logger";
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.78825;
@@ -19,6 +20,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 class ViewsAsMarkers extends BaseScreenComponent {
+    REPEAT_COUNT = 1000;
 
     constructor(props) {
         super(props);
@@ -36,14 +38,25 @@ class ViewsAsMarkers extends BaseScreenComponent {
             },
             amount: 99,
         };
+        this.logger = new MTLogger('MapViewsAsMarkers');
     }
 
     increment() {
-        this.setState({ amount: this.state.amount + 1 });
+        this.logger.start('increment');
+        // repeater mark
+        for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+            this.setState({amount: this.state.amount + 1});
+        }
+        this.logger.start('increment');
     }
 
     decrement() {
-        this.setState({ amount: this.state.amount - 1 });
+        this.logger.start('decrement');
+        // repeater mark
+        for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+            this.setState({amount: this.state.amount - 1});
+        }
+        this.logger.start('decrement');
     }
 
     slotRender() {
@@ -54,7 +67,7 @@ class ViewsAsMarkers extends BaseScreenComponent {
                     initialRegion={this.state.region}
                 >
                     <Marker coordinate={this.state.coordinate}>
-                        <PriceMarker amount={this.state.amount} />
+                        <PriceMarker amount={this.state.amount}/>
                     </Marker>
                 </MapView>
                 <View style={styles.buttonContainer}>
