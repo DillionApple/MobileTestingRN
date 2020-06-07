@@ -26,15 +26,15 @@ const rootRouteConfigMap = {
 
 export const routeConfigMap = {
     UITest: {screen: UITestScreen},
-    ImageViewerTest: {screen: ImageViewerScreen},
-    CameraScreen: {screen: CameraScreen},
+    // ImageViewerTest: {screen: ImageViewerScreen},
+    // CameraScreen: {screen: CameraScreen},
     VideoTest: {screen: VideoTestNavigator},
-    AudioTest: {screen: AudioScreen},
+    // AudioTest: {screen: AudioScreen},
     AudioPlayList: {screen: AudioPlayList},
-    MapTest: {screen: MapTestNavigator},
+    // MapTest: {screen: MapTestNavigator},
     FileSystemScreen: {screen: FileSystemScreen},
-    FileDownloaderTest: {screen: FileDownloaderNavigator},
-    DBScreen: {screen: DBScreen},
+    // FileDownloaderTest: {screen: FileDownloaderNavigator},
+    // DBScreen: {screen: DBScreen},
     End: {screen: EndScreen},
 };
 

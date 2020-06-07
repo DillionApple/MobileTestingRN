@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import {
     View,
@@ -10,14 +10,16 @@ import {
 import MapView from 'react-native-maps';
 import carImage from './assets/car.png';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
+import MTLogger from "../../components/Logger";
 
 export default class NavigationMap extends BaseScreenComponent {
+    REPEAT_COUNT = 100;
 
     constructor(props) {
         super(props);
         this.state = {
             prevPos: null,
-            curPos: { latitude: 37.420814, longitude: -122.081949 },
+            curPos: {latitude: 37.420814, longitude: -122.081949},
             curAng: 45,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
@@ -25,13 +27,19 @@ export default class NavigationMap extends BaseScreenComponent {
         this.changePosition = this.changePosition.bind(this);
         this.getRotation = this.getRotation.bind(this);
         this.updateMap = this.updateMap.bind(this);
+        this.logger = new MTLogger('MapNavigationMap');
     }
 
     changePosition(latOffset, lonOffset) {
+        this.logger.start('changePosition');
         const latitude = this.state.curPos.latitude + latOffset;
         const longitude = this.state.curPos.longitude + lonOffset;
-        this.setState({ prevPos: this.state.curPos, curPos: { latitude, longitude } });
-        this.updateMap();
+        // repeater mark
+        for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+            this.setState({prevPos: this.state.curPos, curPos: {latitude, longitude}});
+            this.updateMap();
+        }
+        this.logger.start('changePosition');
     }
 
     getRotation(prevPos, curPos) {
@@ -42,9 +50,9 @@ export default class NavigationMap extends BaseScreenComponent {
     }
 
     updateMap() {
-        const { curPos, prevPos, curAng } = this.state;
+        const {curPos, prevPos, curAng} = this.state;
         const curRot = this.getRotation(prevPos, curPos);
-        this.map.animateCamera({ heading: curRot, center: curPos, pitch: curAng });
+        this.map.animateCamera({heading: curRot, center: curPos, pitch: curAng});
     }
 
     slotRender() {
@@ -62,7 +70,7 @@ export default class NavigationMap extends BaseScreenComponent {
                 >
                     <MapView.Marker
                         coordinate={this.state.curPos}
-                        anchor={{ x: 0.5, y: 0.5 }}
+                        anchor={{x: 0.5, y: 0.5}}
                         image={carImage}
                     />
                 </MapView>

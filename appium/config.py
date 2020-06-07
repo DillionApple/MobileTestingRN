@@ -8,11 +8,15 @@ BACK_BTN_RE_PATTERN = r"Back"
 INJECTION_BTN_RE_PATTERN = r"Injection"
 INJECTION_CLEAR_BTN_RE_PATTERN = r"Clear"
 
-CHARGING_SECONDS_AFTER_EACH_CASE = 2 * 60 # charge for 2 minutes
+CHARGING_SECONDS_AFTER_EACH_CASE = 0.01 * 60  # charge for some minutes
 
 STRESS_PATTERNS = {
-    "CPU": [0, 2],
-    "Disk Write": [0, 2],
-    "Network Download": [0, 2],
-    "Memory": [0, 2],
+    # "CPU": [0, 2],
+    # "Disk Write": [0, 2],
+    # "Network Download": [0, 2],
+    # "Memory": [0, 2],
+    "CPU": [0],
+    "Disk Write": [0],
+    "Network Download": [0],
+    "Memory": [0]
 }

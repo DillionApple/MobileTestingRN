@@ -8,7 +8,7 @@ import MTLogger from "../../components/Logger";
 class VideoActionAndAnimation extends BaseScreenComponent {
 
     NUMBER_OF_VIDEOS = 0;
-
+    REPEAT_COUNT = 1000;
     WINDOW_WIDTH = Dimensions.get('window').width;
 
     players = null;
@@ -38,9 +38,12 @@ class VideoActionAndAnimation extends BaseScreenComponent {
 
     pauseRandomly() {
         this.logger.start('pauseRandomly');
-        for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
-            if (Math.random() < 0.5) {
-                this.state.pauseds[i] = !this.state.pauseds[i]
+        // repeater mark
+        for (let cnt = 0; cnt< this.REPEAT_COUNT; cnt++) {
+            for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
+                if (Math.random() < 0.5) {
+                    this.state.pauseds[i] = !this.state.pauseds[i]
+                }
             }
         }
         this.setState({pauseds: this.state.pauseds})
@@ -49,9 +52,12 @@ class VideoActionAndAnimation extends BaseScreenComponent {
 
     seekRandomly() {
         this.logger.start('seekRandomly');
-        for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
-            if (Math.random() < 0.5) {
-                this.players[i].seek(Math.random() * this.durations[i])
+        // repeater mark
+        for (let cnt = 0; cnt< this.REPEAT_COUNT; cnt++) {
+            for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
+                if (Math.random() < 0.5) {
+                    this.players[i].seek(Math.random() * this.durations[i])
+                }
             }
         }
         this.logger.end('seekRandomly');
@@ -59,9 +65,12 @@ class VideoActionAndAnimation extends BaseScreenComponent {
 
     changeSpeedRandomly() {
         this.logger.start('changeSpeedRandomly');
-        for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
-            if (Math.random() < 0.5) {
-                this.state.speeds[i] = Math.random() * 2.0
+        // repeater mark
+        for (let cnt = 0; cnt< this.REPEAT_COUNT; cnt++) {
+            for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
+                if (Math.random() < 0.5) {
+                    this.state.speeds[i] = Math.random() * 2.0
+                }
             }
         }
         this.setState({speeds: this.state.speeds})
@@ -70,26 +79,29 @@ class VideoActionAndAnimation extends BaseScreenComponent {
 
     changeSizeRandomly() {
         this.logger.start('changeSizeRandomly');
-        for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
-            if (Math.random() < 0.5) {
-                let widthToValue = Math.random() * this.WINDOW_WIDTH;
-                let direction = this.state.directionAnims[i]._value;
-                let topToValue = (direction % 2 == 0) ? 0 : (widthToValue - widthToValue / this.state.aspectRatios[i]) / 2;
-                Animated.parallel([
-                    Animated.timing(
-                        this.state.widthAnims[i],
-                        {
-                            toValue: widthToValue,
-                            duration: 500,
-                        }
-                    ),
-                    Animated.timing(
-                        this.state.topAnims[i],
-                        {
-                            toValue: topToValue,
-                        }
-                    )
-                ]).start()
+        // repeater mark
+        for (let cnt = 0; cnt< this.REPEAT_COUNT; cnt++) {
+            for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
+                if (Math.random() < 0.5) {
+                    let widthToValue = Math.random() * this.WINDOW_WIDTH;
+                    let direction = this.state.directionAnims[i]._value;
+                    let topToValue = (direction % 2 == 0) ? 0 : (widthToValue - widthToValue / this.state.aspectRatios[i]) / 2;
+                    Animated.parallel([
+                        Animated.timing(
+                            this.state.widthAnims[i],
+                            {
+                                toValue: widthToValue,
+                                duration: 500,
+                            }
+                        ),
+                        Animated.timing(
+                            this.state.topAnims[i],
+                            {
+                                toValue: topToValue,
+                            }
+                        )
+                    ]).start()
+                }
             }
         }
         this.logger.end('changeSizeRandomly');
@@ -97,25 +109,28 @@ class VideoActionAndAnimation extends BaseScreenComponent {
 
     rotateRandomly() {
         this.logger.start('rotateRandomly');
-        for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
-            if (Math.random() < 0.5) {
-                let direction =  Math.floor(Math.random() * 4); // 0 1 2 3
-                let topToValue = (direction % 2 == 0) ? 0 : (this.state.widthAnims[i]._value - this.state.widthAnims[i]._value / this.state.aspectRatios[i])  / 2
-                let animations = [];
-                Animated.parallel([
-                    Animated.timing(
-                        this.state.directionAnims[i],
-                        {
-                            toValue: direction,
-                        }
-                    ),
-                    Animated.timing(
-                        this.state.topAnims[i],
-                        {
-                            toValue: topToValue,
-                        }
-                    )
-                ]).start()
+        // repeater mark
+        for (let cnt = 0; cnt< this.REPEAT_COUNT; cnt++){
+            for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
+                if (Math.random() < 0.5) {
+                    let direction =  Math.floor(Math.random() * 4); // 0 1 2 3
+                    let topToValue = (direction % 2 == 0) ? 0 : (this.state.widthAnims[i]._value - this.state.widthAnims[i]._value / this.state.aspectRatios[i])  / 2
+                    let animations = [];
+                    Animated.parallel([
+                        Animated.timing(
+                            this.state.directionAnims[i],
+                            {
+                                toValue: direction,
+                            }
+                        ),
+                        Animated.timing(
+                            this.state.topAnims[i],
+                            {
+                                toValue: topToValue,
+                            }
+                        )
+                    ]).start()
+                }
             }
         }
         this.logger.end('rotateRandomly');

@@ -16,6 +16,7 @@ const AnimatedModelView = Animated.createAnimatedComponent(ModelView);
 
 
 class WebGLScreen extends BaseScreenComponent {
+    REPEAT_COUNT = 10;
 
     constructor() {
         super();
@@ -66,18 +67,31 @@ class WebGLScreen extends BaseScreenComponent {
         let {zoom, translateZ} = this.state;
 
         this.state.zoom += action;
-
-        Animated.timing(
-            translateZ, {
-                toValue: zoom, useNativeDriver: true, duration: 300
-            }
-        ).start();
+        // repeater mark
+        for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+            Animated.timing(
+                translateZ, {
+                    toValue: zoom, useNativeDriver: true, duration: 300
+                }
+            ).start();
+        }
         this.logger.end('zoomIn');
     };
 
     zoomOut = (action) => {
+        action = -action;
         this.logger.start('zoomOut');
-        this.zoomIn(-action);
+        let {zoom, translateZ} = this.state;
+
+        this.state.zoom += action;
+        // repeater mark
+        for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+            Animated.timing(
+                translateZ, {
+                    toValue: zoom, useNativeDriver: true, duration: 300
+                }
+            ).start();
+        }
         this.logger.end('zoomOut');
     };
 
@@ -89,12 +103,14 @@ class WebGLScreen extends BaseScreenComponent {
             Animated.timing(value, {
                 toValue, useNativeDriver: true, duration: Math.random() * 10000, easing: Easing.elastic(4)
             });
-
-        Animated.parallel([
-            crazy(rotateX, Math.random() * 1000),
-            crazy(translateZ, -2 - Math.random() * 3),
-            crazy(rotateZ, Math.random() * 1000),
-        ]).start();
+        // repeater mark
+        for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+            Animated.parallel([
+                crazy(rotateX, Math.random() * 1000),
+                crazy(translateZ, -2 - Math.random() * 3),
+                crazy(rotateZ, Math.random() * 1000),
+            ]).start();
+        }
         this.logger.end('goCrazy');
     };
 
@@ -103,12 +119,14 @@ class WebGLScreen extends BaseScreenComponent {
         let {turns, rotateZ} = this.state;
 
         this.state.turns += 1;
-
-        Animated.timing(
-            rotateZ, {
-                toValue: turns * 180, useNativeDriver: true, duration: 500
-            }
-        ).start();
+        // repeater mark
+        for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+            Animated.timing(
+                rotateZ, {
+                    toValue: turns * 180, useNativeDriver: true, duration: 500
+                }
+            ).start();
+        }
         this.logger.end('turnAround');
     };
 

@@ -10,7 +10,7 @@ import {
 
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
-
+import MTLogger from "../../components/Logger";
 const screen = Dimensions.get('window');
 
 const ASPECT_RATIO = screen.width / screen.height;
@@ -23,6 +23,7 @@ class AnimatedMarkers extends BaseScreenComponent {
     static navigationOptions = {
         title: "AnimatedMarkers"
     };
+    REPEAT_COUNT = 100;
     constructor(props) {
         super(props);
 
@@ -34,22 +35,27 @@ class AnimatedMarkers extends BaseScreenComponent {
                 longitudeDelta: LONGITUDE_DELTA,
             }),
         };
+        this.logger = new MTLogger('MapAnimatedMarkers');
     }
 
     animate() {
+        this.logger.start('animate');
         const { coordinate } = this.state;
         const newCoordinate = {
             latitude: LATITUDE + ((Math.random() - 0.5) * (LATITUDE_DELTA / 2)),
             longitude: LONGITUDE + ((Math.random() - 0.5) * (LONGITUDE_DELTA / 2)),
         };
-
-        if (Platform.OS === 'android') {
-            if (this.marker) {
-                this.marker._component.animateMarkerToCoordinate(newCoordinate, 500);
+        // repeater mark
+        for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
+            if (Platform.OS === 'android') {
+                if (this.marker) {
+                    this.marker._component.animateMarkerToCoordinate(newCoordinate, 500);
+                }
+            } else {
+                coordinate.timing(newCoordinate).start();
             }
-        } else {
-            coordinate.timing(newCoordinate).start();
         }
+        this.logger.end('animate');
     }
 
     slotRender() {

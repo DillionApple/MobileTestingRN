@@ -35,7 +35,7 @@ class HomeScreen extends React.Component {
                             button
                             onPress={() => navigate(item)}
                             title={<Text style={styles.testlist}>
-                                [-${item}-]
+                                [-{item}-]
                             </Text>}
                             bottomDivider
                         />

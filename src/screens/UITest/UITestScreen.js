@@ -36,7 +36,7 @@ class UITestScreen extends BaseScreenComponent {
     async start() {
         await this.timerHandle.set(500);
         this.setState({indeterminate: false});
-        // this.doingTask(1);
+        this.doingTask(1);
     }
 
 
@@ -71,7 +71,7 @@ class UITestScreen extends BaseScreenComponent {
                 if (mounted){
                     this.doingTask(3);
                 }
-                this.logger.end('testImageView');
+                this.logger.end('testAnimationView');
             }
         });
         this.setState({currentProgress: 0.5});
@@ -82,10 +82,10 @@ class UITestScreen extends BaseScreenComponent {
         this.logger.start('testListView');
         this.props.navigation.navigate('ListView', {
             onGoBack: (mounted) => {
-                if (mounted){
-                    this.doingTask(4);
-                }
-                this.logger.end('testImageView');
+                // if (mounted){
+                //     this.doingTask(4);
+                // }
+                this.logger.end('testListView');
             }
         });
         this.setState({currentProgress: 1});
