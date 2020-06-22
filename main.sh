@@ -62,6 +62,7 @@ function clear {
   rm -r ./android/app/build/
   rm -r ./ios/build/
   npm install
+  npx jetifier
 }
 
 case $1 in
