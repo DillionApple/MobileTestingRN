@@ -25,7 +25,7 @@ SECRET_KEY = '2(=#p!aq&1hpm!1al8h8hk^$b-0)^-rdwsyq356!yf%xaht(m!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['fdugeek.com', ]
+ALLOWED_HOSTS = ['fdugeek.com', '127.0.0.1']
 
 
 # Application definition

@@ -1,8 +1,10 @@
+import json
 from django.http import HttpResponse
 from mobile_testing_log_server.models import LogRecord
 
 
 def add_log(request):
+    request.POST = json.loads(request.body.decode('utf-8'))
     device = request.POST.get("device")
     stress = request.POST.get("stress")
     page = request.POST.get("page")
