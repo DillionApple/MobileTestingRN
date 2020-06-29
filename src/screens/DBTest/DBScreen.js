@@ -3,7 +3,7 @@ import {StyleSheet, Button, Text, View, ScrollView} from 'react-native';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 import withObservables from '@nozbe/with-observables'
 import {database} from "../../../index";
-import MTLogger from "../../components/Logger";
+import log_performance from "../../components/LogDecorator";
 
 const Comment = ({comment}) => (
     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -66,8 +66,7 @@ class DBScreen extends BaseScreenComponent {
         super(props);
         this.state = {
             posts: []
-        }
-        this.logger = new MTLogger('DBScreen');
+        };
     }
 
     randInt = (min, max) => {
@@ -83,7 +82,7 @@ class DBScreen extends BaseScreenComponent {
         })
     }
 
-    slotRender() {
+    slotRender() { // TODO - add 100 10000 and delete 1 100
         return (<ScrollView style={styles.container}>
             <Button title="|-ADD 100 POST-|" onPress={this.add100Posts}/>
             <Button title="|-ADD 10000 POSTS-|" onPress={this.add10000Posts}/>
@@ -103,16 +102,18 @@ class DBScreen extends BaseScreenComponent {
         console.log(`posts : ${this.state.posts}`);
     };
 
+    @log_performance
     add100Posts = () => {
-        this.logger.start('add100Posts');
+
         this.addNewPost(100);
-        this.logger.end('add100Posts');
+
     };
 
+    @log_performance
     add10000Posts = () => {
-        this.logger.start('add10000Posts');
+
         this.addNewPost(10000);
-        this.logger.end('add10000Posts');
+
     };
 
     addNewPost = async (num = 1) => {
@@ -147,8 +148,9 @@ class DBScreen extends BaseScreenComponent {
         // this._updatePosts();
     };
 
+    @log_performance
     deletePost = async () => {
-        this.logger.start('deletePost');
+
         let posts = this.state.posts;
         {
             posts.length !== 0 &&
@@ -157,11 +159,12 @@ class DBScreen extends BaseScreenComponent {
             });
         }
         this._updatePosts();
-        this.logger.end('deletePost');
+
     };
 
+    @log_performance
     delete100Posts = async () => {
-        this.logger.start('delete100Posts');
+
         for (let cnt = 0; cnt < 100; cnt++) {
             let posts = this.state.posts;
             {
@@ -172,11 +175,11 @@ class DBScreen extends BaseScreenComponent {
             }
         }
         this._updatePosts();
-        this.logger.end('delete100Posts');
+
     };
 
     deleteALLPost = async () => {
-        this.logger.start('deleteALLPost');
+
         let posts = this.state.posts;
         await database.action(async () => {
             for (let i = 0; i < posts.length; i++) {
@@ -184,7 +187,7 @@ class DBScreen extends BaseScreenComponent {
             }
         });
         this._updatePosts();
-        this.logger.end('deleteALLPost');
+
     };
 }
 

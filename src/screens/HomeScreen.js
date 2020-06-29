@@ -54,6 +54,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     testlist: {
-        fontSize: 7
+        fontSize: 14
     }
 });

@@ -3,12 +3,12 @@ import React from 'react'
 import { View, StyleSheet, Button, Dimensions, Animated } from 'react-native'
 import Video from 'react-native-video'
 import BaseScreenComponent from "../../components/BaseScreenComponent";
-import MTLogger from "../../components/Logger";
+import log_performance from "../../components/LogDecorator";
 
 class VideoActionAndAnimation extends BaseScreenComponent {
 
     NUMBER_OF_VIDEOS = 0;
-    REPEAT_COUNT = 1000;
+    REPEAT_COUNT = 1;
     WINDOW_WIDTH = Dimensions.get('window').width;
 
     players = null;
@@ -33,11 +33,11 @@ class VideoActionAndAnimation extends BaseScreenComponent {
             topAnims: Array.apply(null, Array(this.NUMBER_OF_VIDEOS)).map(() => new Animated.Value(0)),
         }
 
-        this.logger = new MTLogger('VideoActionAndAnimation');
     }
 
+    @log_performance
     pauseRandomly() {
-        this.logger.start('pauseRandomly');
+
         // repeater mark
         for (let cnt = 0; cnt< this.REPEAT_COUNT; cnt++) {
             for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
@@ -47,11 +47,11 @@ class VideoActionAndAnimation extends BaseScreenComponent {
             }
         }
         this.setState({pauseds: this.state.pauseds})
-        this.logger.end('pauseRandomly');
-    }
 
+    }
+    @log_performance
     seekRandomly() {
-        this.logger.start('seekRandomly');
+
         // repeater mark
         for (let cnt = 0; cnt< this.REPEAT_COUNT; cnt++) {
             for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
@@ -60,11 +60,11 @@ class VideoActionAndAnimation extends BaseScreenComponent {
                 }
             }
         }
-        this.logger.end('seekRandomly');
-    }
 
+    }
+    @log_performance
     changeSpeedRandomly() {
-        this.logger.start('changeSpeedRandomly');
+
         // repeater mark
         for (let cnt = 0; cnt< this.REPEAT_COUNT; cnt++) {
             for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
@@ -74,11 +74,11 @@ class VideoActionAndAnimation extends BaseScreenComponent {
             }
         }
         this.setState({speeds: this.state.speeds})
-        this.logger.end('changeSpeedRandomly');
-    }
 
+    }
+    @log_performance
     changeSizeRandomly() {
-        this.logger.start('changeSizeRandomly');
+
         // repeater mark
         for (let cnt = 0; cnt< this.REPEAT_COUNT; cnt++) {
             for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
@@ -104,11 +104,11 @@ class VideoActionAndAnimation extends BaseScreenComponent {
                 }
             }
         }
-        this.logger.end('changeSizeRandomly');
-    }
 
+    }
+    @log_performance
     rotateRandomly() {
-        this.logger.start('rotateRandomly');
+
         // repeater mark
         for (let cnt = 0; cnt< this.REPEAT_COUNT; cnt++){
             for (let i = 0; i < this.NUMBER_OF_VIDEOS; ++i) {
@@ -133,7 +133,7 @@ class VideoActionAndAnimation extends BaseScreenComponent {
                 }
             }
         }
-        this.logger.end('rotateRandomly');
+
     }
 
     slotRender() {

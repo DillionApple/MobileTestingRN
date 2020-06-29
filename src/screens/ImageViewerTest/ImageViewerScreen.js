@@ -4,25 +4,26 @@ import {View, Button, Text, StyleSheet} from 'react-native'
 import BaseScreenComponent from '../../components/BaseScreenComponent'
 
 import ImageViewer from 'react-native-image-zoom-viewer'
+import log_performance from "../../components/LogDecorator";
 
 export default class ImageViewerScreen extends BaseScreenComponent {
 
     images = [{
-        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-desktop-v1.png',
+        url: 'http://fdugeek.com/files/WWDC-2019-Wallpaper-AR72014-desktop-v1.png',
     }, {
-        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-desktop-v2.png',
+        url: 'http://fdugeek.com/files/WWDC-2019-Wallpaper-AR72014-desktop-v2.png',
     }, {
-        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-desktop-v3.png',
+        url: 'http://fdugeek.com/files/WWDC-2019-Wallpaper-AR72014-desktop-v3.png',
     }, {
-        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-desktop-v4.png',
+        url: 'http://fdugeek.com/files/WWDC-2019-Wallpaper-AR72014-desktop-v4.png',
     }, {
-        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-Desktop-v1-White.png',
+        url: 'http://fdugeek.com/files/WWDC-2019-Wallpaper-AR72014-Desktop-v1-White.png',
     }, {
-        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-Desktop-v2-Black.png',
+        url: 'http://fdugeek.com/files/WWDC-2019-Wallpaper-AR72014-Desktop-v2-Black.png',
     }, {
-        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-Desktop-v3-White.png',
+        url: 'http://fdugeek.com/files/WWDC-2019-Wallpaper-AR72014-Desktop-v3-White.png',
     }, {
-        url: 'https://media.idownloadblog.com/wp-content/uploads/2019/03/WWDC-2019-Wallpaper-AR72014-Desktop-v4-Black.png',
+        url: 'http://fdugeek.com/files/WWDC-2019-Wallpaper-AR72014-Desktop-v4-Black.png',
     }];
 
     constructor(props) {
@@ -32,11 +33,13 @@ export default class ImageViewerScreen extends BaseScreenComponent {
         }
     }
 
+
     renderArrowLeft() {
         return (
             <Text style={styles.buttonText}>{"|-previous-|"}</Text>
         )
     }
+
 
     renderArrowRight() {
         return (

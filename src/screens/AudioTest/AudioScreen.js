@@ -5,13 +5,11 @@ import {
     View,
     TouchableHighlight,
     Platform,
-    FlatList
 } from 'react-native';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
-import Sound from 'react-native-sound';
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import AudioClipItem from './AudioClip'
-import MTLogger from "../../components/Logger";
+import log_performance from "../../components/LogDecorator";
 
 class AudioScreen extends BaseScreenComponent {
 
@@ -28,7 +26,6 @@ class AudioScreen extends BaseScreenComponent {
             audioList: []
         };
         this._loadAudioClipDir();
-        this.logger = new MTLogger('AudioScreen');
     }
 
     randInt = (min, max) => {
@@ -112,6 +109,7 @@ class AudioScreen extends BaseScreenComponent {
         );
     }
 
+    @log_performance
     async _pause() {
         if (!this.state.recording) {
             console.warn('Can\'t pause, not recording!');
@@ -119,15 +117,16 @@ class AudioScreen extends BaseScreenComponent {
         }
 
         try {
-            this.logger.start('_pause');
+
             const filePath = await AudioRecorder.pauseRecording();
             this.setState({paused: true});
-            this.logger.end('_pause');
+
         } catch (error) {
             console.error(error);
         }
     }
 
+    @log_performance
     async _resume() {
         if (!this.state.paused) {
             console.warn('Can\'t resume, not paused!');
@@ -135,15 +134,16 @@ class AudioScreen extends BaseScreenComponent {
         }
 
         try {
-            this.logger.start('_resume');
+
             await AudioRecorder.resumeRecording();
             this.setState({paused: false});
-            this.logger.end('_resume');
+
         } catch (error) {
             console.error(error);
         }
     }
 
+    @log_performance
     async _stop() {
         if (!this.state.recording) {
             console.warn('Can\'t stop, not recording!');
@@ -153,13 +153,13 @@ class AudioScreen extends BaseScreenComponent {
         this.setState({stoppedRecording: true, recording: false, paused: false});
 
         try {
-            this.logger.start('_stop');
+
             const filePath = await AudioRecorder.stopRecording();
 
             if (Platform.OS === 'android') {
                 this._finishRecording(true, filePath);
             }
-            this.logger.end('_stop');
+
             this._loadAudioClipDir();
             return filePath;
         } catch (error) {
@@ -167,16 +167,19 @@ class AudioScreen extends BaseScreenComponent {
         }
     }
 
+
+    @log_performance
     async _randomDelete(){
-        this.logger.start('_randomDelete');
+
         let audioList = this.state.audioList;
         if (audioList.length !== 0){
             let randPath = audioList[this.randInt(0, audioList.length - 1)].path;
             this._onDeleteClip(randPath);
         }
-        this.logger.end('_randomDelete');
+
     }
 
+    @log_performance
     async _record() {
         if (this.state.recording) {
             console.warn('Already recording!');
@@ -195,14 +198,14 @@ class AudioScreen extends BaseScreenComponent {
         this.setState({recording: true, paused: false});
 
         try {
-            this.logger.start('_record');
+
             const path = AudioUtils.DocumentDirectoryPath + '/test' + this.randInt(1000, 9999) + '.aac';
             this.setState({
                 audioPath: path
             })
             this.prepareRecordingPath(path);
             const filePath = await AudioRecorder.startRecording();
-            this.logger.end('_record');
+
         } catch (error) {
             console.error(error);
         }
@@ -229,12 +232,12 @@ class AudioScreen extends BaseScreenComponent {
     };
 
     _onDeleteClip = (path) => {
-        this.logger.start('_onDeleteClip');
+
         console.log(path);
         this.RNFS.unlink(path)
             .then(() => {
                 console.log('FILE DELETED');
-                this.logger.end('_onDeleteClip');
+
             })
             // `unlink` will throw an error, if the item to unlink does not exist
             .catch((err) => {

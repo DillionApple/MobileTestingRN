@@ -10,7 +10,7 @@ import {
 
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
-import MTLogger from "../../components/Logger";
+import log_performance from "../../components/LogDecorator";
 const screen = Dimensions.get('window');
 
 const ASPECT_RATIO = screen.width / screen.height;
@@ -23,7 +23,7 @@ class AnimatedMarkers extends BaseScreenComponent {
     static navigationOptions = {
         title: "AnimatedMarkers"
     };
-    REPEAT_COUNT = 100;
+    REPEAT_COUNT = 1;
     constructor(props) {
         super(props);
 
@@ -35,11 +35,11 @@ class AnimatedMarkers extends BaseScreenComponent {
                 longitudeDelta: LONGITUDE_DELTA,
             }),
         };
-        this.logger = new MTLogger('MapAnimatedMarkers');
     }
 
+    @log_performance
     animate() {
-        this.logger.start('animate');
+
         const { coordinate } = this.state;
         const newCoordinate = {
             latitude: LATITUDE + ((Math.random() - 0.5) * (LATITUDE_DELTA / 2)),
@@ -55,7 +55,7 @@ class AnimatedMarkers extends BaseScreenComponent {
                 coordinate.timing(newCoordinate).start();
             }
         }
-        this.logger.end('animate');
+
     }
 
     slotRender() {

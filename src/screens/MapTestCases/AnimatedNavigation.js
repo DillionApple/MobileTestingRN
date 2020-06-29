@@ -10,10 +10,10 @@ import {
 import MapView from 'react-native-maps';
 import carImage from './assets/car.png';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
-import MTLogger from "../../components/Logger";
+import log_performance from "../../components/LogDecorator";
 
 export default class NavigationMap extends BaseScreenComponent {
-    REPEAT_COUNT = 100;
+    REPEAT_COUNT = 1;
 
     constructor(props) {
         super(props);
@@ -27,11 +27,10 @@ export default class NavigationMap extends BaseScreenComponent {
         this.changePosition = this.changePosition.bind(this);
         this.getRotation = this.getRotation.bind(this);
         this.updateMap = this.updateMap.bind(this);
-        this.logger = new MTLogger('MapNavigationMap');
     }
-
+    @log_performance
     changePosition(latOffset, lonOffset) {
-        this.logger.start('changePosition');
+
         const latitude = this.state.curPos.latitude + latOffset;
         const longitude = this.state.curPos.longitude + lonOffset;
         // repeater mark
@@ -39,16 +38,14 @@ export default class NavigationMap extends BaseScreenComponent {
             this.setState({prevPos: this.state.curPos, curPos: {latitude, longitude}});
             this.updateMap();
         }
-        this.logger.start('changePosition');
-    }
 
+    }
     getRotation(prevPos, curPos) {
         if (!prevPos) return 0;
         const xDiff = curPos.latitude - prevPos.latitude;
         const yDiff = curPos.longitude - prevPos.longitude;
         return (Math.atan2(yDiff, xDiff) * 180.0) / Math.PI;
     }
-
     updateMap() {
         const {curPos, prevPos, curAng} = this.state;
         const curRot = this.getRotation(prevPos, curPos);

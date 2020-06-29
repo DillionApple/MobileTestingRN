@@ -4,7 +4,7 @@ import { View, Text, Button, Dimensions, StyleSheet } from 'react-native'
 
 import * as Progress from 'react-native-progress'
 import RNFetchBlob from "rn-fetch-blob";
-import MTLogger from "../../components/Logger";
+import log_performance from "../../components/LogDecorator";
 
 class FileDownloaderItem extends React.Component {
 
@@ -29,14 +29,14 @@ class FileDownloaderItem extends React.Component {
             speed: "Paused",
         };
         RNFetchBlob.fs.unlink(this.downloadDest).catch((err) => {})
-        this.logger = new MTLogger('FileDownloaderItem');
     }
 
     componentWillUnmount() {
     }
 
+    @log_performance
     startClicked() {
-        this.logger.start('startClicked');
+
         if (this.promise) {
             return;
         }
@@ -100,22 +100,24 @@ class FileDownloaderItem extends React.Component {
                     this.promise = null
                 })
                 .catch((err) => {})
-            this.logger.end('startClicked');
+
         });
     }
 
+    @log_performance
     pauseClicked() {
-        this.logger.start('pauseClicked');
+
         if (this.promise) {
             this.setState({paused: true, speed: "Paused"});
             this.promise.cancel((err) => {});
             this.promise = null
         }
-        this.logger.end('pauseClicked');
+
     }
 
+    @log_performance
     deleteClicked() {
-        this.logger.start('deleteClicked');
+
         this.pauseClicked();
         RNFetchBlob.fs.unlink(this.downloadDest).catch((err) => {});
         this.setState({
@@ -123,7 +125,7 @@ class FileDownloaderItem extends React.Component {
             total: 0,
             downloadProgress: 0,
         })
-        this.logger.end('deleteClicked');
+
     }
 
     render() {

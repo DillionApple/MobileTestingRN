@@ -37,7 +37,7 @@ class VideoTestRootScreen extends BaseScreenComponent {
                             if (section.title == "Offline Video") {
                                 navigationPrams.source = require('./assets/test_video.mov')
                             } else {
-                                navigationPrams.source = {uri: "https://fdugeek.com/static/out.mp4"}
+                                navigationPrams.source = {uri: "http://fdugeek.com/files/test_video.mov"}
                             }
                             navigate("VideoActionAndAnimation", navigationPrams)
                         }}

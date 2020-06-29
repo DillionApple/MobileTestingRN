@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 
 import ModelView from 'react-native-gl-model-view';
-import MTLogger from "../../components/Logger";
+import log_performance from "../../components/LogDecorator";
 
 const AnimatedModelView = Animated.createAnimatedComponent(ModelView);
 
 
 class WebGLScreen extends BaseScreenComponent {
-    REPEAT_COUNT = 10;
+    REPEAT_COUNT = 1;
 
     constructor() {
         super();
@@ -36,7 +36,6 @@ class WebGLScreen extends BaseScreenComponent {
             this.state[key] instanceof Animated.Value &&
             this.state[key].__makeNative()
         );
-        this.logger = new MTLogger('WebGLScreen');
     }
 
     onMoveEnd = () => {
@@ -61,9 +60,9 @@ class WebGLScreen extends BaseScreenComponent {
             rotateX.setValue(valueXY[1] + (Platform.OS === 'ios' ? 1 : -1) * (pageY - fromXY[1]) / 2);
         }
     };
+    @log_performance
+    zoomIn(action) {
 
-    zoomIn = (action) => {
-        this.logger.start('zoomIn');
         let {zoom, translateZ} = this.state;
 
         this.state.zoom += action;
@@ -75,12 +74,12 @@ class WebGLScreen extends BaseScreenComponent {
                 }
             ).start();
         }
-        this.logger.end('zoomIn');
-    };
 
-    zoomOut = (action) => {
+    };
+    @log_performance
+    zoomOut(action) {
         action = -action;
-        this.logger.start('zoomOut');
+
         let {zoom, translateZ} = this.state;
 
         this.state.zoom += action;
@@ -92,11 +91,11 @@ class WebGLScreen extends BaseScreenComponent {
                 }
             ).start();
         }
-        this.logger.end('zoomOut');
-    };
 
-    goCrazy = () => {
-        this.logger.start('goCrazy');
+    };
+    @log_performance
+    goCrazy() {
+
         let {rotateZ, rotateX, translateZ} = this.state;
 
         const crazy = (value, toValue) =>
@@ -111,11 +110,11 @@ class WebGLScreen extends BaseScreenComponent {
                 crazy(rotateZ, Math.random() * 1000),
             ]).start();
         }
-        this.logger.end('goCrazy');
-    };
 
-    turnAround = () => {
-        this.logger.start('turnAround');
+    };
+    @log_performance
+    turnAround() {
+
         let {turns, rotateZ} = this.state;
 
         this.state.turns += 1;
@@ -127,7 +126,7 @@ class WebGLScreen extends BaseScreenComponent {
                 }
             ).start();
         }
-        this.logger.end('turnAround');
+
     };
 
     componentDidMount() {

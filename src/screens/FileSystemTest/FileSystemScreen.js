@@ -2,10 +2,10 @@ import React from 'react'
 import {View, Text, Platform, SafeAreaView, StyleSheet, Button} from "react-native"
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 import {zip, unzip} from "react-native-zip-archive";
-import MTLogger from "../../components/Logger";
+import log_performance from "../../components/LogDecorator";
 
 class FileSystemScreen extends BaseScreenComponent {
-    REPEAT_COUNT = 100;
+    REPEAT_COUNT = 1;
     constructor(props) {
         super(props);
         this.state = {
@@ -18,12 +18,11 @@ class FileSystemScreen extends BaseScreenComponent {
         this.zipPath = `${this.mainPath}/test.zip`;
         this.txtSubPath = `${this.mainSubPath}/test.txt`;
         this.zipSubPath = `${this.mainSubPath}/test.zip`;
-        this.logger = new MTLogger('FileSystemScreen');
     }
 
-
+    @log_performance
     async fsTest() {
-        this.logger.start('fsTest');
+
         // repeater mark
         for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
             await this.readDir();
@@ -47,7 +46,7 @@ class FileSystemScreen extends BaseScreenComponent {
         this.setState({
             progressText: 'FS TEST DONE!'
         })
-        this.logger.end('fsTest');
+
     }
 
 

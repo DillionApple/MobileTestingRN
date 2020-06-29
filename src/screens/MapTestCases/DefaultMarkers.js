@@ -9,7 +9,7 @@ import {
 
 import MapView, { Marker, ProviderPropType } from 'react-native-maps';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
-import MTLogger from "../../components/Logger";
+import log_performance from "../../components/LogDecorator";
 const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
@@ -24,7 +24,7 @@ function randomColor() {
 }
 
 class DefaultMarkers extends BaseScreenComponent {
-    REPEAT_COUNT = 1000;
+    REPEAT_COUNT = 1;
     constructor(props) {
         super(props);
 
@@ -37,7 +37,6 @@ class DefaultMarkers extends BaseScreenComponent {
             },
             markers: [],
         };
-        this.logger = new MTLogger('MapDefaultMarkers');
     }
 
     onMapPress(e) {
@@ -52,7 +51,7 @@ class DefaultMarkers extends BaseScreenComponent {
             ],
         });
     }
-
+    @log_performance
     createRandomMarker() {
         this.setState({
             markers: [

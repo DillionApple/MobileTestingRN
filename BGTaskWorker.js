@@ -23,14 +23,14 @@ function sleep(x) {
 self.onmessage = async (stressName) => {
     let RNFS = require('react-native-fs');
     let mainPath = `${RNFS.DocumentDirectoryPath}/MobileTesting`;
-    console.log(`background task start!`);
+    console.log(`-debug- background task start!`);
     let writing = false;
     try {
         switch (stressName) {
             case 'cpu':
                 while (true) {
                     for (let i = 0; i < 1000000; ++i) {
-                        j = Math.random() * Math.random();
+                        var j = Math.random() * Math.random();
                     }
                     await sleep(0);
                 }
@@ -54,8 +54,9 @@ self.onmessage = async (stressName) => {
                 }
                 break;
             case 'network_download':
-                const downloadUrl = "https://dl.google.com/dl/android/studio/install/3.4.0.18/android-studio-ide-183.5452501-mac.dmg";
+                const downloadUrl = "https://download.jetbrains.com/idea/ideaIU-2020.1.2.dmg?_ga=2.132662222.1765031080.1592925721-1193987217.1590147032";
                 const downloadToPath = `${mainPath}/network_download_${randomWord(16)}`;
+                console.log(`-debug- ${downloadToPath}`);
                 let downloadFileOptions = {
                     fromUrl: downloadUrl,
                     toFile: downloadToPath,

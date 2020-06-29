@@ -9,7 +9,7 @@ import {
 import MapView, {Marker} from 'react-native-maps';
 import PriceMarker from './PriceMarker';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
-import MTLogger from "../../components/Logger";
+import log_performance from "../../components/LogDecorator";
 
 const {width, height} = Dimensions.get('window');
 
@@ -20,7 +20,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 class ViewsAsMarkers extends BaseScreenComponent {
-    REPEAT_COUNT = 1000;
+    REPEAT_COUNT = 1;
 
     constructor(props) {
         super(props);
@@ -38,25 +38,26 @@ class ViewsAsMarkers extends BaseScreenComponent {
             },
             amount: 99,
         };
-        this.logger = new MTLogger('MapViewsAsMarkers');
     }
 
+    @log_performance
     increment() {
-        this.logger.start('increment');
+
         // repeater mark
         for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
             this.setState({amount: this.state.amount + 1});
         }
-        this.logger.start('increment');
+
     }
 
+    @log_performance
     decrement() {
-        this.logger.start('decrement');
+
         // repeater mark
         for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
             this.setState({amount: this.state.amount - 1});
         }
-        this.logger.start('decrement');
+
     }
 
     slotRender() {

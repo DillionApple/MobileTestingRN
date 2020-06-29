@@ -5,7 +5,7 @@ import UITestNavigator from "./UITestNav";
 import * as Progress from 'react-native-progress';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 import Timeout from 'await-timeout';
-import MTLogger from "../../components/Logger";
+import log_performance from "../../components/LogDecorator";
 
 class UITestScreen extends BaseScreenComponent {
     static navigationOptions = {
@@ -19,7 +19,6 @@ class UITestScreen extends BaseScreenComponent {
             currentTaskName: 'initializing..',
             indeterminate: true
         };
-        this.logger = new MTLogger('UITestScreen');
     }
 
     componentWillUnmount() {
@@ -39,7 +38,6 @@ class UITestScreen extends BaseScreenComponent {
         this.doingTask(1);
     }
 
-
     doingTask(task) {
         if (task === 1) {
             this.testImageView();
@@ -49,43 +47,43 @@ class UITestScreen extends BaseScreenComponent {
             this.testListView();
         }
     }
-
+    @log_performance
     testImageView() {
-        this.logger.start('testImageView');
+
         this.props.navigation.navigate('ImageView', {
             onGoBack: (mounted) => {
                 if (mounted){
                     this.doingTask(2);
                 }
-                this.logger.end('testImageView');
+
             }
         });
         this.setState({currentProgress: 0.2});
         this.setState({currentTaskName: 'ImageViewTesting..'});
     }
-
+    @log_performance
     testAnimationView() {
-        this.logger.start('testAnimationView');
+
         this.props.navigation.navigate('AnimationView', {
             onGoBack: (mounted) => {
                 if (mounted){
                     this.doingTask(3);
                 }
-                this.logger.end('testAnimationView');
+
             }
         });
         this.setState({currentProgress: 0.5});
         this.setState({currentTaskName: 'AnimationViewTesting..'});
     }
-
+    @log_performance
     testListView() {
-        this.logger.start('testListView');
+
         this.props.navigation.navigate('ListView', {
             onGoBack: (mounted) => {
                 // if (mounted){
                 //     this.doingTask(4);
                 // }
-                this.logger.end('testListView');
+
             }
         });
         this.setState({currentProgress: 1});

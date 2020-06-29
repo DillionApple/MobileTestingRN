@@ -6,11 +6,11 @@ import {
     Text,
     TouchableHighlight
 } from 'react-native';
-import MTLogger from "../../components/Logger";
+import log_performance from "../../components/LogDecorator";
 
 class AudioPlayList extends BaseScreenComponent {
 
-    REPEAT_COUNT = 1000;
+    REPEAT_COUNT = 1;
 
     constructor() {
         super();
@@ -19,7 +19,6 @@ class AudioPlayList extends BaseScreenComponent {
             isPlay: false,
             isPause: false,
         };
-        this.logger = new MTLogger('AudioPlayList');
         this.Sound = require('react-native-sound');
         this.Sound.setCategory('Playback');
         this.curSound = null;
@@ -28,8 +27,7 @@ class AudioPlayList extends BaseScreenComponent {
             require('../../../assets/A.mp3'),
             require('../../../assets/B.mp3'),
             require('../../../assets/C.mp3')
-        ]
-        this.logger = new MTLogger('AudioPlayList');
+        ];
     }
 
     _renderButton = (title, onPress) => {
@@ -41,11 +39,9 @@ class AudioPlayList extends BaseScreenComponent {
             </TouchableHighlight>
         );
     };
-
-    _onPlay = () => {
+    @log_performance
+    _onPlay() {
         try {
-            // this.logger.start('_onPlay');
-            // let index = Math.floor(Math.random() * this.soundList.length);
             let index = 0;
             this.curSound = new this.Sound(this.soundList[index], (error) => {
                 if (error) {
@@ -57,8 +53,8 @@ class AudioPlayList extends BaseScreenComponent {
                         if (success) {
                             console.log('successfully finished playing');
                             this.setState({'isPlay': true});
+                            super.forceUpdate();
                         }
-                        // this.logger.end('_onPlay');
                     });
                 }, 100)
             });
@@ -76,28 +72,28 @@ class AudioPlayList extends BaseScreenComponent {
         }
     };
 
-    _onPause = () => {
+    @log_performance
+    _onPause() {
         try {
-            this.logger.start('_onPause');
             this.setState({'isPause': true});
+            this.forceUpdate();
             this.curSound.pause();
             // repeater mark
             for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
                 this.curSound.play();
                 this.curSound.pause();
             }
-            this.logger.end('_onPause');
         } catch (e) {
             console.log(e);
         }
     };
 
-    _onResume = () => {
+    @log_performance
+    _onResume() {
         try {
-            this.logger.start('_onResume');
             this.curSound.play();
             this.setState({'isPause': false});
-            this.logger.end('_onResume');
+            this.forceUpdate();
         } catch (e) {
             console.log(e);
         }
@@ -111,65 +107,62 @@ class AudioPlayList extends BaseScreenComponent {
         }
     };
 
-    _forward = (time) => {
+    @log_performance
+    _forward(time) {
         try {
-            this.logger.start('_forward');
             // repeater mark
             for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
                 this.curSound.getCurrentTime((seconds) => this._seek(seconds + time));
             }
-            this.logger.end('_forward');
         } catch (e) {
             console.log(e);
         }
     };
 
-    _backward = (time) => {
+    @log_performance
+    _backward(time) {
         try {
-            this.logger.start('_backward');
             // repeater mark
             for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
                 this.curSound.getCurrentTime((seconds) => this._seek(seconds - time));
             }
-            this.logger.end('_backward');
         } catch (e) {
             console.log(e);
         }
     };
 
-    _onStop = () => {
-        this.logger.start('_onStop');
+    @log_performance
+    _onStop(){
         this.setState({'isPlay': false});
+        this.forceUpdate();
         try {
             this.curSound.stop();
             this.curSound.release();
             this.curSound = null;
-            this.logger.end('_onStop');
         } catch (e) {
             console.log(e);
         }
     };
 
-    _volumeUp = () => {
+    @log_performance
+    _volumeUp() {
         try {
-            this.logger.start('_volumeUp');
             // repeater mark
             for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
                 this._onSetVolume(this.curSound.getVolume() + 0.1);
             }
-            this.logger.end('_volumeUp');
         } catch (e) {
             console.log(e);
         }
     };
-    _volumeDown = () => {
+
+    @log_performance
+    _volumeDown() {
         try {
-            this.logger.start('_volumeDown');
             // repeater mark
             for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
                 this._onSetVolume(this.curSound.getVolume() - 0.1);
             }
-            this.logger.end('_volumeDown');
         } catch (e) {
             console.log(e);
         }

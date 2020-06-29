@@ -1,9 +1,9 @@
 import React from 'react';
-import {Button, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
-import MTLogger from "../../components/Logger";
+import log_performance from "../../components/LogDecorator";
 
 class CameraScreen extends BaseScreenComponent {
 
@@ -14,8 +14,7 @@ class CameraScreen extends BaseScreenComponent {
             isTakingPicture: false,
             isRecording: false,
             isAudioRecording: false
-        }
-        this.logger = new MTLogger('CameraScreen');
+        };
     }
 
     slotRender() {
@@ -97,18 +96,18 @@ class CameraScreen extends BaseScreenComponent {
             );
         }
     }
-
-    takePicture = async function () {
+    @log_performance
+    async takePicture() {
         if (this.camera) {
             try {
-                this.logger.start('takePicture');
+
                 console.log(`function takePicture starts`);
                 const options = {quality: 0.5, base64: true};
                 this.setState({
                     isTakingPicture: true
                 });
                 // repeater mark
-                this.REPEAT_COUNT = 1000;
+                this.REPEAT_COUNT = 0;
                 for (let cnt = 0; cnt < this.REPEAT_COUNT; cnt++) {
                     const data = await this.camera.takePictureAsync(options);
                     // console.log(data.uri);
@@ -118,30 +117,32 @@ class CameraScreen extends BaseScreenComponent {
                 const data = await this.camera.takePictureAsync(options);
                 console.log(data.uri);
                 this.camera.pausePreview();
-                this.logger.end('takePicture');
+
             } catch (err) {
                 console.log(`err : ${err}`);
             }
         }
     };
-    retakePicture = async function () {
+    @log_performance
+    async retakePicture() {
         if (this.camera) {
             try {
-                // this.logger.start('retakePicture');
+                //
                 this.setState({
                     isTakingPicture: false
                 });
                 this.camera.resumePreview();
-                // this.logger.end('retakePicture');
+                //
             } catch (err) {
                 console.log(`err : ${err}`);
             }
         }
     };
-    recordVideo = async function () {
+    @log_performance
+    async recordVideo() {
         if (this.camera) {
             try {
-                this.logger.start('recordVideo');
+
                 console.log(`function recordVideo starts`);
                 const options = {quality: 'RNCamera.Constants.VideoQuality.720p'};
                 // const options2 = {quality: 'RNCamera.Constants.VideoQuality.1080p'};
@@ -150,22 +151,23 @@ class CameraScreen extends BaseScreenComponent {
                 });
                 const data = await this.camera.recordAsync(options);
                 // const data2 = await this.camera.recordAsync(options2);
-                this.logger.end('recordVideo');
+
             } catch (err) {
                 console.log(`err : ${err}`);
             }
 
         }
     };
-    stopRecordingVideo = async function () {
+    @log_performance
+    async stopRecordingVideo() {
         if (this.camera && this.state.isRecording) {
             try {
-                this.logger.start('stopRecordingVideo');
+
                 this.setState({
                     isRecording: false
                 });
                 const data = await this.camera.stopRecording();
-                this.logger.end('stopRecordingVideo');
+
             } catch (err) {
                 console.log(`err : ${err}`);
             }
