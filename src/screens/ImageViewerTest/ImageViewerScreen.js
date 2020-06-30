@@ -4,7 +4,6 @@ import {View, Button, Text, StyleSheet} from 'react-native'
 import BaseScreenComponent from '../../components/BaseScreenComponent'
 
 import ImageViewer from 'react-native-image-zoom-viewer'
-import log_performance from "../../components/LogDecorator";
 
 export default class ImageViewerScreen extends BaseScreenComponent {
 

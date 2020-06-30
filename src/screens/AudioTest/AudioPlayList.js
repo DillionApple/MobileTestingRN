@@ -6,10 +6,11 @@ import {
     Text,
     TouchableHighlight
 } from 'react-native';
-import log_performance from "../../components/LogDecorator";
+import log_performance_origin from "../../components/LogDecorator";
+
+let log_performance = log_performance_origin("AudioPlayList");
 
 class AudioPlayList extends BaseScreenComponent {
-
     REPEAT_COUNT = 1;
 
     constructor() {

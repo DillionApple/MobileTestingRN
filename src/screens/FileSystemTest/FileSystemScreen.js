@@ -2,7 +2,10 @@ import React from 'react'
 import {View, Text, Platform, SafeAreaView, StyleSheet, Button} from "react-native"
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 import {zip, unzip} from "react-native-zip-archive";
-import log_performance from "../../components/LogDecorator";
+import log_performance_origin from "../../components/LogDecorator";
+
+let log_performance = log_performance_origin("FileSystemScreen");
+
 
 class FileSystemScreen extends BaseScreenComponent {
     REPEAT_COUNT = 1;

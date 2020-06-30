@@ -10,7 +10,9 @@ import {
 } from 'react-native';
 
 import ModelView from 'react-native-gl-model-view';
-import log_performance from "../../components/LogDecorator";
+import log_performance_origin from "../../components/LogDecorator";
+
+let log_performance = log_performance_origin("WebGLScreen");
 
 const AnimatedModelView = Animated.createAnimatedComponent(ModelView);
 

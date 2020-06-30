@@ -9,7 +9,10 @@ import {
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import AudioClipItem from './AudioClip'
-import log_performance from "../../components/LogDecorator";
+import log_performance_origin from "../../components/LogDecorator";
+
+let log_performance = log_performance_origin("AudioScreen");
+
 
 class AudioScreen extends BaseScreenComponent {
 

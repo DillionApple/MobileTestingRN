@@ -3,7 +3,10 @@ import {StyleSheet, Button, Text, View, ScrollView} from 'react-native';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 import withObservables from '@nozbe/with-observables'
 import {database} from "../../../index";
-import log_performance from "../../components/LogDecorator";
+import log_performance_origin from "../../components/LogDecorator";
+
+let log_performance = log_performance_origin("DBScreen");
+
 
 const Comment = ({comment}) => (
     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>

@@ -5,7 +5,9 @@ import UITestNavigator from "./UITestNav";
 import * as Progress from 'react-native-progress';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 import Timeout from 'await-timeout';
-import log_performance from "../../components/LogDecorator";
+import log_performance_origin from "../../components/LogDecorator";
+
+let log_performance = log_performance_origin("UITestScreen");
 
 class UITestScreen extends BaseScreenComponent {
     static navigationOptions = {

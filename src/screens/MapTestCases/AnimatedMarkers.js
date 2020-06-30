@@ -10,7 +10,7 @@ import {
 
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
-import log_performance from "../../components/LogDecorator";
+import log_performance_origin from "../../components/LogDecorator";
 const screen = Dimensions.get('window');
 
 const ASPECT_RATIO = screen.width / screen.height;
@@ -18,6 +18,9 @@ const LATITUDE = 37.78825;
 const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
+let log_performance = log_performance_origin("AnimatedMarkers");
+
 
 class AnimatedMarkers extends BaseScreenComponent {
     static navigationOptions = {

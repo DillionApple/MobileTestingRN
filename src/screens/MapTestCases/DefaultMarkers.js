@@ -9,7 +9,7 @@ import {
 
 import MapView, { Marker, ProviderPropType } from 'react-native-maps';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
-import log_performance from "../../components/LogDecorator";
+import log_performance_origin from "../../components/LogDecorator";
 const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
@@ -18,6 +18,8 @@ const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 let id = 0;
+
+let log_performance = log_performance_origin("DefaultMarkers");
 
 function randomColor() {
     return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}`;

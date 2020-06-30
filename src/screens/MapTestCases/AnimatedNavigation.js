@@ -10,7 +10,9 @@ import {
 import MapView from 'react-native-maps';
 import carImage from './assets/car.png';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
-import log_performance from "../../components/LogDecorator";
+import log_performance_origin from "../../components/LogDecorator";
+
+let log_performance = log_performance_origin("AnimatedNavigation");
 
 export default class NavigationMap extends BaseScreenComponent {
     REPEAT_COUNT = 1;

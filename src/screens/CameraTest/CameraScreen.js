@@ -3,7 +3,10 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import BaseScreenComponent from "../../components/BaseScreenComponent";
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
-import log_performance from "../../components/LogDecorator";
+import log_performance_origin from "../../components/LogDecorator";
+
+let log_performance = log_performance_origin("CameraScreen");
+
 
 class CameraScreen extends BaseScreenComponent {
 
