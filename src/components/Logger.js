@@ -8,7 +8,7 @@ class MTLogger {
             global.nativePerformanceNow ||
             require('fbjs/lib/performanceNow');
         this.RNFS = require('react-native-fs');
-        const platPath = Platform.OS === 'android' ? this.RNFS.ExternalStorageDirectoryPath : this.RNFS.MainBundlePath;
+        const platPath = `${this.RNFS.DocumentDirectoryPath}`; // TODO - change this to this.RNFS.DocumentDirectory/PerformanceLog
         let date = this.dateFormat(new Date(), "yyyy-MM-dd");
         this.logDir = logDir || `${platPath}/log_${date}.txt`;
         this.module = module;
@@ -17,13 +17,13 @@ class MTLogger {
 
     dateFormat = function (date, fmt) {
         var o = {
-            "M+": date.getMonth() + 1, //月份
-            "d+": date.getDate(), //日
-            "h+": date.getHours(), //小时
-            "m+": date.getMinutes(), //分
-            "s+": date.getSeconds(), //秒
-            "q+": Math.floor((date.getMonth() + 3) / 3), //季度
-            "S": date.getMilliseconds() //毫秒
+            "M+": date.getMonth() + 1,
+            "d+": date.getDate(),
+            "h+": date.getHours(),
+            "m+": date.getMinutes(),
+            "s+": date.getSeconds(),
+            "q+": Math.floor((date.getMonth() + 3) / 3),
+            "S": date.getMilliseconds()
         };
         if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
         for (var k in o)
@@ -34,6 +34,8 @@ class MTLogger {
     _writeLog(funcName, timeGap) {
         let logContent = `||Module: ${this.module} Function:${funcName} takes ${timeGap}ms||\n`;
         console.log(logContent);
+        console.log(`||Debug: ${this.RNFS.DocumentDirectoryPath}`);
+        console.log(`||Debug: ${this.logDir}`);
         this.RNFS.write(this.logDir, logContent, -1, 'utf8').then((success) => {
             console.log('LOG WRITTEN!');
         }).catch((err) => {
