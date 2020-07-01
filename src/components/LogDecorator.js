@@ -1,4 +1,5 @@
 import DeviceInfo from 'react-native-device-info'
+import './Global'
 
 let device = DeviceInfo.getBrand();
 
@@ -10,11 +11,7 @@ function log_performance_origin(page) {
             let ret = wrapped_func.apply(this, arguments);
             let end_time = new Date();
             let delay = end_time - start_time;
-            let stress = "";
             let action = name;
-            if (page == null) {
-                page = "no page privided in @log_performance";
-            }
             fetch("https://fdugeek.com/add_log/", {
                 method: 'POST',
                 headers: {
@@ -22,7 +19,10 @@ function log_performance_origin(page) {
                 },
                 body: JSON.stringify({
                     device: device,
-                    stress: stress,
+                    cpu_stress: global.cpu_stress,
+                    disk_stress: global.disk_stress,
+                    network_stress: global.network_stress,
+                    memory_stress: global.memory_stress,
                     page: page,
                     action: action,
                     delay: delay,

@@ -3,6 +3,7 @@ import {ListItem, Overlay} from "react-native-elements";
 import {InteractionManager, StyleSheet, View, Platform} from "react-native";
 import {Thread} from "react-native-threads";
 import BaseScreenComponent from "./BaseScreenComponent";
+import './Global'
 
 class InjectionModule extends BaseScreenComponent {
 
@@ -41,6 +42,18 @@ class InjectionModule extends BaseScreenComponent {
                     this.threadList = [];
                     this.RNFS.unlink(this.mainPath);
                     console.log("Stress cleared");
+                    break;
+            }
+            switch (stress_name) {
+                case 'cpu': global.cpu_stress += 1; break;
+                case 'disk_write': global.disk_stress += 1; break;
+                case 'network_download': global.network_stress += 1; break;
+                case 'memory': global.memory_stress += 1; break;
+                case 'clear':
+                    global.cpu_stress = 0;
+                    global.disk_stress = 0;
+                    global.network_stress = 0;
+                    global.memory_stress = 0;
                     break;
             }
         } catch (e) {
