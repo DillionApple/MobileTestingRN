@@ -232,13 +232,13 @@ class BaseTestFlow:
                 log_filename = log_filename.replace("|", "_")
 
                 print("Recording log, please do not terminate the program")
-                # with open(self.current_log_filename, "r") as f:
-                #     log_content = f.readlines()
-                #     log_content = log_content[-10000:]
-                #
-                # with open(log_filename, "w") as f:
-                #     for line in log_content:
-                #         f.write(line)
+                with open(self.current_log_filename, "r") as f:
+                    log_content = f.readlines()
+                    log_content = log_content[-10000:]
+
+                with open(os.path.join(LOG_DIR, log_filename), "w") as f:
+                    for line in log_content:
+                        f.write(line)
                 print("Recording done")
             else:
                 print("Sleep for %d seconds to charge" % CHARGING_SECONDS_AFTER_EACH_CASE)
