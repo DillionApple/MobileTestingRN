@@ -7,6 +7,7 @@ from random import randint
 from time import sleep
 
 from exception import AppCrashedException, OneTestCaseCompleteException, AllTestsDoneException
+from utils import save_state, load_state
 
 class BaseTestFlow:
 
@@ -17,6 +18,8 @@ class BaseTestFlow:
         self.device_name = device_name
         self.current_log_filename = "current_log_{0}.txt".format(device_name)
         self.stress_combinations = []
+        self.complete_set_pickle_file = "{0}_complete_screen_set.pkl".format(device_name)
+        self.current_stress_combination_index_pickle_file = "{0}_current_stress_combination_index.pkl".format(device_name)
 
     def setup(self):
         raise NotImplementedError()
@@ -25,8 +28,22 @@ class BaseTestFlow:
         print("\nTearing down the device\n")
         self.driver.quit()
 
+    def recover_test_state(self):
+        try:
+            self.complete = load_state(self.complete_set_pickle_file)
+            self.current_stress_combination_index = load_state(self.current_stress_combination_index_pickle_file)
+        except Exception as e:
+            print("Error while recover test state, message {0}".format(e))
+            self.complete = set()
+            self.current_stress_combination_index = 0
+
+    def save_test_state(self):
+        save_state(self.complete, self.complete_set_pickle_file)
+        save_state(self.current_stress_combination_index, self.current_stress_combination_index_pickle_file)
+        print("test state saved")
+
     def parse_current_screen(self):
-        
+
         # find the activity identifier <- ->
         # find action buttons |- -|
         # find navigation buttons [- -]
@@ -42,7 +59,7 @@ class BaseTestFlow:
         #   injection_btn: element
         #   clear_btn: element
         # }
-        
+
         raise NotImplementedError()
 
     def navigate_back(self, back_btn):
@@ -147,6 +164,7 @@ class BaseTestFlow:
 
     def main(self):
         self.init_stress_combinations()
+        self.recover_test_state()
         round = 0
         while True:
             sleep(1)
@@ -158,6 +176,7 @@ class BaseTestFlow:
             except Exception as e:
                 print(e)
                 print('appium setup error')
+                continue
             crash_occured = False
             all_tests_done = False
             try:
@@ -175,12 +194,30 @@ class BaseTestFlow:
                     self.current_screen,
                     self.stress_combinations[self.current_stress_combination_index]["signature"]
                     ))
-            finally:
-                self.current_stress_combination_index = (self.current_stress_combination_index + 1) % len(self.stress_combinations)
-                if self.current_stress_combination_index == 0:
-                    self.complete.add(self.current_screen)
-                self.tear_down()
-                log_proc.terminate()
+
+            self.current_stress_combination_index = (self.current_stress_combination_index + 1) % len(self.stress_combinations)
+            if self.current_stress_combination_index == 0:
+                self.complete.add(self.current_screen)
+            if all_tests_done:
+                self.complete = set()
+                print("All test cases are done in round %d, starting a new round" % round)
+                round += 1
+            self.save_test_state()
+
+            for i in range(TEAR_DOWN_RETRY_TIMES):
+                try:
+                    self.tear_down()
+                except Exception as e:
+                    seconds = 60
+                    print("Error occured when tearing down the device, message: {0}".format(e))
+                    print("Sleep for {0} seconds and retry, retry time: {1}".format(seconds, i))
+                    sleep(seconds)
+                    continue
+                else:
+                    print("Tear down devices success")
+                    break
+
+            log_proc.terminate()
 
             if crash_occured:
                 time_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -204,9 +241,5 @@ class BaseTestFlow:
                 #         f.write(line)
                 print("Recording done")
             else:
-                if all_tests_done:
-                    print("All test cases are done in round %d, starting a new round" % round)
-                    round += 1
-                    self.complete = set()
                 print("Sleep for %d seconds to charge" % CHARGING_SECONDS_AFTER_EACH_CASE)
                 sleep(CHARGING_SECONDS_AFTER_EACH_CASE)

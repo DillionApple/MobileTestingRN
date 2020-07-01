@@ -10,6 +10,8 @@ INJECTION_CLEAR_BTN_RE_PATTERN = r"Clear"
 
 CHARGING_SECONDS_AFTER_EACH_CASE = 0.01 * 60  # charge for some minutes
 
+TEAR_DOWN_RETRY_TIMES = 10
+
 STRESS_PATTERNS = {
     # "CPU": [0, 2],
     # "Disk Write": [0, 2],
