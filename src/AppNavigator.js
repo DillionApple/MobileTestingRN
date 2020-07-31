@@ -17,6 +17,7 @@ import DBScreen from "./screens/DBTest/DBScreen";
 import EndScreen from "./screens/EndScreen"
 import WebGLScreen from "./screens/WebGLTest/WebGLScreen";
 import AudioPlayList from "./screens/AudioTest/AudioPlayList";
+import SpeedBaseLineTestScreen from "./screens/SpeedBaseLineTestScreen"
 import InjectionModule from "./components/InjectionModule";
 
 const rootRouteConfigMap = {
@@ -36,6 +37,7 @@ export const routeConfigMap = {
     FileDownloaderTest: {screen: FileDownloaderNavigator},
     DBScreen: {screen: DBScreen},
     End: {screen: EndScreen},
+    SpeedBaseLineTest: {screen: SpeedBaseLineTestScreen},
 };
 
 if (Platform.OS === 'android') {

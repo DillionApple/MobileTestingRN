@@ -9,7 +9,16 @@ from django.db import connection
 cursor = connection.cursor()
 
 import matplotlib.pyplot as plt
-import matplotlib.ticker as mtick
+import numpy as np
+from scipy.stats import halfnorm, norm
+
+device_data = {}
+device_baseline = {
+    "vivo": 300.5,
+    "HUAWEI": 504.8,
+    "samsung": 202.7,
+    "google": 409.2,
+}
 
 def get_page2action():
     ret = {}
@@ -37,38 +46,82 @@ def get_devices():
 def get_data(device, page, action):
     ret = []
     records = LogRecord.objects.filter(device=device, page=page, action=action)
+    delay_baseline = device_baseline[device]
     for record in records:
-        ret.append(record.delay)
+        ret.append(record.delay/delay_baseline)
     return ret
 
-
 def draw_all(page, action):
+    # fig, axs = plt.subplots(2, 2, figsize=(6, 4))
     fig = plt.subplot()
+    x_limit_left = 0
+    x_limit_right = 0
     for device in devices:
         data = get_data(device, page, action)
+        data = data + [(-1 * x) for x in data]
         data = sorted(data)
-        data_length = len(data)
-        X = []
-        Y = []
-        for i in range(data_length):
-            X.append(1.0 * (i + 1) / data_length * 100)
-            Y.append(data[i])
-        fig.plot(X, Y, label=device)
-    plt.xlabel("percent")
-    plt.ylabel("delay(ms)")
+        if data:
+            device_data[device] += data
+            loc, scale = norm.fit(data)
+            print(loc, scale)
+            limit = loc + 3 * scale
+            if (limit > x_limit_right):
+                x_limit_right = limit
+            # percent = 100.0 * len([x for x in data if x >= limit])/len(data)
+            # plt.axvline(limit, c='r')
+            # plt.text(limit, 0, '%.2f(%.2f%%)' % (limit, percent))
+            steps = 1000
+            step = 1.0 * (data[-1] - data[0]) / steps
+            norm_x = [data[0] + i * step for i in range(steps)]
+            fig.plot(norm_x, norm.pdf(norm_x, loc, scale), label="%s(%.2f)" % (device, limit))
+            line = "{page}-{action},{device},{sigma1},{sigma2},{sigma3}\n".format(
+                page=page, action=action,
+                device=device, sigma1=scale,
+                sigma2=scale*2, sigma3=scale*3)
+            output_file.write(line)
     title = "{page}-{action}".format(page=page, action=action)
-    plt.title(title)
+    plt.suptitle(title, y=1.0)
     plt.legend()
+    plt.xlim(x_limit_left, x_limit_right)
+    """
     fmt = '%.0f%%'  # Format you want the ticks, e.g. '40%'
     xticks = mtick.FormatStrFormatter(fmt)
     fig.xaxis.set_major_formatter(xticks)
-    plt.savefig("{title}.png".format(title=title))
-    plt.show()
+    """
+    plt.savefig("norm_fixed/{title}.png".format(title=title))
     plt.close()
+    # exit(0)
 
 if __name__ == "__main__":
+    output_file = open("norm_fixed/output_file.csv", "w")
+    output_file.write("page-action,device,sigma1,2sigma,3sigma\n")
     devices = get_devices()
+    for device in devices:
+        device_data[device] = []
     page2action = get_page2action()
     for page in page2action:
         for action in page2action[page]:
             draw_all(page, action)
+    output_file.close()
+    fig = plt.subplot()
+    x_limit_right = 0
+    for device in devices:
+        data = device_data[device]
+        data = sorted(data)
+        if data:
+            loc, scale = norm.fit(data)
+            print(loc, scale)
+            limit = loc + 3 * scale
+            if (limit > x_limit_right):
+                x_limit_right = limit
+            # percent = 100.0 * len([x for x in data if x >= limit])/len(data)
+            # plt.axvline(limit, c='r')
+            # plt.text(limit, 0, '%.2f(%.2f%%)' % (limit, percent))
+            steps = 10000
+            step = 1.0 * (data[-1] - data[0]) / steps
+            norm_x = [data[0] + i * step for i in range(steps)]
+            fig.plot(norm_x, norm.pdf(norm_x, loc, scale), label="%s(%.2f)" % (device, limit))
+    plt.suptitle("All Performance Data Distribution", y=1.0)
+    plt.legend()
+    plt.xlim(0, x_limit_right)
+    plt.savefig("norm_fixed/all.png")
