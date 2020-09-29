@@ -54,10 +54,9 @@ class UITestScreen extends BaseScreenComponent {
 
         this.props.navigation.navigate('ImageView', {
             onGoBack: (mounted) => {
-                if (mounted){
-                    this.doingTask(2);
-                }
-
+                // if (mounted){
+                //     this.doingTask(2);
+                // }
             }
         });
         this.setState({currentProgress: 0.2});
@@ -68,9 +67,9 @@ class UITestScreen extends BaseScreenComponent {
 
         this.props.navigation.navigate('AnimationView', {
             onGoBack: (mounted) => {
-                if (mounted){
-                    this.doingTask(3);
-                }
+                // if (mounted){
+                //     this.doingTask(3);
+                // }
 
             }
         });

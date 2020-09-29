@@ -13,13 +13,9 @@ import {createAppContainer} from "react-navigation"
 import AppNavigator from './src/AppNavigator'
 
 const AppContainer = createAppContainer(AppNavigator);
-import {setHandler} from "./src/components/bugCaptureOnError";
 
 
 export default class App extends Component<Props> {
-    componentWillMount(): void {
-        setHandler();
-    }
 
     render() {
         return (

@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from django.conf import settings
 import django
 from mobile_testing_log_server.settings import DATABASES, INSTALLED_APPS
@@ -45,39 +47,61 @@ def get_data(device, page, action):
 
 def draw_all(page, action):
     all_data = []
-    fig, axs = plt.subplots(2, 2, figsize=(6, 4))
+    cols = min(3, len(devices))
+    rows = len(devices) // cols
+    if len(devices) % cols != 0:
+        rows += 1
+    fig, axs = plt.subplots(rows, cols, figsize=(6, 4))
     fig.tight_layout(rect=[0, 0.03, 1, 0.9])
     row = 0
     col = 0
     for device in devices:
         data = get_data(device, page, action)
         data = sorted(data)
-        axs[row, col].hist(data, 10)
-        axs[row, col].set_title(device)
+        if rows == 1:
+            if cols == 1:
+                tmp_axs = axs
+            else:
+                tmp_axs = axs[col]
+        else:
+            tmp_axs = axs[row, col]
+        tmp_axs.hist(data, 10)
+        plt.xlim(0, 8)
+        plt.xlabel("耗时 (ms)")
+        plt.ylabel("频数（次）")
+        # tmp_axs.set_title(device)
         if data:
-            axs2 = axs[row, col].twinx()
+            axs2 = tmp_axs.twinx()
             loc, scale = halfnorm.fit(data)
             limit = loc + 3 * scale
             percent = 100.0 * len([x for x in data if x >= limit])/len(data)
+            X = [i/10 for i in range(80)]
             # plt.axvline(limit, c='r')
             # plt.text(limit, 0, '%.2f(%.2f%%)' % (limit, percent))
-            axs2.plot(data, halfnorm.pdf(data, loc, scale), c='r')
+            axs2.plot(X, halfnorm.pdf(X, loc, scale), c='r')
+            plt.ylabel("概率密度")
         col += 1
-        row += int(col/2)
-        col %= 2
-    title = "{page}-{action}".format(page=page, action=action)
-    plt.suptitle(title, y=1.0)
+        row += int(col/cols)
+        col %= cols
+    # title = "{page}-{action}".format(page=page, action=action)
+    # plt.suptitle(title, y=1.0)
     """
     fmt = '%.0f%%'  # Format you want the ticks, e.g. '40%'
     xticks = mtick.FormatStrFormatter(fmt)
     fig.xaxis.set_major_formatter(xticks)
     """
     # plt.show()
-    plt.savefig("hist/{title}.png".format(title=title))
+    plt.subplots_adjust(0.1, 0.12, 0.9, 0.95)
+    # plt.savefig("hist/{title}.png".format(title=title))
+    plt.savefig("hist/example.png")
     plt.close()
 
 
 if __name__ == "__main__":
+    plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
+    devices = ["google"]
+    draw_all("AudioPlayList", "_onPause")
+    exit()
     devices = get_devices()
     page2action = get_page2action()
     for page in page2action:

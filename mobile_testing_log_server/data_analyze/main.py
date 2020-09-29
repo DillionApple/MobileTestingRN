@@ -14,10 +14,15 @@ from scipy.stats import halfnorm, norm
 
 device_data = {}
 device_baseline = {
-    "vivo": 300.5,
-    "HUAWEI": 504.8,
-    "samsung": 202.7,
-    "google": 409.2,
+    # "vivo": 300.5,
+    # "HUAWEI": 504.8,
+    # "samsung": 202.7,
+    # "google": 409.2,
+    "vivo": 159.3,
+    "HUAWEI": 270.6,
+    "samsung": 90.9,
+    "google": 463.9,
+    "Apple": 533.2,
 }
 
 def get_page2action():
@@ -46,7 +51,8 @@ def get_devices():
 def get_data(device, page, action):
     ret = []
     records = LogRecord.objects.filter(device=device, page=page, action=action)
-    delay_baseline = device_baseline[device]
+    # delay_baseline = device_baseline[device]
+    delay_baseline = 1
     for record in records:
         ret.append(record.delay/delay_baseline)
     return ret
@@ -88,12 +94,12 @@ def draw_all(page, action):
     xticks = mtick.FormatStrFormatter(fmt)
     fig.xaxis.set_major_formatter(xticks)
     """
-    plt.savefig("norm_fixed/{title}.png".format(title=title))
+    plt.savefig("norm/{title}.png".format(title=title))
     plt.close()
     # exit(0)
 
 if __name__ == "__main__":
-    output_file = open("norm_fixed/output_file.csv", "w")
+    output_file = open("norm/output_file.csv", "w")
     output_file.write("page-action,device,sigma1,2sigma,3sigma\n")
     devices = get_devices()
     for device in devices:
