@@ -51,13 +51,8 @@ def get_data(device, page):
         ret.append(record.delay)
     return ret
 
-def divide_u(data):
-    try:
-        baseline = sum(data) / len(data)
-        ret = [x / baseline for x in data]
-        return ret
-    except:
-        return data
+def get_avg(l):
+    return sum(l) / len(l)
 
 def process(type): # type -> device -> {u, sigma, sigma/u, fixed_u, fixed_sigma/u, score}
     fig = plt.subplot()
@@ -106,6 +101,12 @@ def output_summary(summary):
     f = codecs.open(os.path.join(ROOT_PATH, "summary.csv"), "w", "utf-8")
     csv_head = ",".join(["type", "device", "mu", "sigma", "sigma/u", "u(fixed)", "sigma/u(fixed)", "score"])
     f.write(csv_head + "\n")
+    keys = ["avg", "sigma", "sigma_div_avg", "fixed_avg", "fixed_sigma_div_avg", "score"]
+    device_data = {}
+    for device in devices:
+        device_data[device] = {}
+        for key in keys:
+            device_data[device][key] = []
     for each_class in classes:
         for device in devices:
             try:
@@ -120,12 +121,27 @@ def output_summary(summary):
                     fixed_sigma_div_avg=data["fixed_sigma_div_avg"],
                     score=data["score"],
                 )
+                for key in keys:
+                    device_data[device][key].append(data[key])
             except:
                 csv_line = "{type},{device},-,-,-,-,-,-\n".format(
                     type = each_class,
                     device = device,
                 )
             f.write(csv_line)
+    for device in devices:
+        csv_line = "All,{device},{avg:.2f},{sigma:.2f},{sigma_div_avg:.2f},{fixed_avg:.2f},{fixed_sigma_div_avg:.2f},{score:.2f}\n".format(
+            device=device,
+            avg=get_avg(device_data[device]["avg"]),
+            sigma=get_avg(device_data[device]["sigma"]),
+            sigma_div_avg=get_avg(device_data[device]["sigma_div_avg"]),
+            fixed_avg=get_avg(device_data[device]["fixed_avg"]),
+            fixed_sigma_div_avg=get_avg(device_data[device]["fixed_sigma_div_avg"]),
+            score=get_avg(device_data[device]["score"]),
+        )
+        f.write(csv_line)
+
+
     f.close()
 
 
