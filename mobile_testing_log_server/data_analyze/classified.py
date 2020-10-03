@@ -1,3 +1,5 @@
+import os
+import codecs
 from django.conf import settings
 import django
 from mobile_testing_log_server.settings import DATABASES, INSTALLED_APPS
@@ -9,8 +11,7 @@ from django.db import connection
 cursor = connection.cursor()
 
 import matplotlib.pyplot as plt
-import numpy as np
-from scipy.stats import halfnorm, norm
+from scipy.stats import norm
 
 classes = {
     "UI": ["UITestScreen"],
@@ -21,7 +22,7 @@ classes = {
     "Download": ["FileDownloaderItem"],
     "3D": ["WebGLScreen"],
     "Camera": ["CameraScreen"],
-    "All": ["All"],
+    # "All": ["All"],
 }
 
 ROOT_PATH="./classified"
@@ -37,55 +38,18 @@ def get_devices():
     return ret
 
 def get_data(device, page):
-    if page == "All":
-        return device_data[device]
     ret = []
+    if page == "All":
+        for each_class in classes:
+            for page in classes[each_class]:
+                if page != "All":
+                    ret += get_data(device, page)
+        return ret
     # records = LogRecord.objects.filter(device=device, page=page, cpu_stress=0, disk_stress=0, memory_stress=0, network_stress=0)
     records = LogRecord.objects.filter(device=device, page=page)
     for record in records:
         ret.append(record.delay)
     return ret
-
-def draw_all(page, action):
-    # fig, axs = plt.subplots(2, 2, figsize=(6, 4))
-    fig = plt.subplot()
-    x_limit_left = 0
-    x_limit_right = 0
-    for device in devices:
-        data = get_data(device, page, action)
-        data = data + [(-1 * x) for x in data]
-        data = sorted(data)
-        if data:
-            device_data[device] += data
-            loc, scale = norm.fit(data)
-            print(loc, scale)
-            limit = loc + 3 * scale
-            if (limit > x_limit_right):
-                x_limit_right = limit
-            # percent = 100.0 * len([x for x in data if x >= limit])/len(data)
-            # plt.axvline(limit, c='r')
-            # plt.text(limit, 0, '%.2f(%.2f%%)' % (limit, percent))
-            steps = 1000
-            step = 1.0 * (data[-1] - data[0]) / steps
-            norm_x = [data[0] + i * step for i in range(steps)]
-            fig.plot(norm_x, norm.pdf(norm_x, loc, scale), label="%s(%.2f)" % (device, limit))
-            line = "{page}-{action},{device},{sigma1},{sigma2},{sigma3}\n".format(
-                page=page, action=action,
-                device=device, sigma1=scale,
-                sigma2=scale*2, sigma3=scale*3)
-            output_file.write(line)
-    title = "{page}-{action}".format(page=page, action=action)
-    plt.suptitle(title, y=1.0)
-    plt.legend()
-    plt.xlim(x_limit_left, x_limit_right)
-    """
-    fmt = '%.0f%%'  # Format you want the ticks, e.g. '40%'
-    xticks = mtick.FormatStrFormatter(fmt)
-    fig.xaxis.set_major_formatter(xticks)
-    """
-    plt.savefig("norm/{title}.png".format(title=title))
-    plt.close()
-    # exit(0)
 
 def divide_u(data):
     try:
@@ -95,56 +59,83 @@ def divide_u(data):
     except:
         return data
 
-def process(type):
+def process(type): # type -> device -> {u, sigma, sigma/u, fixed_u, fixed_sigma/u, score}
     fig = plt.subplot()
-    x_limit_right = 0
+    max_avg = 0
+    max_sigma = 0
+    max_sigma_div_avg = 0
+    devices_having_records = []
     for device in devices:
+        print("processing type: {0}, device: {1}".format(type, device))
         data = []
         for page in classes[type]:
             data = data + get_data(device, page)
-        try:
-            device_avg[device].append(sum(data)/len(data))
-            print(device, type, sum(data)/len(data))
-        except:
-            pass
-        # data = divide_u(data)
+        if len(data) == 0:
+            continue
+        devices_having_records.append(device)
+        data_avg = sum(data) / len(data)
+        max_avg = max(data_avg, max_avg)
+        summary[type][device]['avg'] = data_avg
         data = data + [-1 * x for x in data]
         data = sorted(data)
-        device_data[device] = device_data[device] + data
         loc, scale = norm.fit(data)
-        print(device, type, scale)
-        limit = loc + 3 * scale
-        if (limit > x_limit_right):
-            x_limit_right = limit
+        summary[type][device]['sigma'] = scale
+        summary[type][device]['sigma_div_avg'] = scale / data_avg
+        max_sigma_div_avg = max(scale/data_avg, max_sigma_div_avg)
+        max_sigma = max(scale, max_sigma)
         steps = 1000
         try:
             step = 1.0 * (data[-1] - data[0]) / steps
             norm_x = [data[0] + i * step for i in range(steps)]
-            fig.plot(norm_x, norm.pdf(norm_x, loc, scale), label="%s(%.2f)" % (device, limit))
-            device_limit[device].append(limit)
+            fig.plot(norm_x, norm.pdf(norm_x, loc, scale), label="%s(μ=%.2f,σ=%.2f)" % (device, data_avg, scale))
         except:
             pass
     title = "{type}".format(type=type)
     plt.suptitle(title, y=1.0)
     plt.legend()
-    plt.xlim(0, x_limit_right)
-    plt.savefig("{root_path}/{type}.png".format(root_path=ROOT_PATH, type=type))
+    plt.xlim(0, 3 * max_sigma)
+    plt.savefig(os.path.join(ROOT_PATH, "{0}.png".format(type)))
     plt.close()
+
+    for device in devices_having_records:
+        summary[type][device]["fixed_avg"] = summary[type][device]["avg"] / max_avg
+        summary[type][device]["fixed_sigma_div_avg"] = summary[type][device]["sigma_div_avg"] / max_sigma_div_avg
+        summary[type][device]["score"] = summary[type][device]["fixed_avg"] + summary[type][device]["fixed_sigma_div_avg"]
+
+def output_summary(summary):
+    f = codecs.open(os.path.join(ROOT_PATH, "summary.csv"), "w", "utf-8")
+    csv_head = ",".join(["type", "device", "mu", "sigma", "sigma/u", "u(fixed)", "sigma/u(fixed)", "score"])
+    f.write(csv_head + "\n")
+    for each_class in classes:
+        for device in devices:
+            try:
+                data = summary[each_class][device]
+                csv_line = "{type},{device},{avg:.2f},{sigma:.2f},{sigma_div_avg:.2f},{fixed_avg:.2f},{fixed_sigma_div_avg:.2f},{score:.2f}\n".format(
+                    type=each_class,
+                    device=device,
+                    avg=data["avg"],
+                    sigma=data["sigma"],
+                    sigma_div_avg=data["sigma_div_avg"],
+                    fixed_avg=data["fixed_avg"],
+                    fixed_sigma_div_avg=data["fixed_sigma_div_avg"],
+                    score=data["score"],
+                )
+            except:
+                csv_line = "{type},{device},-,-,-,-,-,-\n".format(
+                    type = each_class,
+                    device = device,
+                )
+            f.write(csv_line)
+    f.close()
 
 
 if __name__ == "__main__":
     devices = get_devices()
-    device_data = {}
-    device_limit = {}
-    device_avg = {}
-    for device in devices:
-        device_data[device] = []
-        device_limit[device] = []
-        device_avg[device] = []
+    summary = {}
+    for each in classes:
+        summary[each] = {}
+        for device in devices:
+            summary[each][device] = {}
     for each in classes:
         process(each)
-    for device in devices:
-        limits = device_limit[device]
-        avgs = device_limit[device]
-        # print(device, sum(limits)/len(limits))
-        print(device, sum(avgs)/len(avgs))
+    output_summary(summary)
