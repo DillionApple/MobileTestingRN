@@ -25,7 +25,12 @@ classes = {
     # "All": ["All"],
 }
 
-ROOT_PATH="./classified"
+ROOT_PATH="./performance_summary/"
+
+try:
+    os.mkdir(ROOT_PATH)
+except:
+    pass
 
 def get_devices():
     ret = []
@@ -98,8 +103,8 @@ def process(type): # type -> device -> {u, sigma, sigma/u, fixed_u, fixed_sigma/
         summary[type][device]["score"] = summary[type][device]["fixed_avg"] + summary[type][device]["fixed_sigma_div_avg"]
 
 def output_summary(summary):
-    f = codecs.open(os.path.join(ROOT_PATH, "summary.csv"), "w", "utf-8")
-    csv_head = ",".join(["type", "device", "mu", "sigma", "sigma/u", "u(fixed)", "sigma/u(fixed)", "score"])
+    f = codecs.open(os.path.join(ROOT_PATH, "performance_summary.csv"), "w", "utf-8")
+    csv_head = ",".join(["type", "device", "mu", "sigma", "sigma/mu", "mu(fixed)", "sigma/mu(fixed)", "score"])
     f.write(csv_head + "\n")
     keys = ["avg", "sigma", "sigma_div_avg", "fixed_avg", "fixed_sigma_div_avg", "score"]
     device_data = {}
