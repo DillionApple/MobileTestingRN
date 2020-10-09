@@ -1,29 +1,10 @@
 import os
 import codecs
-from django.conf import settings
-import django
-from mobile_testing_log_server.settings import DATABASES, INSTALLED_APPS
-settings.configure(DATABASES=DATABASES, INSTALLED_APPS=INSTALLED_APPS)
-django.setup()
-from mobile_testing_log_server.models import LogRecord
-
-from django.db import connection
-cursor = connection.cursor()
 
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 
-classes = {
-    "UI": ["UITestScreen"],
-    "Video": ["VideoActionAndAnimation"],
-    "Audio": ["AudioPlayList", "AudioScreen"],
-    "Map": ["AnimatedMarkers", "AnimatedNavigation", "DefaultMarkers", "ViewsAsMarkers"],
-    "File System": ["FileSystemScreen"],
-    "Download": ["FileDownloaderItem"],
-    "3D": ["WebGLScreen"],
-    "Camera": ["CameraScreen"],
-    # "All": ["All"],
-}
+from data_analyze.utils import *
 
 ROOT_PATH="./performance_summary/"
 
@@ -32,32 +13,6 @@ try:
 except:
     pass
 
-def get_devices():
-    ret = []
-    query = """
-        select distinct device from mobile_testing_log_server_logrecord
-     """
-    cursor.execute(query)
-    for each in cursor:
-        ret.append(each[0])
-    return ret
-
-def get_data(device, page):
-    ret = []
-    if page == "All":
-        for each_class in classes:
-            for page in classes[each_class]:
-                if page != "All":
-                    ret += get_data(device, page)
-        return ret
-    # records = LogRecord.objects.filter(device=device, page=page, cpu_stress=0, disk_stress=0, memory_stress=0, network_stress=0)
-    records = LogRecord.objects.filter(device=device, page=page)
-    for record in records:
-        ret.append(record.delay)
-    return ret
-
-def get_avg(l):
-    return sum(l) / len(l)
 
 def process(type): # type -> device -> {u, sigma, sigma/u, fixed_u, fixed_sigma/u, score}
     fig = plt.subplot()
@@ -68,7 +23,7 @@ def process(type): # type -> device -> {u, sigma, sigma/u, fixed_u, fixed_sigma/
     for device in devices:
         print("processing type: {0}, device: {1}".format(type, device))
         data = []
-        for page in classes[type]:
+        for page in CLASSES[type]:
             data = data + get_data(device, page)
         if len(data) == 0:
             continue
@@ -112,7 +67,7 @@ def output_summary(summary):
         device_data[device] = {}
         for key in keys:
             device_data[device][key] = []
-    for each_class in classes:
+    for each_class in CLASSES:
         for device in devices:
             try:
                 data = summary[each_class][device]
@@ -153,10 +108,10 @@ def output_summary(summary):
 if __name__ == "__main__":
     devices = get_devices()
     summary = {}
-    for each in classes:
+    for each in CLASSES:
         summary[each] = {}
         for device in devices:
             summary[each][device] = {}
-    for each in classes:
+    for each in CLASSES:
         process(each)
     output_summary(summary)
