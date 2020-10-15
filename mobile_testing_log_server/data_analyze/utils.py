@@ -34,16 +34,19 @@ def get_devices():
             ret.append(each[0])
     return ret
 
-def get_data(device, page):
+def get_data(device, page, no_stress=False):
     ret = []
     if page == "All":
         for each_class in CLASSES:
             for page in CLASSES[each_class]:
                 if page != "All":
-                    ret += get_data(device, page)
+                    ret += get_data(device, page, no_stress)
         return ret
-    # records = LogRecord.objects.filter(device=device, page=page, cpu_stress=0, disk_stress=0, memory_stress=0, network_stress=0)
-    records = LogRecord.objects.filter(device=device, page=page)
+    if not no_stress:
+        records = LogRecord.objects.filter(device=device, page=page)
+    else:
+        records = LogRecord.objects.filter(device=device, page=page, cpu_stress=0, disk_stress=0, memory_stress=0,
+                                           network_stress=0)
     for record in records:
         ret.append(record.delay)
     return ret
@@ -51,7 +54,12 @@ def get_data(device, page):
 def get_avg(l):
     return sum(l) / len(l)
 
+def get_data_div_avg(data):
+    avg = get_avg(data)
+    return [each / avg for each in data]
+
 
 def save_pkl(obj, filepath):
     with open(filepath, "wb") as f:
         pkl.dump(obj, f)
+

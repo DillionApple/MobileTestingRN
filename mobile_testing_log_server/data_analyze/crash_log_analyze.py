@@ -33,6 +33,30 @@ page2type = {
     "CameraScreen": "Camera",    
 }
 
+type_count = {
+    "3D": 1,
+    "Audio": 2,
+    "Camera": 1,
+    "Download": 5,
+    "Filesystem": 2,
+    "Map": 4,
+    "UI": 2,
+    "Video": 8,
+}
+
+# NOTE - modify this, these data are fake
+# the device name is the same with the device name in the log
+device_rounds = {
+    "huawei_p9_plus": 1,
+    "nexus_6p": 1,
+    "samsung_s9": 1,
+    "vivo_x27": 1,
+    "test_phone": 1,
+}
+
+# NOTE - modify this if the stress combination changed
+stress_count = 16
+
 types = sorted(list(set([page2type[key] for key in page2type])))
 
 def process(device):
@@ -70,15 +94,19 @@ def process(device):
 
 def output_summary(summary):
     f = codecs.open("crash_summary.csv", "w", "utf-8")
-    header = ",".join(["type", "device", "crash_count"])
+    header = ",".join(["type", "device", "crash_count", "type_count", "stress_count", "rounds", "crash_rate"])
     f.write(header + "\n")
 
     for type in types:
         for device in DEVICES:
-            csv_line = "{type},{device},{crash_count}\n".format(
+            csv_line = "{type},{device},{crash_count},{type_count},{stress_count},{rounds},{crash_rate}\n".format(
                 type=type,
                 device=device,
-                crash_count=summary[device][type]
+                crash_count=summary[device][type],
+                type_count=type_count[type],
+                stress_count=stress_count, # modify this if stress combination changed
+                rounds=device_rounds[device],
+                crash_rate=summary[device][type]/(type_count[type] * stress_count * device_rounds[device])
             )
             f.write(csv_line)
 

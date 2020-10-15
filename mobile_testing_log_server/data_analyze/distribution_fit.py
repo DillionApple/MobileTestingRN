@@ -11,6 +11,7 @@ matplotlib.rcParams['figure.figsize'] = (16.0, 12.0)
 matplotlib.style.use('ggplot')
 
 def fit(data, distribution, bins):
+    # y, x = np.histogram(data, bins=bins, density=True)
     y, x = np.histogram(data, bins=bins)
     original_x = x
     bin_width = original_x[1] - original_x[0]
@@ -25,17 +26,32 @@ def fit(data, distribution, bins):
     loc = params[-2]
     scale = params[-1]
 
-    sse = 0
-    data_sum = sum(y)
-    for i in range(len(x)):
-        if y[i] == 0:
-            continue
-        possibility = distribution.cdf(x[i] + bin_width, loc, scale) - distribution.cdf(x[i], loc, scale)
-        sse += (y[i] - data_sum * possibility) ** 2
-        print(y[i], data_sum * possibility)
-    sse /= len(x)
+    # Calculate fitted PDF and error with fit in distribution
+    pdf = distribution.pdf(x, loc=loc, scale=scale, *arg)
 
-    return (arg, loc, scale, sse)
+    """
+    y_minus_pdf_square = []
+    for i in range(len(y)):
+        if y[i] != 0:
+            y_minus_pdf_square.append((y[i] - pdf[i])**2)
+            print(y[i], pdf[i])            
+    sse = sum(y_minus_pdf_square) / len(y_minus_pdf_square)
+    """
+
+    data_sum = sum(y)
+    sse = 0
+    for i in range(len(y)):
+        x1 = original_x[i]
+        x2 = x1 + bin_width
+        true_y = y[i]
+        new_y = (distribution.cdf(x2, loc, scale) - distribution.cdf(x1, loc, scale)) * data_sum
+        print(x1, x2, true_y, new_y)
+        sse += (true_y - new_y)**2
+
+    sse = (sse / len(y)) ** 0.5
+
+    # return (arg, loc, scale, pdf, sse)
+    return (arg, loc, scale, None, sse)
 
 # Create models from data
 def best_fit_distribution(data, bins=200, ax=None):
@@ -183,8 +199,8 @@ def output_summary(summary):
         for device in devices:
             l = [each_class, device]
             for distribution in distributions:
-                if devices == "Apple":
-                    l.append(["-"])
+                if device == "Apple":
+                    l.append("-")
                     continue
                 l.append(summary[each_class][device][distribution.name][-1])
             line = ",".join([str(x) for x in l])
@@ -215,7 +231,8 @@ if __name__ == "__main__":
             for distribution in distributions:
                 try:
                     summary[each_class][device][distribution.name] = fit(data, distribution, 10)
-                except:
+                except Exception as e:
+                    print(e)
                     summary[each_class][device][distribution.name] = "-"
             # best_fit_key = "{0}-{1}".format(each_class, device)
             # best_fits[best_fit_key] = find_best_fit(data)

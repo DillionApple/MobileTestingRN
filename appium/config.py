@@ -15,12 +15,8 @@ TEAR_DOWN_RETRY_TIMES = 10
 LOG_DIR='log/'
 
 STRESS_PATTERNS = {
-    # "CPU": [0, 2],
-    # "Disk Write": [0, 2],
-    # "Network Download": [0, 2],
-    # "Memory": [0, 2],
-    "CPU": [2],
-    "Disk Write": [2],
-    "Network Download": [2],
-    "Memory": [2]
+    "CPU": [0, 2],
+    "Disk Write": [0, 2],
+    "Network Download": [0, 2],
+    "Memory": [0, 2],
 }
