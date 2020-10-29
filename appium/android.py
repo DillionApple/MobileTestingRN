@@ -79,6 +79,13 @@ class AndroidTestFlow(BaseTestFlow):
                 ret['clear_btn'] = el
         return ret
 
+    def check_app_running(self):
+        proc = subprocess.Popen(['adb', '-s', DEVICE_DICT[self.device_name]['UDID'], 'shell', 'ps', '|', 'grep', 'com.mobiletesting'], stdout=subprocess.PIPE)
+        line = proc.stdout.readline()
+        if str(line).find("com.mobiletesting") >= 0:
+            return True
+        return False
+
     def navigate_back(self, back_btn):
         self.driver.back()
         

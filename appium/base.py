@@ -62,6 +62,11 @@ class BaseTestFlow:
 
         raise NotImplementedError()
 
+    def check_app_running(self):
+
+        # this method is implemented in the sub-class (AndroidTestFlow)
+        pass
+
     def navigate_back(self, back_btn):
         raise NotImplementedError()
 
@@ -170,15 +175,15 @@ class BaseTestFlow:
             sleep(1)
             try:
                 self.setup()
-                # start log process
-                log_proc = Process(target=self.collect_device_log_process_target)
-                log_proc.start()
             except Exception as e:
                 print(e)
                 print('appium setup error')
                 continue
             crash_occured = False
             all_tests_done = False
+            # start log process
+            log_proc = Process(target=self.collect_device_log_process_target)
+            log_proc.start()
             try:
                 self.dfs("[-MobileTesting-]")
             except AllTestsDoneException as e:
@@ -189,6 +194,10 @@ class BaseTestFlow:
                     self.stress_combinations[self.current_stress_combination_index]["signature"],
                 ))
             except Exception as e:
+                if self.check_app_running():
+                    print("Appium is possibly crashed, re-test this use case")
+                    log_proc.terminate()
+                    continue
                 crash_occured = True
                 print("Broken on screen %s, stress %s" % (
                     self.current_screen,
